@@ -126,10 +126,9 @@
   .gradient-card{
     position:relative; overflow:hidden; isolation:isolate;
     background:var(--paper-alt);
-    display:flex; flex-direction:column; align-items:center;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
     width:min(1000px, calc(100% - 64px)); height:620px;
     border-radius:32px;
-    padding-top:28px;
     transition:border-radius 120ms linear;
   }
   .mesh-layer{ position:absolute; inset:-15%; z-index:0; filter:blur(60px); opacity:0; transition:opacity 700ms ease; }
@@ -173,7 +172,7 @@
   .tab-btn[data-target="suede"].active::after{ background:var(--sd); }
   .tab-btn[data-target="terrava"].active{ background:var(--tr); border-color:var(--tr); }
   .tab-btn[data-target="terrava"].active::after{ background:var(--tr); }
-  .showcase-card-zone{ position:relative; z-index:1; flex:1; width:100%; display:flex; align-items:flex-start; justify-content:center; padding-top:20px; }
+  .showcase-card-zone{ position:relative; z-index:1; width:100%; display:flex; justify-content:center; padding-top:20px; }
   .showcase-card{
     position:relative;
     background:var(--paper); border-radius:20px; overflow:hidden;
