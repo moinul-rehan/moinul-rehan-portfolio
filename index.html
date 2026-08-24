@@ -608,9 +608,22 @@
       });
     }
     cards.forEach(function(card){
-      card.addEventListener('mouseenter', function(){ activateCard(card); });
       card.addEventListener('click', function(){ activateCard(card); });
       card.addEventListener('focus', function(){ activateCard(card); });
+    });
+
+    // Hit-testing is based on a fixed equal-width grid over the container, not on the
+    // cards' own (animating) widths — otherwise a growing card shifts the layout under
+    // a stationary cursor, re-triggering hover on a neighbor and causing a flicker loop.
+    deckCards.addEventListener('mousemove', function(e){
+      var rect = deckCards.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var idx = Math.floor((x / rect.width) * cards.length);
+      idx = Math.max(0, Math.min(cards.length - 1, idx));
+      activateCard(cards[idx]);
+    });
+    deckCards.addEventListener('mouseleave', function(){
+      activateCard(cards[0]);
     });
   }
 })();
