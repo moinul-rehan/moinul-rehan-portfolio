@@ -27,6 +27,12 @@
     --mesh-cyan: rgba(93,223,215,0.32);
     --mesh-pink: rgba(240,122,242,0.24);
     --mesh-sky: rgba(132,193,255,0.34);
+    --mesh-purple: rgba(155,93,229,0.34);
+    --mesh-teal: rgba(18,166,125,0.34);
+
+    --hn:#3C90FF; --hn-strong:#167EB4; --hn-soft:#EDF5FF;
+    --sd:#9B5DE5; --sd-strong:#7C3AED; --sd-soft:#F4EDFD;
+    --tr:#12A67D; --tr-strong:#0C7F60; --tr-soft:#E6F7F1;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -117,24 +123,44 @@
     position:sticky; top:0; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
     overflow:hidden; padding-block:24px;
   }
-  .showcase-mesh{
-    position:absolute; inset:0; z-index:0;
+  .showcase-mesh{ position:absolute; inset:0; z-index:0; background:var(--paper-alt); filter:blur(6px); overflow:hidden; }
+  .mesh-layer{ position:absolute; inset:0; opacity:0; transition:opacity 700ms ease; }
+  .mesh-layer.active{ opacity:1; }
+  .mesh-layer.theme-handynaija{
     background:
       radial-gradient(38% 48% at 80% 15%, var(--mesh-blue), transparent 70%),
       radial-gradient(34% 42% at 92% 68%, var(--mesh-sky), transparent 70%),
       radial-gradient(30% 38% at 18% 62%, var(--mesh-pink), transparent 70%),
-      radial-gradient(30% 36% at 58% 94%, var(--mesh-cyan), transparent 70%),
-      var(--paper-alt);
-    filter:blur(6px);
+      radial-gradient(30% 36% at 58% 94%, var(--mesh-cyan), transparent 70%);
+  }
+  .mesh-layer.theme-suede{
+    background:
+      radial-gradient(40% 50% at 18% 20%, var(--mesh-pink), transparent 70%),
+      radial-gradient(36% 44% at 86% 28%, var(--mesh-purple), transparent 70%),
+      radial-gradient(30% 38% at 72% 88%, var(--mesh-blue), transparent 70%),
+      radial-gradient(30% 34% at 14% 82%, var(--mesh-cyan), transparent 70%);
+  }
+  .mesh-layer.theme-terrava{
+    background:
+      radial-gradient(40% 50% at 80% 18%, var(--mesh-cyan), transparent 70%),
+      radial-gradient(36% 44% at 15% 30%, var(--mesh-teal), transparent 70%),
+      radial-gradient(30% 38% at 60% 92%, var(--mesh-sky), transparent 70%),
+      radial-gradient(30% 34% at 92% 86%, var(--mesh-pink), transparent 70%);
   }
   .showcase-tabs{ position:relative; z-index:3; display:flex; align-items:center; gap:12px; margin-bottom:0; flex:none; transition:opacity 120ms linear; }
   .tab-btn{
     width:52px; height:52px; border-radius:14px; background:rgba(255,255,255,0.75); backdrop-filter:blur(6px);
     border:1px solid var(--line); display:flex; align-items:center; justify-content:center; cursor:pointer;
-    color:var(--ink-soft); position:relative; padding:0;
+    color:var(--ink-soft); position:relative; padding:0; transition:border-color 200ms ease, color 200ms ease, box-shadow 200ms ease, background 200ms ease;
   }
-  .tab-btn.active{ background:#fff; border-color:var(--accent); color:var(--accent); box-shadow:0 0 0 4px rgba(60,144,255,0.16); }
-  .tab-btn.active::after{ content:''; position:absolute; top:100%; left:50%; width:2px; height:22px; background:var(--accent); opacity:0.45; }
+  .tab-btn.active{ background:#fff; }
+  .tab-btn.active::after{ content:''; position:absolute; top:100%; left:50%; width:2px; height:22px; opacity:0.45; }
+  .tab-btn[data-target="handynaija"].active{ border-color:var(--hn); color:var(--hn); box-shadow:0 0 0 4px rgba(60,144,255,0.16); }
+  .tab-btn[data-target="handynaija"].active::after{ background:var(--hn); }
+  .tab-btn[data-target="suede"].active{ border-color:var(--sd); color:var(--sd); box-shadow:0 0 0 4px rgba(155,93,229,0.18); }
+  .tab-btn[data-target="suede"].active::after{ background:var(--sd); }
+  .tab-btn[data-target="terrava"].active{ border-color:var(--tr); color:var(--tr); box-shadow:0 0 0 4px rgba(18,166,125,0.18); }
+  .tab-btn[data-target="terrava"].active::after{ background:var(--tr); }
   .showcase-card-zone{ position:relative; z-index:1; width:100%; flex:1; margin-top:22px; }
   .showcase-card{
     position:absolute; left:50%; transform:translateX(-50%); top:0;
@@ -142,24 +168,36 @@
     background:var(--paper); border-radius:28px; overflow:hidden;
     box-shadow:0 40px 70px -24px rgba(7,26,49,0.28);
     display:grid; grid-template-columns:1fr 1fr;
+    transition:border-radius 120ms linear;
   }
   .sc-panel{ display:none; grid-column:1/-1; grid-template-columns:1fr 1fr; }
   .sc-panel.active{ display:grid; }
   .sc-text{ padding:clamp(28px,4vw,48px); display:flex; flex-direction:column; justify-content:center; }
-  .sc-eyebrow{ display:flex; align-items:center; gap:8px; font-size:14px; font-weight:600; color:var(--ink); margin-bottom:16px; }
-  .sc-eyebrow svg{ color:var(--accent); flex:none; }
-  .sc-pill{ display:inline-block; align-self:flex-start; font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent-strong); background:var(--accent-soft); border-radius:6px; padding:4px 9px; margin-bottom:12px; }
+  .sc-eyebrow{ display:flex; align-items:center; gap:9px; font-size:14px; font-weight:600; color:var(--ink); margin-bottom:16px; }
+  .sc-eyebrow-icon{ width:24px; height:24px; border-radius:7px; display:flex; align-items:center; justify-content:center; flex:none; }
+  .sc-pill{ display:inline-block; align-self:flex-start; font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; border-radius:6px; padding:4px 9px; margin-bottom:12px; }
   .sc-title{ font-weight:700; font-size:clamp(24px,2.6vw,32px); line-height:1.15; letter-spacing:-0.015em; margin:0 0 14px 0; }
   .sc-desc{ font-size:15.5px; line-height:1.55; color:var(--ink-soft); margin:0 0 22px 0; max-width:340px; }
   .sc-link{ display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:14.5px; text-decoration:underline; text-underline-offset:3px; }
-  .sc-visual{ background:var(--accent-soft); margin:14px 14px 14px 0; border-radius:16px; position:relative; overflow:hidden; }
+  .sc-visual{ margin:14px 14px 14px 0; border-radius:16px; position:relative; overflow:hidden; }
   .sc-mock{ position:absolute; inset:0; }
+
+  #panel-handynaija .sc-eyebrow-icon{ background:var(--hn-soft); color:var(--hn); }
+  #panel-handynaija .sc-link{ color:var(--hn-strong); }
+  #panel-handynaija .sc-visual{ background:var(--hn-soft); }
+  #panel-suede .sc-eyebrow-icon{ background:var(--sd-soft); color:var(--sd); }
+  #panel-suede .sc-link{ color:var(--sd-strong); }
+  #panel-suede .sc-visual{ background:var(--sd-soft); }
+  #panel-suede .sc-pill{ color:var(--sd-strong); background:var(--sd-soft); }
+  #panel-terrava .sc-eyebrow-icon{ background:var(--tr-soft); color:var(--tr); }
+  #panel-terrava .sc-link{ color:var(--tr-strong); }
+  #panel-terrava .sc-visual{ background:var(--tr-soft); }
 
   /* HandyNaija mock — service booking rows */
   .mock-row{ position:absolute; left:8%; right:8%; height:15%; background:#fff; border-radius:10px; box-shadow:0 6px 14px -6px rgba(7,26,49,0.15); display:flex; align-items:center; padding-inline:14px; gap:10px; }
-  .mock-avatar{ width:26px; height:26px; border-radius:50%; background:var(--accent); flex:none; opacity:0.85; }
+  .mock-avatar{ width:26px; height:26px; border-radius:50%; background:var(--hn); flex:none; opacity:0.85; }
   .mock-line{ height:7px; border-radius:4px; background:var(--line); }
-  .mock-chip{ margin-left:auto; font-size:9px; font-weight:700; color:var(--accent-strong); background:var(--accent-soft); border-radius:999px; padding:4px 8px; flex:none; }
+  .mock-chip{ margin-left:auto; font-size:9px; font-weight:700; color:var(--hn-strong); background:var(--hn-soft); border-radius:999px; padding:4px 8px; flex:none; }
 
   /* SUEDE mock — review card grid */
   .mock-card{ position:absolute; width:44%; height:38%; background:#fff; border-radius:12px; box-shadow:0 6px 14px -6px rgba(7,26,49,0.15); padding:12px; }
@@ -167,7 +205,7 @@
   .mock-star{ width:8px; height:8px; border-radius:2px; background:#FFB020; }
 
   /* Terrava mock — route path */
-  .mock-dot{ position:absolute; width:9px; height:9px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px rgba(60,144,255,0.18); }
+  .mock-dot{ position:absolute; width:9px; height:9px; border-radius:50%; background:var(--tr); box-shadow:0 0 0 4px rgba(18,166,125,0.18); }
   .mock-stat{ position:absolute; background:#fff; border-radius:10px; box-shadow:0 6px 14px -6px rgba(7,26,49,0.18); padding:8px 12px; font-size:12px; font-weight:700; color:var(--ink); }
 
   .testi-section{ background:var(--paper-alt); padding-block:clamp(56px,8vw,104px); }
@@ -276,7 +314,11 @@
 
 <div class="showcase-wrap" id="showcaseWrap">
   <div class="showcase-stage" id="showcaseStage">
-    <div class="showcase-mesh"></div>
+    <div class="showcase-mesh">
+      <div class="mesh-layer theme-handynaija active" data-theme="handynaija"></div>
+      <div class="mesh-layer theme-suede" data-theme="suede"></div>
+      <div class="mesh-layer theme-terrava" data-theme="terrava"></div>
+    </div>
 
     <div class="showcase-tabs" id="showcaseTabs">
       <button class="tab-btn active" data-target="handynaija" aria-label="HandyNaija">
@@ -296,7 +338,7 @@
         <div class="sc-panel active" id="panel-handynaija">
           <div class="sc-text">
             <div class="sc-eyebrow">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 11L12 4l8 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9a1 1 0 001 1h3v-5h4v5h3a1 1 0 001-1v-9" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              <span class="sc-eyebrow-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 11L12 4l8 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9a1 1 0 001 1h3v-5h4v5h3a1 1 0 001-1v-9" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
               HandyNaija
             </div>
             <h2 class="sc-title">Find a trusted pro, in minutes</h2>
@@ -337,7 +379,7 @@
           <div class="sc-text">
             <div class="sc-pill">In Progress</div>
             <div class="sc-eyebrow">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5.3a2 2 0 10-2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 7.3v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 9.3L4 15a1.15 1.15 0 00.6 2.1h14.8a1.15 1.15 0 00.6-2.1l-8-5.7z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              <span class="sc-eyebrow-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5.3a2 2 0 10-2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 7.3v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 9.3L4 15a1.15 1.15 0 00.6 2.1h14.8a1.15 1.15 0 00.6-2.1l-8-5.7z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
               SUEDE
             </div>
             <h2 class="sc-title">Reviews that actually fit</h2>
@@ -369,7 +411,7 @@
         <div class="sc-panel" id="panel-terrava">
           <div class="sc-text">
             <div class="sc-eyebrow">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-7.58 7-12A7 7 0 105 9c0 4.42 7 12 7 12z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg>
+              <span class="sc-eyebrow-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-7.58 7-12A7 7 0 105 9c0 4.42 7 12 7 12z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.8"/></svg></span>
               Terrava
             </div>
             <h2 class="sc-title">Every run claims new ground</h2>
@@ -379,7 +421,7 @@
           <div class="sc-visual">
             <div class="sc-mock">
               <svg width="100%" height="100%" viewBox="0 0 300 240" preserveAspectRatio="none" style="position:absolute; inset:0;">
-                <path d="M40 190 C 90 150, 70 90, 130 80 S 220 40, 260 60" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="2 8" stroke-linecap="round" fill="none" opacity="0.6"/>
+                <path d="M40 190 C 90 150, 70 90, 130 80 S 220 40, 260 60" stroke="var(--tr)" stroke-width="2.5" stroke-dasharray="2 8" stroke-linecap="round" fill="none" opacity="0.6"/>
               </svg>
               <div class="mock-dot" style="left:12%; top:76%;"></div>
               <div class="mock-dot" style="left:43%; top:33%;"></div>
@@ -403,17 +445,21 @@
   var tabsEl = document.getElementById('showcaseTabs');
   var tabs = tabsEl.querySelectorAll('.tab-btn');
   var panels = document.querySelectorAll('.sc-panel');
+  var meshLayers = document.querySelectorAll('.mesh-layer');
+  var tabOrder = ['handynaija', 'suede', 'terrava'];
+
+  function setActive(name){
+    tabs.forEach(function(b){ b.classList.toggle('active', b.dataset.target === name); });
+    panels.forEach(function(p){ p.classList.toggle('active', p.id === 'panel-' + name); });
+    meshLayers.forEach(function(m){ m.classList.toggle('active', m.dataset.theme === name); });
+  }
 
   tabs.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      tabs.forEach(function(b){ b.classList.remove('active'); });
-      panels.forEach(function(p){ p.classList.remove('active'); });
-      btn.classList.add('active');
-      document.getElementById('panel-' + btn.dataset.target).classList.add('active');
-    });
+    btn.addEventListener('click', function(){ setActive(btn.dataset.target); });
   });
 
   var compactW = 1040, compactH = 560;
+  var margin = 28;
 
   function update(){
     if (window.innerWidth <= 860) { return; }
@@ -424,19 +470,22 @@
 
     var stageW = stage.clientWidth, stageH = stage.clientHeight;
     var tabsH = tabsEl.offsetHeight;
-    var maxW = stageW - 24;
-    var maxH = stageH - tabsH - 46;
+    var maxW = stageW - margin * 2;
+    var maxH = stageH - tabsH - margin - 24;
 
     var w = compactW + (maxW - compactW) * p;
     var h = compactH + (maxH - compactH) * p;
-    w = Math.min(w, stageW - 16);
-    h = Math.min(h, stageH - tabsH - 30);
+    w = Math.min(w, maxW);
+    h = Math.min(h, maxH);
 
     card.style.width = w + 'px';
     card.style.height = h + 'px';
-    card.style.borderRadius = (28 - 8 * p) + 'px';
+    card.style.borderRadius = (28 - 4 * p) + 'px';
 
-    tabsEl.style.opacity = p > 0.82 ? Math.max(0, 1 - (p - 0.82) / 0.18) : 1;
+    tabsEl.style.opacity = p > 0.86 ? Math.max(0, 1 - (p - 0.86) / 0.14) : 1;
+
+    var idx = p >= 1 ? tabOrder.length - 1 : Math.floor(p * tabOrder.length);
+    setActive(tabOrder[idx]);
   }
 
   var ticking = false;
