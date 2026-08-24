@@ -161,12 +161,19 @@
     border:1px solid var(--line); display:flex; align-items:center; justify-content:center; cursor:pointer;
     color:var(--ink-soft); position:relative; padding:0; transition:border-color 200ms ease, color 200ms ease, box-shadow 200ms ease, background 200ms ease;
   }
-  .tab-btn.active{ background:#fff; }
-  .tab-btn.active::after{ content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); width:14px; height:18px; background:#fff; border-radius:0 0 7px 7px; }
-  .tab-btn[data-target="handynaija"].active{ border-color:var(--hn); color:var(--hn); box-shadow:0 0 0 4px rgba(60,144,255,0.16); }
-  .tab-btn[data-target="suede"].active{ border-color:var(--sd); color:var(--sd); box-shadow:0 0 0 4px rgba(155,93,229,0.18); }
-  .tab-btn[data-target="terrava"].active{ border-color:var(--tr); color:var(--tr); box-shadow:0 0 0 4px rgba(18,166,125,0.18); }
-  .showcase-card-zone{ position:relative; z-index:1; flex:1; width:100%; display:flex; align-items:flex-start; justify-content:center; padding-top:18px; }
+  .tab-btn.active{ color:var(--ink); box-shadow:0 0 0 3px rgba(255,255,255,0.6); }
+  .tab-btn.active::after{
+    content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%);
+    width:26px; height:20px;
+    clip-path:polygon(8% 0, 92% 0, 58% 82%, 50% 100%, 42% 82%);
+  }
+  .tab-btn[data-target="handynaija"].active{ background:var(--hn); border-color:var(--hn); }
+  .tab-btn[data-target="handynaija"].active::after{ background:var(--hn); }
+  .tab-btn[data-target="suede"].active{ background:var(--sd); border-color:var(--sd); }
+  .tab-btn[data-target="suede"].active::after{ background:var(--sd); }
+  .tab-btn[data-target="terrava"].active{ background:var(--tr); border-color:var(--tr); }
+  .tab-btn[data-target="terrava"].active::after{ background:var(--tr); }
+  .showcase-card-zone{ position:relative; z-index:1; flex:1; width:100%; display:flex; align-items:flex-start; justify-content:center; padding-top:20px; }
   .showcase-card{
     position:relative;
     background:var(--paper); border-radius:20px; overflow:hidden;
