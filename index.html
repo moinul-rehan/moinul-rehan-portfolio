@@ -229,9 +229,9 @@
   .process-section{ padding-block:clamp(56px,8vw,104px); }
   .process-head{ max-width:600px; margin-bottom:clamp(32px,5vw,48px); }
   .process-head h2{ font-weight:700; font-size:clamp(26px,2.8vw,32px); letter-spacing:-0.015em; margin-top:8px; }
-  .deck-cards{ display:flex; align-items:stretch; gap:20px; width:100%; overflow-x:auto; padding-bottom:4px; }
+  .deck-cards{ display:flex; align-items:stretch; gap:20px; width:100%; }
   .deck-card{
-    position:relative; flex:0 0 180px; width:180px; overflow:hidden;
+    position:relative; flex:0 0 180px; width:180px; height:360px; overflow:hidden;
     background:var(--paper); border-radius:20px; border:1px solid var(--line);
     transition:flex-basis 500ms cubic-bezier(.4,0,.2,1), width 500ms cubic-bezier(.4,0,.2,1), box-shadow 500ms ease, border-color 500ms ease;
     cursor:pointer;
@@ -263,8 +263,8 @@
   .deck-steps li{ display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--ink); }
   .deck-steps li::before{ content:''; width:6px; height:6px; border-radius:50%; background:currentColor; opacity:0.35; flex:none; }
   @media (max-width:860px){
-    .deck-cards{ flex-direction:column; overflow-x:visible; }
-    .deck-card{ flex:0 0 auto; width:100%; }
+    .deck-cards{ flex-direction:column; }
+    .deck-card{ flex:0 0 auto; width:100%; height:auto; }
     .deck-card::before{ display:none; }
     .deck-card .deck-bg{ opacity:1; }
     .deck-card .deck-resting-desc{ display:none; }
