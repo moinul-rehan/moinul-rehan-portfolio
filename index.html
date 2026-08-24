@@ -156,9 +156,9 @@
   }
   .showcase-tabs{ position:relative; z-index:2; display:flex; align-items:center; gap:12px; margin-bottom:0; flex:none; transition:opacity 120ms linear; }
   .tab-btn{
-    width:52px; height:52px; border-radius:16px; background:#fff;
+    width:auto; height:auto; padding:16px; border-radius:16px; background:#fff;
     border:1px solid var(--line); display:flex; align-items:center; justify-content:center; cursor:pointer;
-    color:var(--ink); position:relative; padding:0; overflow:visible;
+    color:var(--ink); position:relative; overflow:visible;
   }
   .tab-btn svg{ position:relative; z-index:3; opacity:0.4; transition:opacity 220ms ease; }
   .tab-btn.active svg{ opacity:1; }
@@ -261,7 +261,7 @@
     .showcase-card{ width:calc(100% - 32px); }
     .sc-panel{ grid-template-columns:1fr; }
     .sc-visual{ margin:0; min-height:180px; order:-1; border-radius:16px 16px 0 0; }
-    .tab-btn{ width:44px; height:44px; border-radius:12px; }
+    .tab-btn{ padding:12px; border-radius:12px; }
   }
 </style>
 </head>
