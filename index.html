@@ -30,9 +30,9 @@
     --mesh-purple: rgba(155,93,229,0.34);
     --mesh-teal: rgba(18,166,125,0.34);
 
-    --hn:#3C90FF; --hn-strong:#167EB4; --hn-soft:#EDF5FF;
-    --sd:#9B5DE5; --sd-strong:#7C3AED; --sd-soft:#F4EDFD;
-    --tr:#12A67D; --tr-strong:#0C7F60; --tr-soft:#E6F7F1;
+    --hn:#3C90FF; --hn-strong:#167EB4; --hn-soft:#EDF5FF; --hn-vivid:#6BB1FF;
+    --sd:#9B5DE5; --sd-strong:#7C3AED; --sd-soft:#F4EDFD; --sd-vivid:#B89FFA;
+    --tr:#12A67D; --tr-strong:#0C7F60; --tr-soft:#E6F7F1; --tr-vivid:#5DDFD7;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -156,20 +156,30 @@
   }
   .showcase-tabs{ position:relative; z-index:2; display:flex; align-items:center; gap:12px; margin-bottom:0; flex:none; transition:opacity 120ms linear; }
   .tab-btn{
-    width:52px; height:52px; border-radius:14px; background:rgba(255,255,255,0.75); backdrop-filter:blur(6px);
+    width:52px; height:52px; border-radius:16px; background:#fff;
     border:1px solid var(--line); display:flex; align-items:center; justify-content:center; cursor:pointer;
-    color:var(--ink-soft); position:relative; padding:0; transition:border-color 200ms ease, color 200ms ease, box-shadow 200ms ease, background 200ms ease;
+    color:var(--ink); position:relative; padding:0; overflow:visible;
   }
-  .tab-btn.active{ background:#fff; color:var(--ink); }
-  .tab-btn.active::after{
-    content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%);
-    width:26px; height:20px; background:#fff;
-    clip-path:polygon(8% 0, 92% 0, 58% 82%, 50% 100%, 42% 82%);
+  .tab-btn svg{ position:relative; z-index:3; opacity:0.4; transition:opacity 220ms ease; }
+  .tab-btn.active svg{ opacity:1; }
+  .tab-indicator{
+    position:absolute; z-index:2; inset:15%; border-radius:50%;
+    opacity:0; transform:scale(0.8); transition:opacity 220ms ease, transform 220ms ease;
   }
-  .tab-btn[data-target="handynaija"].active{ border-color:var(--hn); box-shadow:0 0 0 3px rgba(60,144,255,0.18); }
-  .tab-btn[data-target="suede"].active{ border-color:var(--sd); box-shadow:0 0 0 3px rgba(155,93,229,0.18); }
-  .tab-btn[data-target="terrava"].active{ border-color:var(--tr); box-shadow:0 0 0 3px rgba(18,166,125,0.18); }
-  .showcase-card-zone{ position:relative; z-index:1; width:100%; display:flex; justify-content:center; padding-top:20px; }
+  .tab-btn.active .tab-indicator{ opacity:1; transform:scale(1); }
+  .tab-btn[data-target="handynaija"] .tab-indicator{ background:var(--hn-vivid); }
+  .tab-btn[data-target="suede"] .tab-indicator{ background:var(--sd-vivid); }
+  .tab-btn[data-target="terrava"] .tab-indicator{ background:var(--tr-vivid); }
+  .tab-goo{
+    position:absolute; left:0; top:0; width:100%; height:calc(100% + 26px);
+    z-index:1; pointer-events:none; opacity:0; transition:opacity 260ms ease;
+    filter:url(#tab-goo);
+  }
+  .tab-btn.active .tab-goo{ opacity:1; }
+  .goo-blob{ position:absolute; background:#fff; }
+  .goo-blob.goo-circle{ inset:0; border-radius:16px; }
+  .goo-blob.goo-stem{ left:50%; top:100%; transform:translateX(-50%); width:18px; height:26px; border-radius:9px; }
+  .showcase-card-zone{ position:relative; z-index:1; width:100%; display:flex; justify-content:center; padding-top:14px; }
   .showcase-card{
     position:relative;
     background:var(--paper); border-radius:20px; overflow:hidden;
@@ -188,14 +198,14 @@
   .sc-visual{ margin:14px 14px 14px 0; border-radius:16px; position:relative; overflow:hidden; }
   .sc-mock{ position:absolute; inset:0; }
 
-  #panel-handynaija .sc-eyebrow-icon{ background:var(--hn-soft); color:var(--hn); }
+  #panel-handynaija .sc-eyebrow-icon{ background:var(--hn-vivid); color:var(--ink); }
   #panel-handynaija .sc-link{ color:var(--hn-strong); }
   #panel-handynaija .sc-visual{ background:var(--hn-soft); }
-  #panel-suede .sc-eyebrow-icon{ background:var(--sd-soft); color:var(--sd); }
+  #panel-suede .sc-eyebrow-icon{ background:var(--sd-vivid); color:var(--ink); }
   #panel-suede .sc-link{ color:var(--sd-strong); }
   #panel-suede .sc-visual{ background:var(--sd-soft); }
   #panel-suede .sc-pill{ color:var(--sd-strong); background:var(--sd-soft); }
-  #panel-terrava .sc-eyebrow-icon{ background:var(--tr-soft); color:var(--tr); }
+  #panel-terrava .sc-eyebrow-icon{ background:var(--tr-vivid); color:var(--ink); }
   #panel-terrava .sc-link{ color:var(--tr-strong); }
   #panel-terrava .sc-visual{ background:var(--tr-soft); }
 
@@ -258,6 +268,15 @@
 </style>
 </head>
 <body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="tab-goo" x="-60%" y="-30%" width="220%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" result="goo"/>
+    </filter>
+  </defs>
+</svg>
 
 <div class="strip">
   <div class="wrap strip-inner">
@@ -329,12 +348,18 @@
 
       <div class="showcase-tabs" id="showcaseTabs">
         <button class="tab-btn active" data-target="handynaija" aria-label="HandyNaija">
+          <span class="tab-goo" aria-hidden="true"><span class="goo-blob goo-circle"></span><span class="goo-blob goo-stem"></span></span>
+          <span class="tab-indicator" aria-hidden="true"></span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 11L12 4l8 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9a1 1 0 001 1h3v-5h4v5h3a1 1 0 001-1v-9" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
         </button>
         <button class="tab-btn" data-target="suede" aria-label="SUEDE">
+          <span class="tab-goo" aria-hidden="true"><span class="goo-blob goo-circle"></span><span class="goo-blob goo-stem"></span></span>
+          <span class="tab-indicator" aria-hidden="true"></span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5.3a2 2 0 10-2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 7.3v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 9.3L4 15a1.15 1.15 0 00.6 2.1h14.8a1.15 1.15 0 00.6-2.1l-8-5.7z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
         </button>
         <button class="tab-btn" data-target="terrava" aria-label="Terrava">
+          <span class="tab-goo" aria-hidden="true"><span class="goo-blob goo-circle"></span><span class="goo-blob goo-stem"></span></span>
+          <span class="tab-indicator" aria-hidden="true"></span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-7.58 7-12A7 7 0 105 9c0 4.42 7 12 7 12z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg>
         </button>
       </div>
