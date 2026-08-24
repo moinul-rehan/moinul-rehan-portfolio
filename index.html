@@ -118,7 +118,7 @@
   .section-label{ padding-block:8px 0; }
 
   /* PROJECT SHOWCASE — sticky scroll-driven gradient card, matching the reference's tab-switcher + expand-on-scroll pattern */
-  .showcase-wrap{ position:relative; height:calc(100vh + 360px); }
+  .showcase-wrap{ position:relative; height:calc(100vh + 320px); }
   .showcase-stage{
     position:sticky; top:0; height:100vh; display:flex; align-items:center; justify-content:center;
     overflow:hidden;
@@ -129,7 +129,7 @@
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     width:min(1000px, calc(100% - 64px)); height:620px;
     border-radius:32px;
-    transition:border-radius 120ms linear;
+    transition:width 620ms cubic-bezier(.4,0,.2,1), height 620ms cubic-bezier(.4,0,.2,1), border-radius 620ms cubic-bezier(.4,0,.2,1);
   }
   .mesh-layer{ position:absolute; inset:-15%; z-index:0; filter:blur(60px); opacity:0; transition:opacity 700ms ease; }
   .mesh-layer.active{ opacity:1; }
@@ -500,38 +500,48 @@
 
   function isMobile(){ return window.innerWidth <= BREAKPOINT; }
 
-  // The gradient card expands to fill the page (equal margin on every side) on a light
-  // scroll — the white project card underneath never resizes, it just stays centered.
+  // The gradient card expands to fill the page (equal margin on every side) the moment
+  // scroll crosses a small threshold — a CSS transition animates it automatically, so
+  // the user doesn't have to keep scrolling to "manually" zoom it in. The white project
+  // card underneath never resizes, it just stays centered.
   var compactW = 1000, compactH = 620;
   var margin = 28;
   var UNIT_PX = 100;
-  var EXPAND_UNITS = 0.6;
-  var totalUnits = EXPAND_UNITS + stepCount;
+  var EXPAND_THRESHOLD = 20;
+  var isExpanded = false;
 
-  // Desktop/tablet: scroll-jack — a light scroll expands the gradient card, then
-  // further scrolling through the pinned section steps through projects.
+  function applyExpandState(expand){
+    var stageW = stage.clientWidth, stageH = stage.clientHeight;
+    var fullW = stageW - margin * 2;
+    var fullH = stageH - margin * 2;
+    if (expand) {
+      gradientCard.style.width = fullW + 'px';
+      gradientCard.style.height = fullH + 'px';
+      gradientCard.style.borderRadius = '20px';
+    } else {
+      gradientCard.style.width = Math.min(compactW, fullW) + 'px';
+      gradientCard.style.height = Math.min(compactH, fullH) + 'px';
+      gradientCard.style.borderRadius = '32px';
+    }
+  }
+
+  // Desktop/tablet: scroll-jack — crossing the threshold triggers the auto-expand
+  // animation once, then further scrolling through the pinned section steps through projects.
   function updateScroll(){
     if (isMobile()) return;
     var rect = wrap.getBoundingClientRect();
     var vh = window.innerHeight;
     var totalScrollable = rect.height - vh;
     var scrolled = Math.min(Math.max(-rect.top, 0), totalScrollable > 0 ? totalScrollable : 0);
-    var unit = UNIT_PX;
-    var expandDistance = EXPAND_UNITS * unit;
 
-    var stageW = stage.clientWidth, stageH = stage.clientHeight;
-    var fullW = stageW - margin * 2;
-    var fullH = stageH - margin * 2;
-    var startW = Math.min(compactW, fullW);
-    var startH = Math.min(compactH, fullH);
+    var shouldExpand = scrolled > EXPAND_THRESHOLD;
+    if (shouldExpand !== isExpanded) {
+      isExpanded = shouldExpand;
+      applyExpandState(isExpanded);
+    }
 
-    var expandP = expandDistance > 0 ? Math.min(1, scrolled / expandDistance) : 1;
-    gradientCard.style.width = (startW + (fullW - startW) * expandP) + 'px';
-    gradientCard.style.height = (startH + (fullH - startH) * expandP) + 'px';
-    gradientCard.style.borderRadius = (32 - 12 * expandP) + 'px';
-
-    var remaining = Math.max(0, scrolled - expandDistance);
-    var idx = unit > 0 ? Math.min(stepCount - 1, Math.floor(remaining / unit)) : 0;
+    var remaining = Math.max(0, scrolled - EXPAND_THRESHOLD);
+    var idx = Math.min(stepCount - 1, Math.floor(remaining / UNIT_PX));
     goToIndex(idx);
   }
 
