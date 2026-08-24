@@ -618,7 +618,10 @@
   var deckCards = document.getElementById('deckCards');
   if (deckCards) {
     var cards = deckCards.querySelectorAll('.deck-card');
+    var activeCard = cards[0];
     function activateCard(card){
+      if (card === activeCard) return;
+      activeCard = card;
       cards.forEach(function(c){
         var isActive = c === card;
         c.classList.toggle('active', isActive);
@@ -630,15 +633,21 @@
       card.addEventListener('focus', function(){ activateCard(card); });
     });
 
-    // Hit-testing is based on a fixed equal-width grid over the container, not on the
-    // cards' own (animating) widths — otherwise a growing card shifts the layout under
-    // a stationary cursor, re-triggering hover on a neighbor and causing a flicker loop.
+    // Hit-test against each card's real live rect (driven only by actual mouse
+    // movement, never by animation frames) — NOT a fixed equal-width grid. The cards
+    // are visually unequal once one is expanded (400px vs 180px), so a fixed grid
+    // drifts out of sync with what's really under the cursor near boundaries, which
+    // kept re-triggering the active card mid-transition and restarting its reveal.
     deckCards.addEventListener('mousemove', function(e){
-      var rect = deckCards.getBoundingClientRect();
-      var x = e.clientX - rect.left;
-      var idx = Math.floor((x / rect.width) * cards.length);
-      idx = Math.max(0, Math.min(cards.length - 1, idx));
-      activateCard(cards[idx]);
+      var x = e.clientX;
+      var closest = null, closestDist = Infinity;
+      cards.forEach(function(card){
+        var r = card.getBoundingClientRect();
+        if (x >= r.left && x < r.right) { closest = card; closestDist = 0; return; }
+        var d = x < r.left ? r.left - x : x - r.right;
+        if (d < closestDist) { closestDist = d; closest = card; }
+      });
+      if (closest) activateCard(closest);
     });
     deckCards.addEventListener('mouseleave', function(){
       activateCard(cards[0]);
