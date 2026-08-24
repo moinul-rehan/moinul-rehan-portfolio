@@ -182,12 +182,12 @@
   .showcase-card-zone{ position:relative; z-index:1; width:100%; display:flex; justify-content:center; padding-top:14px; }
   .showcase-card{
     position:relative; overflow:hidden;
-    width:min(920px, calc(100% - 48px)); height:min(520px, calc(100% - 24px));
+    width:min(920px, calc(100% - 48px));
     background:var(--paper); border-radius:20px;
     box-shadow:0 30px 60px -20px rgba(7,26,49,0.24);
   }
-  .sc-track{ display:flex; width:300%; height:100%; transition:transform 420ms cubic-bezier(.4,0,.2,1); }
-  .sc-panel{ flex:0 0 calc(100% / 3); width:calc(100% / 3); height:100%; display:grid; grid-template-columns:1fr 1fr; }
+  .sc-track{ display:flex; width:300%; align-items:stretch; transition:transform 420ms cubic-bezier(.4,0,.2,1); }
+  .sc-panel{ flex:0 0 calc(100% / 3); width:calc(100% / 3); display:grid; grid-template-columns:1fr 1fr; }
   .sc-text{ padding:clamp(28px,4vw,48px); display:flex; flex-direction:column; justify-content:center; }
   .sc-eyebrow{ display:flex; align-items:center; gap:9px; font-size:14px; font-weight:600; color:var(--ink); margin-bottom:16px; }
   .sc-eyebrow-icon{ width:24px; height:24px; border-radius:7px; display:flex; align-items:center; justify-content:center; flex:none; }
@@ -257,8 +257,8 @@
     .stat-div{ display:none; }
     .showcase-wrap{ height:auto; }
     .showcase-stage{ position:relative; height:auto; padding-block:32px 16px; }
-    .gradient-card{ width:100% !important; height:560px !important; border-radius:24px !important; }
-    .showcase-card{ width:calc(100% - 32px); height:480px; }
+    .gradient-card{ width:100% !important; height:auto !important; border-radius:24px !important; padding-block:20px; }
+    .showcase-card{ width:calc(100% - 32px); }
     .sc-panel{ grid-template-columns:1fr; }
     .sc-visual{ margin:0; min-height:180px; order:-1; border-radius:16px 16px 0 0; }
     .tab-btn{ width:44px; height:44px; border-radius:12px; }
