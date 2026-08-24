@@ -257,12 +257,12 @@
   .deck-body{ position:relative; flex:1; min-height:0; }
   .deck-resting-desc, .deck-active-body{
     position:absolute; left:0; right:0; top:0;
-    transition:opacity 380ms ease, transform 380ms ease;
+    transition:opacity 320ms ease, filter 320ms ease;
   }
-  .deck-resting-desc{ font-size:14px; line-height:1.5; color:var(--ink-soft); opacity:1; transform:translateY(0); }
-  .deck-active-body{ display:flex; flex-direction:column; gap:16px; opacity:0; transform:translateY(10px); pointer-events:none; }
-  .deck-card.active .deck-resting-desc{ opacity:0; transform:translateY(-10px); pointer-events:none; }
-  .deck-card.active .deck-active-body{ opacity:1; transform:translateY(0); pointer-events:auto; }
+  .deck-resting-desc{ font-size:14px; line-height:1.5; color:var(--ink-soft); opacity:1; filter:blur(0); }
+  .deck-active-body{ display:flex; flex-direction:column; gap:16px; opacity:0; filter:blur(6px); pointer-events:none; }
+  .deck-card.active .deck-resting-desc{ opacity:0; filter:blur(6px); pointer-events:none; }
+  .deck-card.active .deck-active-body{ opacity:1; filter:blur(0); pointer-events:auto; transition-delay:160ms; }
   .deck-active-desc{ font-size:14.5px; line-height:1.55; color:var(--ink-soft); }
   .deck-steps{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:11px; }
   .deck-steps li{ display:flex; align-items:center; gap:10px; font-size:13.5px; color:var(--ink); }
@@ -278,7 +278,7 @@
     .deck-card .deck-bg{ opacity:1; }
     .deck-body{ position:static; }
     .deck-card .deck-resting-desc{ display:none; }
-    .deck-card .deck-active-body{ position:static; display:flex; opacity:1; transform:none; pointer-events:auto; }
+    .deck-card .deck-active-body{ position:static; display:flex; opacity:1; filter:none; pointer-events:auto; }
   }
 
   .testi-section{ background:var(--paper-alt); padding-block:clamp(56px,8vw,104px); }
