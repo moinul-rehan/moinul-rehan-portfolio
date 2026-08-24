@@ -33,6 +33,7 @@
     --hn:#3C90FF; --hn-strong:#167EB4; --hn-soft:#EDF5FF; --hn-vivid:#6BB1FF;
     --sd:#9B5DE5; --sd-strong:#7C3AED; --sd-soft:#F4EDFD; --sd-vivid:#B89FFA;
     --tr:#12A67D; --tr-strong:#0C7F60; --tr-soft:#E6F7F1; --tr-vivid:#5DDFD7;
+    --p4:#D98A2B; --p4-soft:#FBF1E3;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -223,6 +224,52 @@
   /* Terrava mock — route path */
   .mock-dot{ position:absolute; width:9px; height:9px; border-radius:50%; background:var(--tr); box-shadow:0 0 0 4px rgba(18,166,125,0.18); }
   .mock-stat{ position:absolute; background:#fff; border-radius:10px; box-shadow:0 6px 14px -6px rgba(7,26,49,0.18); padding:8px 12px; font-size:12px; font-weight:700; color:var(--ink); }
+
+  /* HOW I WORK — hover-expanding card deck, matching the reference's timeline-feature-deck pattern */
+  .process-section{ padding-block:clamp(56px,8vw,104px); }
+  .process-head{ max-width:600px; margin-bottom:clamp(32px,5vw,48px); }
+  .process-head h2{ font-weight:700; font-size:clamp(26px,2.8vw,32px); letter-spacing:-0.015em; margin-top:8px; }
+  .deck-cards{ display:flex; align-items:stretch; gap:20px; width:100%; overflow-x:auto; padding-bottom:4px; }
+  .deck-card{
+    position:relative; flex:0 0 180px; width:180px; overflow:hidden;
+    background:var(--paper); border-radius:20px; border:1px solid var(--line);
+    transition:flex-basis 500ms cubic-bezier(.4,0,.2,1), width 500ms cubic-bezier(.4,0,.2,1), box-shadow 500ms ease, border-color 500ms ease;
+    cursor:pointer;
+  }
+  .deck-card.active{ flex:0 0 400px; width:400px; border-color:transparent; box-shadow:0 20px 48px -12px rgba(11,53,88,0.16); }
+  .deck-card::before{
+    content:attr(data-step); position:absolute; right:-10px; bottom:-40px; z-index:0;
+    font-size:180px; font-weight:800; line-height:1; color:var(--ink); opacity:0.04; pointer-events:none;
+  }
+  .deck-bg{ position:absolute; inset:0; z-index:0; opacity:0; transition:opacity 500ms ease; }
+  .deck-card.active .deck-bg{ opacity:1; }
+  .deck-card[data-theme="p1"] .deck-bg{ background:radial-gradient(120% 100% at 100% 0%, var(--hn-soft), var(--paper) 65%); }
+  .deck-card[data-theme="p2"] .deck-bg{ background:radial-gradient(120% 100% at 100% 0%, var(--sd-soft), var(--paper) 65%); }
+  .deck-card[data-theme="p3"] .deck-bg{ background:radial-gradient(120% 100% at 100% 0%, var(--tr-soft), var(--paper) 65%); }
+  .deck-card[data-theme="p4"] .deck-bg{ background:radial-gradient(120% 100% at 100% 0%, var(--p4-soft), var(--paper) 65%); }
+  .deck-content{ position:relative; z-index:1; padding:26px; display:flex; flex-direction:column; height:100%; }
+  .deck-step-icon{ width:auto; height:auto; padding:7px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; flex:none; margin-bottom:16px; }
+  .deck-card[data-theme="p1"] .deck-step-icon{ background:var(--hn-vivid); color:var(--ink); }
+  .deck-card[data-theme="p2"] .deck-step-icon{ background:var(--sd-vivid); color:var(--ink); }
+  .deck-card[data-theme="p3"] .deck-step-icon{ background:var(--tr-vivid); color:var(--ink); }
+  .deck-card[data-theme="p4"] .deck-step-icon{ background:var(--p4); color:#fff; }
+  .deck-heading{ font-weight:700; font-size:20px; letter-spacing:-0.01em; margin-bottom:10px; white-space:nowrap; }
+  .deck-resting-desc{ font-size:14px; line-height:1.5; color:var(--ink-soft); }
+  .deck-active-body{ display:none; flex-direction:column; gap:16px; }
+  .deck-card.active .deck-resting-desc{ display:none; }
+  .deck-card.active .deck-active-body{ display:flex; }
+  .deck-active-desc{ font-size:14.5px; line-height:1.55; color:var(--ink-soft); }
+  .deck-steps{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px; }
+  .deck-steps li{ display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--ink); }
+  .deck-steps li::before{ content:''; width:6px; height:6px; border-radius:50%; background:currentColor; opacity:0.35; flex:none; }
+  @media (max-width:860px){
+    .deck-cards{ flex-direction:column; overflow-x:visible; }
+    .deck-card{ flex:0 0 auto; width:100%; }
+    .deck-card::before{ display:none; }
+    .deck-card .deck-bg{ opacity:1; }
+    .deck-card .deck-resting-desc{ display:none; }
+    .deck-card .deck-active-body{ display:flex; }
+  }
 
   .testi-section{ background:var(--paper-alt); padding-block:clamp(56px,8vw,104px); }
   .testi-head{ max-width:600px; margin-bottom:clamp(32px,5vw,48px); }
@@ -469,6 +516,105 @@
     </div>
   </div>
 </div>
+
+<div class="process-section wrap">
+  <div class="process-head">
+    <div class="eyebrow">How I Work</div>
+    <h2>From a messy brief to something users trust.</h2>
+  </div>
+  <div class="deck-cards" id="deckCards" role="tablist" aria-label="Design process steps">
+
+    <div class="deck-card active" data-theme="p1" data-step="1" role="tab" aria-selected="true" tabindex="0">
+      <div class="deck-bg"></div>
+      <div class="deck-content">
+        <span class="deck-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="M20 20L15.5 15.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        <div class="deck-heading">Discover</div>
+        <p class="deck-resting-desc">Understand before designing anything.</p>
+        <div class="deck-active-body">
+          <p class="deck-active-desc">Every project starts with questions, not screens. I sit with stakeholders, map the real workflow, and figure out what's actually broken before opening Figma.</p>
+          <ul class="deck-steps">
+            <li>Stakeholder interviews</li>
+            <li>Mapping the current workflow</li>
+            <li>Defining what success looks like</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-card" data-theme="p2" data-step="2" role="tab" aria-selected="false" tabindex="0">
+      <div class="deck-bg"></div>
+      <div class="deck-content">
+        <span class="deck-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 20l1-4.5L15.5 5 19 8.5 8.5 19 4 20z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <div class="deck-heading">Design</div>
+        <p class="deck-resting-desc">Explore wide, then commit.</p>
+        <div class="deck-active-body">
+          <p class="deck-active-desc">Low-fidelity flows first, then high-fidelity screens once the structure is agreed. Nothing goes to prototype until the layout has earned it.</p>
+          <ul class="deck-steps">
+            <li>Wireframes and flows</li>
+            <li>Visual design system</li>
+            <li>Internal review loops</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-card" data-theme="p3" data-step="3" role="tab" aria-selected="false" tabindex="0">
+      <div class="deck-bg"></div>
+      <div class="deck-content">
+        <span class="deck-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M10 9l5 3.2-5 3.2V9z" fill="currentColor"/></svg></span>
+        <div class="deck-heading">Prototype</div>
+        <p class="deck-resting-desc">Make it feel real before it's built.</p>
+        <div class="deck-active-body">
+          <p class="deck-active-desc">Interactive prototypes so stakeholders and users react to something real, not a static mockup. It's cheaper to change a prototype than a codebase.</p>
+          <ul class="deck-steps">
+            <li>Clickable Figma prototypes</li>
+            <li>Usability walkthroughs</li>
+            <li>Edge cases caught early</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-card" data-theme="p4" data-step="4" role="tab" aria-selected="false" tabindex="0">
+      <div class="deck-bg"></div>
+      <div class="deck-content">
+        <span class="deck-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="deck-heading">Deliver</div>
+        <p class="deck-resting-desc">Handoff that doesn't lose the details.</p>
+        <div class="deck-active-body">
+          <p class="deck-active-desc">Specs, redlines, and a design system devs can actually build from — plus staying involved through implementation so nothing gets lost in translation.</p>
+          <ul class="deck-steps">
+            <li>Dev handoff docs</li>
+            <li>Design QA on build</li>
+            <li>Post-launch iteration</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  var deckCards = document.getElementById('deckCards');
+  if (deckCards) {
+    var cards = deckCards.querySelectorAll('.deck-card');
+    function activateCard(card){
+      cards.forEach(function(c){
+        var isActive = c === card;
+        c.classList.toggle('active', isActive);
+        c.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+    }
+    cards.forEach(function(card){
+      card.addEventListener('mouseenter', function(){ activateCard(card); });
+      card.addEventListener('click', function(){ activateCard(card); });
+      card.addEventListener('focus', function(){ activateCard(card); });
+    });
+  }
+})();
+</script>
 
 <script>
 (function(){
