@@ -129,7 +129,6 @@
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     width:min(1000px, calc(100% - 64px)); height:620px;
     border-radius:32px;
-    transition:border-radius 120ms linear;
   }
   .mesh-layer{ position:absolute; inset:-15%; z-index:0; filter:blur(60px); opacity:0; transition:opacity 700ms ease; }
   .mesh-layer.active{ opacity:1; }
@@ -181,13 +180,13 @@
   .goo-blob.goo-stem{ left:50%; top:100%; transform:translateX(-50%); width:18px; height:26px; border-radius:9px; }
   .showcase-card-zone{ position:relative; z-index:1; width:100%; display:flex; justify-content:center; padding-top:14px; }
   .showcase-card{
-    position:relative;
-    background:var(--paper); border-radius:20px; overflow:hidden;
+    position:relative; overflow:hidden;
+    width:min(640px, calc(100% - 48px)); height:min(420px, calc(100% - 24px));
+    background:var(--paper); border-radius:20px;
     box-shadow:0 30px 60px -20px rgba(7,26,49,0.24);
-    transition:border-radius 120ms linear;
   }
-  .sc-panel{ position:absolute; inset:0; display:grid; grid-template-columns:1fr 1fr; opacity:0; pointer-events:none; transition:opacity 500ms ease; }
-  .sc-panel.active{ opacity:1; pointer-events:auto; }
+  .sc-track{ display:flex; width:300%; height:100%; transition:transform 420ms cubic-bezier(.4,0,.2,1); }
+  .sc-panel{ flex:0 0 calc(100% / 3); width:calc(100% / 3); height:100%; display:grid; grid-template-columns:1fr 1fr; }
   .sc-text{ padding:clamp(28px,4vw,48px); display:flex; flex-direction:column; justify-content:center; }
   .sc-eyebrow{ display:flex; align-items:center; gap:9px; font-size:14px; font-weight:600; color:var(--ink); margin-bottom:16px; }
   .sc-eyebrow-icon{ width:24px; height:24px; border-radius:7px; display:flex; align-items:center; justify-content:center; flex:none; }
@@ -257,12 +256,10 @@
     .stat-div{ display:none; }
     .showcase-wrap{ height:auto; }
     .showcase-stage{ position:relative; height:auto; padding-block:32px 16px; }
-    .gradient-card{ width:100% !important; height:auto !important; border-radius:24px !important; padding-top:20px; }
-    .showcase-card-zone{ display:block; width:calc(100% - 32px); margin:18px 16px 16px; }
-    .showcase-card{ width:100% !important; height:auto !important; }
-    .sc-panel{ position:relative; inset:auto; opacity:1; display:none; pointer-events:auto; }
-    .sc-panel.active{ display:grid; grid-template-columns:1fr; }
-    .sc-visual{ margin:0; min-height:200px; order:-1; border-radius:16px 16px 0 0; }
+    .gradient-card{ width:100%; height:560px; border-radius:24px; }
+    .showcase-card{ width:calc(100% - 32px); height:480px; }
+    .sc-panel{ grid-template-columns:1fr; }
+    .sc-visual{ margin:0; min-height:180px; order:-1; border-radius:16px 16px 0 0; }
     .tab-btn{ width:44px; height:44px; border-radius:12px; }
   }
 </style>
@@ -366,8 +363,9 @@
 
       <div class="showcase-card-zone">
       <div class="showcase-card" id="showcaseCard">
+      <div class="sc-track" id="scTrack">
 
-        <div class="sc-panel active" id="panel-handynaija">
+        <div class="sc-panel" id="panel-handynaija">
           <div class="sc-text">
             <div class="sc-eyebrow">
               <span class="sc-eyebrow-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 11L12 4l8 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9a1 1 0 001 1h3v-5h4v5h3a1 1 0 001-1v-9" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
@@ -466,6 +464,7 @@
 
       </div>
       </div>
+      </div>
     </div>
   </div>
 </div>
@@ -473,81 +472,80 @@
 <script>
 (function(){
   var wrap = document.getElementById('showcaseWrap');
-  var stage = document.getElementById('showcaseStage');
-  var gradientCard = document.getElementById('gradientCard');
-  var card = document.getElementById('showcaseCard');
   var tabsEl = document.getElementById('showcaseTabs');
   var tabs = tabsEl.querySelectorAll('.tab-btn');
-  var panels = document.querySelectorAll('.sc-panel');
+  var track = document.getElementById('scTrack');
   var meshLayers = document.querySelectorAll('.mesh-layer');
   var tabOrder = ['handynaija', 'suede', 'terrava'];
+  var stepCount = tabOrder.length;
+  var BREAKPOINT = 860;
+
+  var currentIndex = 0;
+  var autoplayTimer = null;
 
   function setActive(name){
     tabs.forEach(function(b){ b.classList.toggle('active', b.dataset.target === name); });
-    panels.forEach(function(p){ p.classList.toggle('active', p.id === 'panel-' + name); });
     meshLayers.forEach(function(m){ m.classList.toggle('active', m.dataset.theme === name); });
   }
 
-  tabs.forEach(function(btn){
-    btn.addEventListener('click', function(){ setActive(btn.dataset.target); });
-  });
+  function goToIndex(idx){
+    idx = Math.max(0, Math.min(stepCount - 1, idx));
+    currentIndex = idx;
+    setActive(tabOrder[idx]);
+    track.style.transform = 'translateX(-' + (idx * (100 / stepCount)) + '%)';
+  }
 
-  var compactW = 1000, compactH = 620;
-  var margin = 24;
-  var cardScale = 0.6;
+  function isMobile(){ return window.innerWidth <= BREAKPOINT; }
 
-  function update(){
-    if (window.innerWidth <= 860) { return; }
+  // Desktop/tablet: scroll-jack — scrolling through the pinned section steps through projects.
+  function updateScroll(){
+    if (isMobile()) return;
     var rect = wrap.getBoundingClientRect();
     var vh = window.innerHeight;
     var totalScrollable = rect.height - vh;
     var scrolled = Math.min(Math.max(-rect.top, 0), totalScrollable > 0 ? totalScrollable : 0);
-
-    var steps = tabOrder.length - 1;
-    var phaseUnits = 1 + steps;
-    var unit = totalScrollable > 0 ? totalScrollable / phaseUnits : 0;
-
-    var stageW = stage.clientWidth, stageH = stage.clientHeight;
-    var startW = Math.min(compactW, stageW - margin * 2);
-    var startH = Math.min(compactH, stageH - margin * 2);
-    var fullW = stageW - margin * 2;
-    var fullH = stageH - margin * 2;
-
-    var expandP = unit > 0 ? Math.min(1, scrolled / unit) : 1;
-    var w = startW + (fullW - startW) * expandP;
-    var h = startH + (fullH - startH) * expandP;
-
-    gradientCard.style.width = w + 'px';
-    gradientCard.style.height = h + 'px';
-    gradientCard.style.borderRadius = (32 - 14 * expandP) + 'px';
-
-    var tabsH = tabsEl.offsetHeight;
-    var availW = w - margin * 2;
-    var availH = h - tabsH - margin * 2;
-    card.style.width = Math.max(280, availW * cardScale) + 'px';
-    card.style.height = Math.max(200, availH * cardScale) + 'px';
-    card.style.borderRadius = (20 - 4 * expandP) + 'px';
-
-    var idx = 0;
-    if (steps > 0 && unit > 0 && scrolled > unit){
-      var stepProgress = (scrolled - unit) / unit;
-      idx = Math.min(steps, Math.round(stepProgress));
-    }
-    setActive(tabOrder[idx]);
-
-    var overallP = totalScrollable > 0 ? scrolled / totalScrollable : 0;
-    tabsEl.style.opacity = overallP > 0.94 ? Math.max(0, 1 - (overallP - 0.94) / 0.06) : 1;
+    var unit = totalScrollable > 0 ? totalScrollable / stepCount : 0;
+    var idx = unit > 0 ? Math.min(stepCount - 1, Math.floor(scrolled / unit)) : 0;
+    goToIndex(idx);
   }
+
+  // Mobile: no scroll-jacking — auto-advance on a timer instead.
+  function startAutoplay(){
+    stopAutoplay();
+    autoplayTimer = setInterval(function(){
+      goToIndex((currentIndex + 1) % stepCount);
+    }, 6000);
+  }
+  function stopAutoplay(){
+    if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; }
+  }
+
+  function applyMode(){
+    if (isMobile()) {
+      updateScroll();
+      startAutoplay();
+    } else {
+      stopAutoplay();
+      updateScroll();
+    }
+  }
+
+  tabs.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      goToIndex(tabOrder.indexOf(btn.dataset.target));
+      if (isMobile()) startAutoplay();
+    });
+  });
 
   var ticking = false;
   window.addEventListener('scroll', function(){
     if (!ticking) {
-      requestAnimationFrame(function(){ update(); ticking = false; });
+      requestAnimationFrame(function(){ updateScroll(); ticking = false; });
       ticking = true;
     }
   }, { passive: true });
-  window.addEventListener('resize', update);
-  update();
+  window.addEventListener('resize', applyMode);
+  applyMode();
 })();
 </script>
 
