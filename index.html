@@ -764,20 +764,22 @@
 
   // Desktop/tablet: scroll-jack — one wheel notch = one step. Step 0 is compact with
   // the first project selected; step 1 expands to full page (still first project);
-  // steps 2..stepCount move to the next project each. Reaching either end releases
+  // steps 2..stepCount move to the next project each; the final step (stepCount+1)
+  // collapses back to compact after the last project. Reaching either end releases
   // the wheel lock so the page scrolls normally past the section.
   var virtualStep = 0;
-  var VSTEP_MAX = stepCount; // 1 (expand) + (stepCount - 1) project moves
+  var VSTEP_MAX = stepCount + 1; // + 1 final collapse-back-to-compact step
   var wheelLocked = false;
   var WHEEL_LOCK_MS = 650;
 
   function applyVirtualStep(){
-    var expand = virtualStep >= 1;
+    var expand = virtualStep >= 1 && virtualStep <= stepCount;
     if (expand !== isExpanded) {
       isExpanded = expand;
       applyExpandState(expand);
     }
-    goToIndex(expand ? virtualStep - 1 : 0);
+    var projectIdx = virtualStep <= 0 ? 0 : Math.min(stepCount, virtualStep) - 1;
+    goToIndex(projectIdx);
   }
 
   function isStageEngaged(){
