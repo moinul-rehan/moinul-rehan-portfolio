@@ -310,13 +310,14 @@
   .testi-eyebrow{ color:rgba(255,255,255,0.75); }
   .testi-heading{ font-weight:700; font-size:clamp(30px,4vw,44px); line-height:1.15; letter-spacing:-0.015em; color:#fff; margin-top:10px; }
   .testi-carousel{ position:relative; z-index:1; display:flex; align-items:stretch; justify-content:center; gap:10px; max-width:1160px; margin-inline:auto; padding-inline:16px; }
-  .testi-peek{ border-radius:20px; overflow:hidden; align-self:center; border:12px solid #fff; box-shadow:0 16px 32px -16px rgba(7,26,49,0.32); cursor:pointer; }
+  .testi-peek{ position:relative; z-index:1; border-radius:20px; overflow:hidden; align-self:center; border:12px solid #fff; box-shadow:0 16px 32px -16px rgba(7,26,49,0.32); cursor:pointer; }
   .testi-peek img{ width:100%; height:100%; object-fit:cover; display:block; }
   .testi-peek.far{ flex:0 0 74px; width:74px; height:205px; }
   .testi-peek.near{ flex:0 0 105px; width:105px; height:344px; }
-  .testi-connector{ flex:0 0 0; width:0; align-self:center; position:relative; z-index:1; pointer-events:none; }
+  .testi-connector{ flex:0 0 0; width:0; align-self:center; position:relative; z-index:0; pointer-events:none; }
   .testi-connector svg{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:22px; height:38px; display:block; }
   .testi-card{
+    position:relative; z-index:1;
     flex:0 0 auto; width:min(762px, 100%); height:513px; background:#fff; border-radius:24px; overflow:hidden;
     border:12px solid #fff; box-shadow:0 30px 60px -20px rgba(7,26,49,0.35);
     display:grid; grid-template-columns:1fr 1fr; align-items:stretch; gap:16px; padding:16px;
