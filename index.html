@@ -330,7 +330,8 @@
   .testi-eyebrow{ color:rgba(255,255,255,0.75); }
   .testi-heading{ font-weight:700; font-size:clamp(30px,4vw,44px); line-height:1.15; letter-spacing:-0.015em; color:#fff; margin-top:10px; }
   .testi-carousel{ position:relative; z-index:1; height:513px; max-width:1160px; margin-inline:auto; padding-inline:16px; }
-  .testi-connector{ position:absolute; top:50%; left:50%; z-index:0; pointer-events:none; transition:transform 550ms cubic-bezier(.4,0,.2,1), opacity 550ms ease; }
+  .testi-connector{ position:absolute; top:50%; left:50%; z-index:0; pointer-events:none; transition:opacity 550ms ease; }
+  .testi-connector.tc-mirror svg{ transform:translate(-50%,-50%) scaleX(-1); }
   .testi-connector svg{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:22px; height:38px; display:block; }
   .testi-card-el{
     position:absolute; top:50%; left:50%; z-index:1;
@@ -938,9 +939,9 @@
   </div>
 
   <div class="testi-carousel" id="testiCarousel">
-    <div class="testi-connector" id="testiConnLeft" aria-hidden="true"><svg viewBox="0 0 20 37.3338" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 1.2422 13.5759 10 13.5759C18.7578 13.5759 20 0 20 0V37.3338C20 37.3338 18.7578 23.7578 10 23.7578C1.2422 23.7578 0 37.3338 0 37.3338V0Z" fill="#fff"/></svg></div>
+    <div class="testi-connector tc-mirror" id="testiConnLeft" aria-hidden="true"><svg viewBox="0 0 20 37.3338" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 1.2422 13.5759 10 13.5759C18.7578 13.5759 20 0 20 0V37.3338C20 37.3338 18.7578 23.7578 10 23.7578C1.2422 23.7578 0 37.3338 0 37.3338V0Z" fill="#fff"/></svg></div>
     <div class="testi-connector" id="testiConnRight" aria-hidden="true"><svg viewBox="0 0 20 37.3338" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 1.2422 13.5759 10 13.5759C18.7578 13.5759 20 0 20 0V37.3338C20 37.3338 18.7578 23.7578 10 23.7578C1.2422 23.7578 0 37.3338 0 37.3338V0Z" fill="#fff"/></svg></div>
-    <div class="testi-connector" id="testiConnFarLeft" aria-hidden="true"><svg viewBox="0 0 16 28" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 0.993759 10.1818 8 10.1818C15.0062 10.1818 16 0 16 0V28C16 28 15.0062 17.8182 8 17.8182C0.993759 17.8182 0 28 0 28V0Z" fill="#fff"/></svg></div>
+    <div class="testi-connector tc-mirror" id="testiConnFarLeft" aria-hidden="true"><svg viewBox="0 0 16 28" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 0.993759 10.1818 8 10.1818C15.0062 10.1818 16 0 16 0V28C16 28 15.0062 17.8182 8 17.8182C0.993759 17.8182 0 28 0 28V0Z" fill="#fff"/></svg></div>
     <div class="testi-connector" id="testiConnFarRight" aria-hidden="true"><svg viewBox="0 0 16 28" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 0.993759 10.1818 8 10.1818C15.0062 10.1818 16 0 16 0V28C16 28 15.0062 17.8182 8 17.8182C0.993759 17.8182 0 28 0 28V0Z" fill="#fff"/></svg></div>
     <div id="testiCards"></div>
   </div>
@@ -1019,9 +1020,50 @@
     return raw > n / 2 ? raw - n : raw;
   }
 
-  function positionConnector(el, x, visible){
-    el.style.transform = 'translateX(' + x + 'px)';
-    el.style.opacity = visible ? '1' : '0';
+  function getRoleEl(roleNum){
+    for (var i = 0; i < cards.length; i++){
+      if (signedRole(i, current) === roleNum) return cards[i];
+    }
+    return null;
+  }
+
+  // Connectors bridge two specific adjacent cards (right card -> left card),
+  // so instead of sitting at a fixed slot position they track the real
+  // midpoint between those cards' facing edges every frame - they move and
+  // settle together with whichever cards are currently in those roles.
+  var connectorPairs = [
+    { el: connLeft, roleRight: 0, roleLeft: -1, minN: 2 },
+    { el: connRight, roleRight: 1, roleLeft: 0, minN: 2 },
+    { el: connFarLeft, roleRight: -1, roleLeft: -2, minN: 5 },
+    { el: connFarRight, roleRight: 2, roleLeft: 1, minN: 4 }
+  ];
+  var liveTrackTimer = null;
+
+  function trackConnectorsFrame(){
+    var carouselRect = cardsWrap.getBoundingClientRect();
+    var centerX = carouselRect.left + carouselRect.width / 2;
+    connectorPairs.forEach(function(pair){
+      if (n < pair.minN) { pair.el.style.opacity = '0'; return; }
+      var rightEl = getRoleEl(pair.roleRight);
+      var leftEl = getRoleEl(pair.roleLeft);
+      if (!rightEl || !leftEl) { pair.el.style.opacity = '0'; return; }
+      var rightRect = rightEl.getBoundingClientRect();
+      var leftRect = leftEl.getBoundingClientRect();
+      var midX = (rightRect.left + leftRect.right) / 2;
+      pair.el.style.transform = 'translateX(' + (midX - centerX) + 'px)';
+      pair.el.style.opacity = '1';
+    });
+  }
+
+  function trackConnectorsLive(){
+    if (liveTrackTimer) clearInterval(liveTrackTimer);
+    var elapsed = 0;
+    liveTrackTimer = setInterval(function(){
+      trackConnectorsFrame();
+      elapsed += 16;
+      if (elapsed >= 950) clearInterval(liveTrackTimer);
+    }, 16);
+    trackConnectorsFrame();
   }
 
   var prevX = {};
@@ -1071,10 +1113,7 @@
     // Roles present depend on n: signedRole() only ever produces -2 once n>=5,
     // so with n=4 the far-left slot is structurally always empty — no card ever
     // sits there, so that connector must stay hidden (nothing to connect to).
-    positionConnector(connLeft, -389, n > 1);
-    positionConnector(connRight, 389, n > 1);
-    positionConnector(connFarLeft, -513, n >= 5);
-    positionConnector(connFarRight, 513, n >= 4);
+    trackConnectorsLive();
     dots.forEach(function(d, i){ d.classList.toggle('active', i === current); });
   }
 
