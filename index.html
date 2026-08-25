@@ -1067,53 +1067,75 @@
   }
 
   var prevX = {};
+  var ENTER_DELAY = 380;
 
   function apply(){
-    cards.forEach(function(el, i){
+    var moves = cards.map(function(el, i){
       var role = signedRole(i, current);
       var isCenter = role === 0;
       el.classList.toggle('is-center', isCenter);
       var r = ROLES[String(Math.max(-2, Math.min(2, role)))];
-      if (!r) { el.style.opacity = '0'; el.style.pointerEvents = 'none'; return; }
-      el.style.pointerEvents = 'auto';
-      el.style.width = r.w + 'px';
-      el.style.height = r.h + 'px';
-
-      // A card recycling from one edge to the other (e.g. leaving the left
-      // side to become the new far-right peek) would otherwise travel the
-      // full width of the carousel in one visible slide. Instead: fade/slide
-      // it out further off the edge it was already exiting toward, then jump
-      // it (no transition) to just off the opposite edge, then fade/slide it
-      // in from there — it never crosses the visible stage.
       var oldX = prevX[i];
-      var bigJump = oldX !== undefined && Math.abs(r.x - oldX) > 700;
+      var bigJump = !!r && oldX !== undefined && Math.abs(r.x - oldX) > 700;
+      return { el: el, role: role, isCenter: isCenter, r: r, oldX: oldX, bigJump: bigJump };
+    });
+
+    // A card recycling from one edge to the other is the "new" card being
+    // added on the far side it's entering toward. It should finish landing
+    // before any other card moves/expands — the rest of the deck shifts
+    // only once that add has happened, as if passing the motion through
+    // the connector to its neighbor.
+    var entering = moves.filter(function(m){ return m.bigJump; });
+    var staggerOthers = entering.some(function(m){ return m.r.x > 0; });
+
+    moves.forEach(function(m){
+      var el = m.el, r = m.r, isCenter = m.isCenter, oldX = m.oldX, bigJump = m.bigJump;
+      if (!r) { el.style.opacity = '0'; el.style.pointerEvents = 'none'; prevX[cards.indexOf(el)] = undefined; return; }
+      el.style.pointerEvents = 'auto';
+
       if (bigJump) {
+        // Fade/slide it out further off the edge it was already exiting
+        // toward, then jump it (no transition) to just off the opposite
+        // edge, then fade/slide it in from there — it never crosses the
+        // visible stage.
         var exitDir = oldX < 0 ? -1 : 1;
+        el.style.width = r.w + 'px';
+        el.style.height = r.h + 'px';
         el.style.zIndex = 0;
         el.style.opacity = '0';
         el.style.transform = 'translate(-50%, -50%) translateX(' + (oldX + exitDir * 160) + 'px)';
-        (function(el, r, isCenter, exitDir){
-          setTimeout(function(){
-            el.style.transition = 'none';
-            el.style.transform = 'translate(-50%, -50%) translateX(' + (r.x - exitDir * 160) + 'px)';
-            el.offsetHeight;
-            el.style.transition = '';
-            el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
-            el.style.opacity = '1';
-            el.style.zIndex = isCenter ? 2 : 1;
-          }, 360);
-        })(el, r, isCenter, exitDir);
+        setTimeout(function(){
+          el.style.transition = 'none';
+          el.style.transform = 'translate(-50%, -50%) translateX(' + (r.x - exitDir * 160) + 'px)';
+          el.offsetHeight;
+          el.style.transition = '';
+          el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
+          el.style.opacity = '1';
+          el.style.zIndex = isCenter ? 2 : 1;
+        }, ENTER_DELAY);
+      } else if (staggerOthers) {
+        setTimeout(function(){
+          el.style.width = r.w + 'px';
+          el.style.height = r.h + 'px';
+          el.style.opacity = '1';
+          el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
+          el.style.zIndex = isCenter ? 2 : 1;
+        }, ENTER_DELAY);
       } else {
+        el.style.width = r.w + 'px';
+        el.style.height = r.h + 'px';
         el.style.opacity = '1';
         el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
         el.style.zIndex = isCenter ? 2 : 1;
       }
-      prevX[i] = r.x;
     });
+    cards.forEach(function(el, i){ prevX[i] = moves[i].r ? moves[i].r.x : undefined; });
+
     // Roles present depend on n: signedRole() only ever produces -2 once n>=5,
     // so with n=4 the far-left slot is structurally always empty — no card ever
     // sits there, so that connector must stay hidden (nothing to connect to).
     trackConnectorsLive();
+    if (staggerOthers) setTimeout(trackConnectorsLive, ENTER_DELAY);
     dots.forEach(function(d, i){ d.classList.toggle('active', i === current); });
   }
 
