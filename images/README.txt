@@ -1,6 +1,9 @@
-Also needed: rehan.jpg — your hero-section portrait/photo, shown right
-below the "Let's Talk"/"Email Me" buttons. Any reasonable landscape or
-portrait photo works; the hero-photo box caps at 760px wide.
+Also needed: rehan.png, rehan-2.jpg, rehan-3.jpg — three hero-section
+photos shown right below the "Let's Talk"/"Email Me" buttons, flipping
+between each other every 3 seconds. rehan.png and rehan-2.jpg are
+already in place; rehan-3.jpg still needs to be added (drop it in here
+with that exact filename, no code changes needed). Portrait orientation
+works best; the hero-photo box is 640px wide, 4:5 aspect ratio.
 
 Testimonial section needs one headshot per person (portrait orientation
 works best, the photo box crops to fill):
