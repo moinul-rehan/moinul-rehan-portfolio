@@ -1079,33 +1079,62 @@
       return { el: el, role: role, isCenter: isCenter, r: r, oldX: oldX, bigJump: bigJump };
     });
 
+    var hasBigJump = moves.some(function(m){ return m.bigJump; });
+
     moves.forEach(function(m){
-      var el = m.el, r = m.r, isCenter = m.isCenter, bigJump = m.bigJump;
+      var el = m.el, r = m.r, isCenter = m.isCenter, role = m.role, bigJump = m.bigJump;
       if (!r) { el.style.opacity = '0'; el.style.pointerEvents = 'none'; return; }
       el.style.pointerEvents = 'auto';
       el.style.opacity = '1';
 
       if (bigJump) {
-        // A card recycling from one edge to the other (leaving the left side
-        // to become the new far-right peek, or vice versa) has no adjacent
-        // slot to slide through — it just appears already in its new spot,
-        // in the same instant every other card starts its one-slot shift, so
-        // it reads as "a new card is here" rather than a distracting slide
-        // across the whole stage.
+        // A card recycling from one edge to the other has no adjacent slot
+        // to slide through, so it jumps straight (invisibly, no transition)
+        // to sit flush against the neighbor it's entering next to. Its move
+        // to the final slot is then deferred to the same shared rAF as every
+        // other card below, so all four genuinely start sliding on the same
+        // frame — one push, all at once.
+        var R = Math.max(-2, Math.min(2, role));
+        var dir = R === 0 ? 1 : R / Math.abs(R);
+        var neighbor = ROLES[String(R - dir)] || ROLES['0'];
+        var flushX = neighbor.x + dir * (neighbor.w / 2 + r.w / 2);
+        el.classList.remove('is-center');
+        el.style.zIndex = 0;
         el.style.transition = 'none';
         el.style.width = r.w + 'px';
         el.style.height = r.h + 'px';
-        el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
-        el.style.zIndex = isCenter ? 2 : 1;
+        el.style.transform = 'translate(-50%, -50%) translateX(' + flushX + 'px)';
         el.offsetHeight;
-        el.style.transition = '';
-      } else {
+      } else if (!hasBigJump) {
         el.style.width = r.w + 'px';
         el.style.height = r.h + 'px';
         el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
         el.style.zIndex = isCenter ? 2 : 1;
       }
     });
+
+    if (hasBigJump) {
+      // Restoring transitions and setting final values in the same tick as
+      // the flush teleport gets collapsed by the browser (no animation) — a
+      // double rAF forces that "flush" frame to actually paint first, then
+      // every card (the recycler included) gets its final transform set
+      // together in one pass, so they all move on the same frame.
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          moves.forEach(function(m){
+            var el = m.el, r = m.r, isCenter = m.isCenter;
+            if (!r) return;
+            el.classList.toggle('is-center', isCenter);
+            el.style.transition = '';
+            el.style.width = r.w + 'px';
+            el.style.height = r.h + 'px';
+            el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
+            el.style.zIndex = isCenter ? 2 : 1;
+          });
+        });
+      });
+    }
+
     cards.forEach(function(el, i){ prevX[i] = moves[i].r ? moves[i].r.x : undefined; });
 
     // Roles present depend on n: signedRole() only ever produces -2 once n>=5,
