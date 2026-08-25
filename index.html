@@ -23,12 +23,12 @@
     --dark-line:#1B2E44;
     --dark-text:#FCFBF8;
     --dark-text-soft:#A9B4BE;
-    --mesh-blue: rgba(60,144,255,0.34);
-    --mesh-cyan: rgba(93,223,215,0.32);
-    --mesh-pink: rgba(240,122,242,0.24);
-    --mesh-sky: rgba(132,193,255,0.34);
-    --mesh-purple: rgba(155,93,229,0.34);
-    --mesh-teal: rgba(18,166,125,0.34);
+    --mesh-blue: rgba(35,120,255,0.72);
+    --mesh-cyan: rgba(50,220,205,0.62);
+    --mesh-pink: rgba(230,80,235,0.62);
+    --mesh-sky: rgba(100,175,255,0.68);
+    --mesh-purple: rgba(140,70,230,0.72);
+    --mesh-teal: rgba(10,175,130,0.62);
 
     --hn:#3C90FF; --hn-strong:#167EB4; --hn-soft:#EDF5FF; --hn-vivid:#6BB1FF;
     --sd:#9B5DE5; --sd-strong:#7C3AED; --sd-soft:#F4EDFD; --sd-vivid:#B89FFA;
@@ -136,24 +136,27 @@
   .mesh-layer.active{ opacity:1; }
   .mesh-layer.theme-handynaija{
     background:
-      radial-gradient(38% 48% at 80% 15%, var(--mesh-blue), transparent 70%),
-      radial-gradient(34% 42% at 92% 68%, var(--mesh-sky), transparent 70%),
-      radial-gradient(30% 38% at 18% 62%, var(--mesh-pink), transparent 70%),
-      radial-gradient(30% 36% at 58% 94%, var(--mesh-cyan), transparent 70%);
+      radial-gradient(60% 70% at 80% 12%, var(--mesh-blue), transparent 88%),
+      radial-gradient(55% 65% at 95% 70%, var(--mesh-sky), transparent 88%),
+      radial-gradient(50% 60% at 15% 65%, var(--mesh-pink), transparent 88%),
+      radial-gradient(50% 58% at 55% 98%, var(--mesh-cyan), transparent 88%),
+      var(--mesh-blue);
   }
   .mesh-layer.theme-suede{
     background:
-      radial-gradient(40% 50% at 18% 20%, var(--mesh-pink), transparent 70%),
-      radial-gradient(36% 44% at 86% 28%, var(--mesh-purple), transparent 70%),
-      radial-gradient(30% 38% at 72% 88%, var(--mesh-blue), transparent 70%),
-      radial-gradient(30% 34% at 14% 82%, var(--mesh-cyan), transparent 70%);
+      radial-gradient(62% 72% at 15% 15%, var(--mesh-pink), transparent 88%),
+      radial-gradient(58% 68% at 88% 25%, var(--mesh-purple), transparent 88%),
+      radial-gradient(52% 62% at 75% 92%, var(--mesh-blue), transparent 88%),
+      radial-gradient(50% 58% at 10% 85%, var(--mesh-cyan), transparent 88%),
+      var(--mesh-purple);
   }
   .mesh-layer.theme-terrava{
     background:
-      radial-gradient(40% 50% at 80% 18%, var(--mesh-cyan), transparent 70%),
-      radial-gradient(36% 44% at 15% 30%, var(--mesh-teal), transparent 70%),
-      radial-gradient(30% 38% at 60% 92%, var(--mesh-sky), transparent 70%),
-      radial-gradient(30% 34% at 92% 86%, var(--mesh-pink), transparent 70%);
+      radial-gradient(62% 72% at 82% 15%, var(--mesh-cyan), transparent 88%),
+      radial-gradient(58% 68% at 12% 28%, var(--mesh-teal), transparent 88%),
+      radial-gradient(52% 62% at 58% 95%, var(--mesh-sky), transparent 88%),
+      radial-gradient(50% 58% at 95% 88%, var(--mesh-pink), transparent 88%),
+      var(--mesh-teal);
   }
   .showcase-tabs{ position:relative; z-index:1; display:flex; align-items:center; gap:12px; margin-bottom:0; flex:none; transition:opacity 120ms linear; }
   .tab-btn{
