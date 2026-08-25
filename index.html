@@ -30,6 +30,11 @@
     --mesh-purple: rgba(140,70,230,0.72);
     --mesh-teal: rgba(10,175,130,0.62);
 
+    --hero-mesh-blue: rgba(60,144,255,0.30);
+    --hero-mesh-cyan: rgba(93,223,215,0.28);
+    --hero-mesh-pink: rgba(240,122,242,0.20);
+    --hero-mesh-sky: rgba(132,193,255,0.30);
+
     --hn:#3C90FF; --hn-strong:#167EB4; --hn-soft:#EDF5FF; --hn-vivid:#6BB1FF;
     --sd:#9B5DE5; --sd-strong:#7C3AED; --sd-soft:#F4EDFD; --sd-vivid:#B89FFA;
     --tr:#12A67D; --tr-strong:#0C7F60; --tr-soft:#E6F7F1; --tr-vivid:#5DDFD7;
@@ -93,10 +98,10 @@
   .hero-panel::before{
     content:''; position:absolute; inset:-15%; z-index:0; filter:blur(70px); opacity:0.9;
     background:
-      radial-gradient(38% 46% at 82% 18%, var(--mesh-blue), transparent 70%),
-      radial-gradient(34% 40% at 92% 62%, var(--mesh-sky), transparent 70%),
-      radial-gradient(30% 36% at 46% 58%, var(--mesh-pink), transparent 70%),
-      radial-gradient(30% 34% at 66% 88%, var(--mesh-cyan), transparent 70%);
+      radial-gradient(38% 46% at 82% 18%, var(--hero-mesh-blue), transparent 70%),
+      radial-gradient(34% 40% at 92% 62%, var(--hero-mesh-sky), transparent 70%),
+      radial-gradient(30% 36% at 46% 58%, var(--hero-mesh-pink), transparent 70%),
+      radial-gradient(30% 34% at 66% 88%, var(--hero-mesh-cyan), transparent 70%);
   }
   .hero{ position:relative; z-index:1; padding-block:clamp(56px,9vw,104px) clamp(48px,7vw,88px); display:flex; flex-direction:column; align-items:center; text-align:center; }
   .hero-status{ font-size:13.5px; font-weight:500; color:var(--ink-soft); margin-bottom:20px; display:inline-flex; align-items:center; gap:7px; }
