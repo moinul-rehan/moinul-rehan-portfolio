@@ -1067,7 +1067,6 @@
   }
 
   var prevX = {};
-  var ENTER_DELAY = 380;
 
   function apply(){
     var moves = cards.map(function(el, i){
@@ -1080,51 +1079,29 @@
       return { el: el, role: role, isCenter: isCenter, r: r, oldX: oldX, bigJump: bigJump };
     });
 
-    // A card recycling from one edge to the other is the "new" card being
-    // added on the far side it's entering toward. It should finish landing
-    // before any other card moves/expands — the rest of the deck shifts
-    // only once that add has happened, as if passing the motion through
-    // the connector to its neighbor.
-    var entering = moves.filter(function(m){ return m.bigJump; });
-    var staggerOthers = entering.some(function(m){ return m.r.x > 0; });
-
     moves.forEach(function(m){
-      var el = m.el, r = m.r, isCenter = m.isCenter, oldX = m.oldX, bigJump = m.bigJump;
-      if (!r) { el.style.opacity = '0'; el.style.pointerEvents = 'none'; prevX[cards.indexOf(el)] = undefined; return; }
+      var el = m.el, r = m.r, isCenter = m.isCenter, bigJump = m.bigJump;
+      if (!r) { el.style.opacity = '0'; el.style.pointerEvents = 'none'; return; }
       el.style.pointerEvents = 'auto';
+      el.style.opacity = '1';
 
       if (bigJump) {
-        // Fade/slide it out further off the edge it was already exiting
-        // toward, then jump it (no transition) to just off the opposite
-        // edge, then fade/slide it in from there — it never crosses the
-        // visible stage.
-        var exitDir = oldX < 0 ? -1 : 1;
+        // A card recycling from one edge to the other (leaving the left side
+        // to become the new far-right peek, or vice versa) has no adjacent
+        // slot to slide through — it just appears already in its new spot,
+        // in the same instant every other card starts its one-slot shift, so
+        // it reads as "a new card is here" rather than a distracting slide
+        // across the whole stage.
+        el.style.transition = 'none';
         el.style.width = r.w + 'px';
         el.style.height = r.h + 'px';
-        el.style.zIndex = 0;
-        el.style.opacity = '0';
-        el.style.transform = 'translate(-50%, -50%) translateX(' + (oldX + exitDir * 160) + 'px)';
-        setTimeout(function(){
-          el.style.transition = 'none';
-          el.style.transform = 'translate(-50%, -50%) translateX(' + (r.x - exitDir * 160) + 'px)';
-          el.offsetHeight;
-          el.style.transition = '';
-          el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
-          el.style.opacity = '1';
-          el.style.zIndex = isCenter ? 2 : 1;
-        }, ENTER_DELAY);
-      } else if (staggerOthers) {
-        setTimeout(function(){
-          el.style.width = r.w + 'px';
-          el.style.height = r.h + 'px';
-          el.style.opacity = '1';
-          el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
-          el.style.zIndex = isCenter ? 2 : 1;
-        }, ENTER_DELAY);
+        el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
+        el.style.zIndex = isCenter ? 2 : 1;
+        el.offsetHeight;
+        el.style.transition = '';
       } else {
         el.style.width = r.w + 'px';
         el.style.height = r.h + 'px';
-        el.style.opacity = '1';
         el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
         el.style.zIndex = isCenter ? 2 : 1;
       }
@@ -1135,7 +1112,6 @@
     // so with n=4 the far-left slot is structurally always empty — no card ever
     // sits there, so that connector must stay hidden (nothing to connect to).
     trackConnectorsLive();
-    if (staggerOthers) setTimeout(trackConnectorsLive, ENTER_DELAY);
     dots.forEach(function(d, i){ d.classList.toggle('active', i === current); });
   }
 
