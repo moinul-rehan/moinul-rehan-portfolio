@@ -157,7 +157,8 @@
   }
   .showcase-tabs{ position:relative; z-index:2; display:flex; align-items:center; gap:12px; margin-bottom:0; flex:none; transition:opacity 120ms linear; }
   .tab-btn{
-    width:auto; height:auto; padding:16px; border-radius:16px; background:#fff;
+    width:auto; height:auto; padding:16px; background:#fff;
+    clip-path:url(#squircle-tab);
     border:1px solid var(--line); display:flex; align-items:center; justify-content:center; cursor:pointer;
     color:var(--ink); position:relative; overflow:visible;
   }
@@ -178,7 +179,7 @@
   }
   .tab-btn.active .tab-goo{ opacity:1; }
   .goo-blob{ position:absolute; background:#fff; }
-  .goo-blob.goo-circle{ inset:0; border-radius:16px; }
+  .goo-blob.goo-circle{ inset:0; clip-path:url(#squircle-tab); }
   .goo-blob.goo-stem{ left:50%; top:100%; transform:translateX(-50%); width:18px; height:26px; border-radius:9px; }
   .showcase-card-zone{ position:relative; z-index:1; width:100%; display:flex; justify-content:center; padding-top:14px; }
   .showcase-card{
@@ -330,6 +331,9 @@
       <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="blur"/>
       <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo"/>
     </filter>
+    <clipPath id="squircle-tab" clipPathUnits="objectBoundingBox">
+      <path d="M1 0.5 C1 0.877202 0.830064 1 0.5 1 C0.169910 1 0 0.877177 0 0.5 C0 0.122799 0.169886 0 0.5 0 C0.830089 0 1 0.122799 1 0.5 Z"/>
+    </clipPath>
   </defs>
 </svg>
 
