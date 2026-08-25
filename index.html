@@ -107,13 +107,25 @@
   .hero-status{ font-size:13.5px; font-weight:500; color:var(--ink-soft); margin-bottom:20px; display:inline-flex; align-items:center; gap:7px; }
   .hero-status .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); }
   .hero h1{
-    font-weight:700; font-size:clamp(38px,6.4vw,64px); line-height:1.11; letter-spacing:-0.025em;
-    max-width:760px; margin-bottom:24px; color:var(--ink);
+    font-weight:800; font-size:clamp(40px,7vw,72px); line-height:1.08; letter-spacing:-0.03em;
+    max-width:880px; margin-bottom:20px; color:var(--ink);
   }
   .hero h1 .hero-label{ font-weight:400; color:var(--ink-faint); }
-  .hero p.lede{ font-size:clamp(16px,1.6vw,18px); line-height:1.5; color:var(--ink-soft); max-width:560px; margin-bottom:32px; }
+  .hero p.lede{ font-size:clamp(16px,1.6vw,18px); line-height:1.5; color:var(--ink-soft); max-width:560px; margin-bottom:36px; }
   .hero-actions{ display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; margin-bottom:16px; }
-  .hero-photo-wrap{ width:min(640px,100%); margin:40px 0 8px; perspective:1400px; }
+  .hero-trust-label{ font-size:13.5px; color:var(--ink-faint); margin-bottom:18px; }
+  .hero-trust-row{ display:flex; align-items:center; justify-content:center; gap:clamp(24px,4vw,44px); flex-wrap:wrap; margin-bottom:40px; }
+  .hero-trust-row .stat-num{ font-size:24px; }
+  .hero-trust-row .stat-div{ height:28px; }
+  .hero-pill{
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+    width:min(620px,100%); border:1px solid var(--line); border-radius:999px;
+    padding:8px 8px 8px 26px; background:var(--paper);
+    box-shadow:0 12px 28px -16px rgba(7,26,49,0.16);
+  }
+  .hero-pill-text{ font-size:14.5px; font-weight:600; color:var(--ink); text-align:left; line-height:1.3; }
+  .hero-email-link{ font-size:13.5px; color:var(--ink-faint); margin-top:16px; text-decoration:underline; text-underline-offset:3px; }
+  .hero-photo-wrap{ width:min(560px,100%); margin:44px 0 8px; perspective:1400px; }
   .hero-photo{
     position:relative; width:100%; aspect-ratio:4/5; border-radius:24px; border:16px solid var(--ink);
     overflow:hidden; transform-style:preserve-3d;
@@ -475,34 +487,40 @@
 <div class="hero-panel">
 <div class="wrap hero">
   <div class="fade-up d1" style="display:flex; flex-direction:column; align-items:center;">
-    <h1><span class="hero-label">Product Designer</span> shaping intuitive digital experiences</h1>
+    <h1>Product design work that <span class="hero-label">ships, and performs</span></h1>
     <p class="lede">Designing user-centered digital products with a strong focus on usability, clarity, and real-world problem solving.</p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn btn-primary"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6.5 3h3l1.5 4-2 2c1 2.5 2.5 4 5 5l2-2 4 1.5v3c0 1.1-.9 2-2 2C10.5 18.5 5.5 13.5 4.5 6c0-1.1.9-3 2-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>Let's Talk</a>
-      <a href="mailto:rehan.moinul.10@gmail.com" class="btn btn-ghost">Email Me</a>
+  </div>
+  <div class="fade-up d2" style="display:flex; flex-direction:column; align-items:center;">
+    <div class="hero-trust-label">A quick look at the track record</div>
+    <div class="hero-trust-row">
+      <div class="stat">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Years designing</div>
+      </div>
+      <div class="stat-div"></div>
+      <div class="stat">
+        <div class="stat-num">25+</div>
+        <div class="stat-label">Client projects</div>
+      </div>
+      <div class="stat-div"></div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Case studies below</div>
+      </div>
     </div>
+    <div class="hero-pill">
+      <span class="hero-pill-text">Have a project in mind?<br>Let's build something great.</span>
+      <a href="#contact" class="btn btn-primary" style="min-height:44px; padding:11px 22px; font-size:14.5px;">Let's Talk
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <a href="mailto:rehan.moinul.10@gmail.com" class="hero-email-link">or email me directly</a>
     <div class="hero-photo-wrap">
       <div class="hero-photo" id="heroPhoto">
         <img class="hero-photo-slide active" src="images/rehan.png" alt="Moinul Islam Rehan">
         <img class="hero-photo-slide" src="images/rehan-2.jpg" alt="Moinul Islam Rehan">
         <img class="hero-photo-slide" src="images/rehan-3.jpg" alt="Moinul Islam Rehan">
       </div>
-    </div>
-  </div>
-  <div class="stat-row fade-up d2">
-    <div class="stat">
-      <div class="stat-num">2+</div>
-      <div class="stat-label">Years designing</div>
-    </div>
-    <div class="stat-div"></div>
-    <div class="stat">
-      <div class="stat-num">25+</div>
-      <div class="stat-label">Client projects</div>
-    </div>
-    <div class="stat-div"></div>
-    <div class="stat">
-      <div class="stat-num">3</div>
-      <div class="stat-label">Case studies below</div>
     </div>
   </div>
 </div>
