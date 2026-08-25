@@ -107,6 +107,12 @@
     content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
     background-image:repeating-linear-gradient(to right, var(--line) 0 1px, transparent 1px 20%);
     background-size:20% 100%;
+    -webkit-mask-image:linear-gradient(to bottom, #000, #000 75%, transparent);
+    mask-image:linear-gradient(to bottom, #000, #000 75%, transparent);
+  }
+  .hero-fade-bottom{
+    position:absolute; left:0; right:0; bottom:0; height:220px; z-index:0; pointer-events:none;
+    background:linear-gradient(to bottom, transparent, var(--paper));
   }
   .hero{ position:relative; z-index:1; padding-block:clamp(56px,9vw,104px) clamp(48px,7vw,88px); display:flex; flex-direction:column; align-items:center; text-align:center; }
   .hero-status{ font-size:13.5px; font-weight:500; color:var(--ink-soft); margin-bottom:20px; display:inline-flex; align-items:center; gap:7px; }
@@ -529,6 +535,7 @@
     </div>
   </div>
 </div>
+<div class="hero-fade-bottom"></div>
 </div>
 
 <div class="wrap section-label" id="work">
