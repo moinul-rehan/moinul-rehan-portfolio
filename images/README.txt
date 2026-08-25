@@ -12,6 +12,11 @@ works best, the photo box crops to fill):
   testi-2.jpg  (Shampa Banik)
   testi-3.jpg  (Starlove Annulysse)
   testi-4.jpg  (SohanulL Habib)
+  testi-5.jpg  (5th testimonial - placeholder photo, name, role, and
+                quote text are all dummy for now; update the 5th entry
+                in the `testimonials` array in index.html with the real
+                name/role/quote once you have them, and drop the real
+                photo in here as testi-5.jpg)
 
 Drop project photos here using this naming convention — the slideshow
 picks them up automatically, no code changes needed:
