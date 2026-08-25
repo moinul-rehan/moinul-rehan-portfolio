@@ -983,10 +983,13 @@
       el.style.zIndex = isCenter ? 2 : 1;
       el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
     });
-    positionConnector(connLeft, -213, n > 1);
-    positionConnector(connRight, 213, n > 1);
-    positionConnector(connFarLeft, -503, n > 3);
-    positionConnector(connFarRight, 503, n > 3);
+    // Roles present depend on n: signedRole() only ever produces -2 once n>=5,
+    // so with n=4 the far-left slot is structurally always empty — no card ever
+    // sits there, so that connector must stay hidden (nothing to connect to).
+    positionConnector(connLeft, -389, n > 1);
+    positionConnector(connRight, 389, n > 1);
+    positionConnector(connFarLeft, -513, n >= 5);
+    positionConnector(connFarRight, 513, n >= 4);
     dots.forEach(function(d, i){ d.classList.toggle('active', i === current); });
   }
 
