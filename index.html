@@ -251,6 +251,8 @@
   .process-head{ max-width:600px; margin-bottom:clamp(32px,5vw,48px); }
   .process-head h2{ font-weight:700; font-size:clamp(26px,2.8vw,32px); letter-spacing:-0.015em; margin-top:8px; }
   .deck-cards{ display:flex; align-items:stretch; gap:20px; width:100%; }
+  .deck-connector{ flex:0 0 0; width:0; align-self:center; position:relative; z-index:1; pointer-events:none; }
+  .deck-connector svg{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:24px; height:44.8px; display:block; }
   .deck-card{
     position:relative; flex:0 0 180px; width:180px; height:360px; overflow:hidden;
     background:var(--paper); border-radius:20px; border:1px solid var(--line);
@@ -293,6 +295,7 @@
   .deck-card[data-theme="p4"] .deck-step-badge{ background:var(--p4); color:#fff; }
   @media (max-width:860px){
     .deck-cards{ flex-direction:column; }
+    .deck-connector{ display:none; }
     .deck-card{ flex:0 0 auto; width:100%; height:auto; }
     .deck-card::before{ display:none; }
     .deck-card .deck-bg{ opacity:1; }
@@ -594,6 +597,7 @@
       </div>
     </div>
 
+    <div class="deck-connector" aria-hidden="true"><svg viewBox="0 0 34 64" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 2 23 17 23C32 23 34 0 34 0V64C34 64 32 41 17 41C2 41 0 64 0 64V0Z" fill="#fff"/></svg></div>
     <div class="deck-card" data-theme="p2" data-step="2" role="tab" aria-selected="false" tabindex="0">
       <div class="deck-bg"></div>
       <div class="deck-content">
@@ -612,6 +616,7 @@
       </div>
     </div>
 
+    <div class="deck-connector" aria-hidden="true"><svg viewBox="0 0 34 64" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 2 23 17 23C32 23 34 0 34 0V64C34 64 32 41 17 41C2 41 0 64 0 64V0Z" fill="#fff"/></svg></div>
     <div class="deck-card" data-theme="p3" data-step="3" role="tab" aria-selected="false" tabindex="0">
       <div class="deck-bg"></div>
       <div class="deck-content">
@@ -630,6 +635,7 @@
       </div>
     </div>
 
+    <div class="deck-connector" aria-hidden="true"><svg viewBox="0 0 34 64" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 2 23 17 23C32 23 34 0 34 0V64C34 64 32 41 17 41C2 41 0 64 0 64V0Z" fill="#fff"/></svg></div>
     <div class="deck-card" data-theme="p4" data-step="4" role="tab" aria-selected="false" tabindex="0">
       <div class="deck-bg"></div>
       <div class="deck-content">
