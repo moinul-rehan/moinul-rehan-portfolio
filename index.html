@@ -330,10 +330,10 @@
   .testi-card-el.is-center .testi-overlay{ opacity:1; pointer-events:auto; }
   .testi-card-text{ padding:16px; display:flex; flex-direction:column; justify-content:center; min-width:0; }
   .testi-quote{ font-size:19px; line-height:1.5; font-weight:500; color:var(--ink); margin-bottom:24px; }
-  .testi-attrib{ display:flex; align-items:center; gap:0; flex-wrap:wrap; }
+  .testi-attrib{ display:flex; flex-direction:column; align-items:flex-start; gap:0; }
   .testi-name{ font-size:13px; font-weight:700; background:var(--paper-alt); border-radius:999px; padding:6px 12px; }
   .testi-role{ font-size:13px; color:var(--ink-faint); background:var(--paper-alt); border-radius:999px; padding:6px 12px; }
-  .testi-mini-connector{ width:8px; height:14px; flex:none; }
+  .testi-mini-connector{ width:14px; height:8px; flex:none; }
   .testi-card-photo{ position:relative; overflow:hidden; border-radius:16px; min-width:0; }
   .testi-card-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
   .testi-dots{ position:relative; z-index:1; display:flex; align-items:center; justify-content:center; gap:6px; margin-top:clamp(32px,5vw,48px); }
@@ -936,7 +936,7 @@
           '<p class="testi-quote">' + t.quote + '</p>' +
           '<div class="testi-attrib">' +
             '<span class="testi-name">' + t.name + '</span>' +
-            '<svg class="testi-mini-connector" viewBox="0 0 8 14" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 0.49688 5.09091 4 5.09091C7.50312 5.09091 8 0 8 0V14C8 14 7.50312 8.90909 4 8.90909C0.49688 8.90909 0 14 0 14V0Z" fill="var(--paper-alt)"/></svg>' +
+            '<svg class="testi-mini-connector" viewBox="0 0 14 8" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 5.09091 0.49688 5.09091 4C5.09091 7.50312 0 8 0 8H14C14 8 8.90909 7.50312 8.90909 4C8.90909 0.49688 14 0 14 0H0Z" fill="var(--paper-alt)"/></svg>' +
             '<span class="testi-role">' + t.role + '</span>' +
           '</div>' +
         '</div>' +
