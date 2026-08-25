@@ -304,16 +304,31 @@
     .deck-card .deck-active-body{ position:static; display:flex; opacity:1; filter:none; pointer-events:auto; }
   }
 
-  .testi-section{ background:var(--paper-alt); padding-block:clamp(56px,8vw,104px); }
-  .testi-head{ max-width:600px; margin-bottom:clamp(32px,5vw,48px); }
-  .testi-head h2{ font-weight:700; font-size:clamp(26px,2.8vw,32px); letter-spacing:-0.015em; margin-top:8px; }
-  .testi-grid{ display:grid; grid-template-columns:1.3fr 1fr; gap:24px; margin-bottom:24px; }
-  .testi-card{ background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:clamp(24px,3vw,36px); display:flex; flex-direction:column; justify-content:space-between; }
-  .testi-card.feature p.quote{ font-weight:500; font-size:clamp(19px,1.9vw,23px); line-height:1.4; color:var(--ink); margin-bottom:22px; }
-  .testi-card p.quote{ font-size:15px; line-height:1.55; color:var(--ink-soft); margin-bottom:20px; }
-  .testi-name{ font-size:14px; font-weight:700; }
-  .testi-role{ font-size:12.5px; color:var(--ink-faint); margin-top:2px; }
-  .testi-row3{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .testi-section{ position:relative; overflow:hidden; padding-block:clamp(64px,10vw,120px); }
+  .testi-section .mesh-layer{ opacity:1; }
+  .testi-head{ position:relative; z-index:1; text-align:center; margin-bottom:clamp(40px,6vw,64px); }
+  .testi-eyebrow{ color:rgba(255,255,255,0.75); }
+  .testi-heading{ font-weight:700; font-size:clamp(30px,4vw,44px); line-height:1.15; letter-spacing:-0.015em; color:#fff; margin-top:10px; }
+  .testi-carousel{ position:relative; z-index:1; display:flex; align-items:stretch; justify-content:center; gap:0; max-width:1100px; margin-inline:auto; padding-inline:20px; }
+  .testi-peek{ flex:0 0 90px; width:90px; height:340px; border-radius:20px; overflow:hidden; align-self:center; box-shadow:0 20px 40px -18px rgba(7,26,49,0.35); cursor:pointer; }
+  .testi-peek img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .testi-connector{ flex:0 0 0; width:0; align-self:center; position:relative; z-index:1; pointer-events:none; }
+  .testi-connector svg{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:24px; height:44.8px; display:block; }
+  .testi-card{
+    flex:0 0 auto; width:min(640px, 100%); background:#fff; border-radius:24px; overflow:hidden;
+    box-shadow:0 30px 60px -20px rgba(7,26,49,0.35);
+    display:grid; grid-template-columns:1fr 1fr; align-items:stretch;
+  }
+  .testi-card-text{ padding:clamp(28px,3.5vw,40px); display:flex; flex-direction:column; justify-content:center; }
+  .testi-quote{ font-size:19px; line-height:1.5; font-weight:500; color:var(--ink); margin-bottom:24px; }
+  .testi-attrib{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .testi-name{ font-size:13px; font-weight:700; background:var(--paper-alt); border-radius:999px; padding:6px 12px; }
+  .testi-role{ font-size:13px; color:var(--ink-faint); background:var(--paper-alt); border-radius:999px; padding:6px 12px; }
+  .testi-card-photo{ position:relative; overflow:hidden; min-height:260px; }
+  .testi-card-photo img{ width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0; }
+  .testi-dots{ position:relative; z-index:1; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:clamp(32px,5vw,48px); }
+  .testi-dot{ width:8px; height:8px; border-radius:999px; background:rgba(255,255,255,0.4); cursor:pointer; transition:width 260ms ease, background 260ms ease; }
+  .testi-dot.active{ width:24px; background:#fff; }
 
   .tools-section{ padding-block:clamp(56px,8vw,96px); text-align:center; }
   .tools-section h2{ font-weight:700; font-size:clamp(22px,2.4vw,28px); margin-top:8px; margin-bottom:clamp(28px,4vw,40px); letter-spacing:-0.01em; }
@@ -330,8 +345,10 @@
   .footer-links{ display:flex; align-items:center; gap:20px; font-size:14px; }
 
   @media (max-width:860px){
-    .testi-grid{ grid-template-columns:1fr; }
-    .testi-row3{ grid-template-columns:1fr; }
+    .testi-peek{ flex:0 0 44px; width:44px; height:220px; }
+    .testi-connector svg{ width:16px; height:30px; }
+    .testi-card{ grid-template-columns:1fr; width:calc(100% - 32px); }
+    .testi-card-photo{ min-height:180px; order:-1; }
     .nav-links{ display:none; }
     .tools-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
     .stat-div{ display:none; }
@@ -843,45 +860,86 @@
 </script>
 
 <div class="testi-section">
-  <div class="wrap">
-    <div class="testi-head">
-      <div class="eyebrow">From people I've worked with</div>
-      <h2>A few words from people I've built with.</h2>
+  <div class="mesh-layer theme-suede active"></div>
+  <div class="wrap testi-head">
+    <div class="eyebrow testi-eyebrow">Client Feedback</div>
+    <h2 class="testi-heading">Real people. Real feedback.</h2>
+  </div>
+
+  <div class="testi-carousel" id="testiCarousel">
+    <div class="testi-peek" id="testiPrev"><img src="images/testi-4.jpg" alt=""></div>
+    <div class="testi-connector" aria-hidden="true"><svg viewBox="0 0 34 64" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 2 23 17 23C32 23 34 0 34 0V64C34 64 32 41 17 41C2 41 0 64 0 64V0Z" fill="#fff"/></svg></div>
+
+    <div class="testi-card" id="testiCard">
+      <div class="testi-card-text">
+        <p class="testi-quote" id="testiQuote">"He is a thoughtful, hardworking, and highly professional product designer who approaches problems with a strong user-first mindset."</p>
+        <div class="testi-attrib">
+          <span class="testi-name" id="testiName">Abdullah</span>
+          <span class="testi-role" id="testiRole">CEO, MindSynth Technologies</span>
+        </div>
+      </div>
+      <div class="testi-card-photo"><img id="testiPhoto" src="images/testi-1.jpg" alt=""></div>
     </div>
-    <div class="testi-grid">
-      <div class="testi-card feature">
-        <p class="quote">"He is a thoughtful, hardworking, and highly professional product designer who approaches problems with a strong user-first mindset."</p>
-        <div>
-          <div class="testi-name">Abdullah</div>
-          <div class="testi-role">CEO, MindSynth Technologies</div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <p class="quote">"Rehan consistently demonstrated strong design thinking, attention to detail, and the ability to turn ideas into intuitive, impactful visuals."</p>
-        <div>
-          <div class="testi-name">Shampa Banik</div>
-          <div class="testi-role">Lecturer of CSE, BUBT</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-row3">
-      <div class="testi-card">
-        <p class="quote">"He seamlessly converted our mobile app to web with great UX and visuals."</p>
-        <div>
-          <div class="testi-name">Starlove Annulysse</div>
-          <div class="testi-role">Founder, Booking Nest</div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <p class="quote">"He learns fast, takes feedback seriously, and always goes the extra mile."</p>
-        <div>
-          <div class="testi-name">SohanulL Habib</div>
-          <div class="testi-role">CEO, OrbitX</div>
-        </div>
-      </div>
-    </div>
+
+    <div class="testi-connector" aria-hidden="true"><svg viewBox="0 0 34 64" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 2 23 17 23C32 23 34 0 34 0V64C34 64 32 41 17 41C2 41 0 64 0 64V0Z" fill="#fff"/></svg></div>
+    <div class="testi-peek" id="testiNext"><img src="images/testi-2.jpg" alt=""></div>
+  </div>
+
+  <div class="testi-dots" id="testiDots">
+    <span class="testi-dot active"></span>
+    <span class="testi-dot"></span>
+    <span class="testi-dot"></span>
+    <span class="testi-dot"></span>
   </div>
 </div>
+
+<script>
+(function(){
+  var testimonials = [
+    { quote: "“He is a thoughtful, hardworking, and highly professional product designer who approaches problems with a strong user-first mindset.”", name: "Abdullah", role: "CEO, MindSynth Technologies", photo: "images/testi-1.jpg" },
+    { quote: "“Rehan consistently demonstrated strong design thinking, attention to detail, and the ability to turn ideas into intuitive, impactful visuals.”", name: "Shampa Banik", role: "Lecturer of CSE, BUBT", photo: "images/testi-2.jpg" },
+    { quote: "“He seamlessly converted our mobile app to web with great UX and visuals.”", name: "Starlove Annulysse", role: "Founder, Booking Nest", photo: "images/testi-3.jpg" },
+    { quote: "“He learns fast, takes feedback seriously, and always goes the extra mile.”", name: "SohanulL Habib", role: "CEO, OrbitX", photo: "images/testi-4.jpg" }
+  ];
+
+  var quoteEl = document.getElementById('testiQuote');
+  var nameEl = document.getElementById('testiName');
+  var roleEl = document.getElementById('testiRole');
+  var photoEl = document.getElementById('testiPhoto');
+  var prevEl = document.getElementById('testiPrev').querySelector('img');
+  var nextEl = document.getElementById('testiNext').querySelector('img');
+  var dots = document.querySelectorAll('.testi-dot');
+  var current = 0;
+
+  function render(idx){
+    current = idx;
+    var t = testimonials[idx];
+    var prevT = testimonials[(idx - 1 + testimonials.length) % testimonials.length];
+    var nextT = testimonials[(idx + 1) % testimonials.length];
+    quoteEl.textContent = t.quote;
+    nameEl.textContent = t.name;
+    roleEl.textContent = t.role;
+    photoEl.src = t.photo;
+    prevEl.src = prevT.photo;
+    nextEl.src = nextT.photo;
+    dots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+  }
+
+  dots.forEach(function(dot, i){
+    dot.addEventListener('click', function(){ render(i); });
+  });
+  document.getElementById('testiPrev').addEventListener('click', function(){
+    render((current - 1 + testimonials.length) % testimonials.length);
+  });
+  document.getElementById('testiNext').addEventListener('click', function(){
+    render((current + 1) % testimonials.length);
+  });
+
+  setInterval(function(){
+    render((current + 1) % testimonials.length);
+  }, 6000);
+})();
+</script>
 
 <div class="tools-section wrap">
   <div class="eyebrow">Tools I Work In</div>

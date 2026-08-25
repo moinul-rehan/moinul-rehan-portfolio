@@ -2,6 +2,14 @@ Also needed: rehan.jpg — your hero-section portrait/photo, shown right
 below the "Let's Talk"/"Email Me" buttons. Any reasonable landscape or
 portrait photo works; the hero-photo box caps at 760px wide.
 
+Testimonial section needs one headshot per person (portrait orientation
+works best, the photo box crops to fill):
+
+  testi-1.jpg  (Abdullah)
+  testi-2.jpg  (Shampa Banik)
+  testi-3.jpg  (Starlove Annulysse)
+  testi-4.jpg  (SohanulL Habib)
+
 Drop project photos here using this naming convention — the slideshow
 picks them up automatically, no code changes needed:
 
