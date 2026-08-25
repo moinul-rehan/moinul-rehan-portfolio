@@ -337,7 +337,7 @@
     border-radius:20px; overflow:hidden; background:#fff; border:12px solid #fff;
     box-shadow:0 16px 32px -16px rgba(7,26,49,0.32);
     cursor:pointer;
-    transition:width 550ms cubic-bezier(.4,0,.2,1), height 550ms cubic-bezier(.4,0,.2,1), transform 550ms cubic-bezier(.4,0,.2,1), box-shadow 550ms ease;
+    transition:width 550ms cubic-bezier(.4,0,.2,1), height 550ms cubic-bezier(.4,0,.2,1), transform 550ms cubic-bezier(.4,0,.2,1), box-shadow 550ms ease, opacity 350ms ease;
   }
   .testi-card-el.is-center{ box-shadow:0 30px 60px -20px rgba(7,26,49,0.35); cursor:default; }
   .testi-bg-photo{ position:absolute; inset:0; overflow:hidden; }
@@ -1033,26 +1033,37 @@
       el.classList.toggle('is-center', isCenter);
       var r = ROLES[String(Math.max(-2, Math.min(2, role)))];
       if (!r) { el.style.opacity = '0'; el.style.pointerEvents = 'none'; return; }
-      el.style.opacity = '1';
       el.style.pointerEvents = 'auto';
       el.style.width = r.w + 'px';
       el.style.height = r.h + 'px';
-      el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
 
       // A card recycling from one edge to the other (e.g. leaving the left
-      // side to become the new far-right peek) travels the full width of the
-      // carousel. At equal z-index it can paint over whichever stationary
-      // card it happens to be later than in the DOM, which looks broken —
-      // so during that long slide it drops behind everything, then resumes
-      // normal stacking once it has settled into its new spot.
+      // side to become the new far-right peek) would otherwise travel the
+      // full width of the carousel in one visible slide. Instead: fade/slide
+      // it out further off the edge it was already exiting toward, then jump
+      // it (no transition) to just off the opposite edge, then fade/slide it
+      // in from there — it never crosses the visible stage.
       var oldX = prevX[i];
       var bigJump = oldX !== undefined && Math.abs(r.x - oldX) > 700;
       if (bigJump) {
+        var exitDir = oldX < 0 ? -1 : 1;
         el.style.zIndex = 0;
-        (function(el, isCenter){
-          setTimeout(function(){ el.style.zIndex = isCenter ? 2 : 1; }, 560);
-        })(el, isCenter);
+        el.style.opacity = '0';
+        el.style.transform = 'translate(-50%, -50%) translateX(' + (oldX + exitDir * 160) + 'px)';
+        (function(el, r, isCenter, exitDir){
+          setTimeout(function(){
+            el.style.transition = 'none';
+            el.style.transform = 'translate(-50%, -50%) translateX(' + (r.x - exitDir * 160) + 'px)';
+            el.offsetHeight;
+            el.style.transition = '';
+            el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
+            el.style.opacity = '1';
+            el.style.zIndex = isCenter ? 2 : 1;
+          }, 360);
+        })(el, r, isCenter, exitDir);
       } else {
+        el.style.opacity = '1';
+        el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
         el.style.zIndex = isCenter ? 2 : 1;
       }
       prevX[i] = r.x;
