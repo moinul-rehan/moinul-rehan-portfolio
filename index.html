@@ -309,26 +309,32 @@
   .testi-head{ position:relative; z-index:1; text-align:center; margin-bottom:clamp(40px,6vw,64px); }
   .testi-eyebrow{ color:rgba(255,255,255,0.75); }
   .testi-heading{ font-weight:700; font-size:clamp(30px,4vw,44px); line-height:1.15; letter-spacing:-0.015em; color:#fff; margin-top:10px; }
-  .testi-carousel{ position:relative; z-index:1; display:flex; align-items:stretch; justify-content:center; gap:0; max-width:1100px; margin-inline:auto; padding-inline:20px; }
-  .testi-peek{ flex:0 0 90px; width:90px; height:340px; border-radius:20px; overflow:hidden; align-self:center; box-shadow:0 20px 40px -18px rgba(7,26,49,0.35); cursor:pointer; }
+  .testi-carousel{ position:relative; z-index:1; display:flex; align-items:stretch; justify-content:center; gap:0; max-width:1160px; margin-inline:auto; padding-inline:16px; }
+  .testi-peek{ border-radius:20px; overflow:hidden; align-self:center; box-shadow:0 16px 32px -16px rgba(7,26,49,0.32); cursor:pointer; }
   .testi-peek img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .testi-peek.far{ flex:0 0 64px; width:64px; height:180px; }
+  .testi-peek.near{ flex:0 0 96px; width:96px; height:300px; }
   .testi-connector{ flex:0 0 0; width:0; align-self:center; position:relative; z-index:1; pointer-events:none; }
-  .testi-connector svg{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:24px; height:44.8px; display:block; }
+  .testi-connector svg{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:22px; height:38px; display:block; }
   .testi-card{
-    flex:0 0 auto; width:min(640px, 100%); background:#fff; border-radius:24px; overflow:hidden;
+    flex:0 0 auto; width:min(680px, 100%); background:#fff; border-radius:24px; overflow:hidden;
     box-shadow:0 30px 60px -20px rgba(7,26,49,0.35);
     display:grid; grid-template-columns:1fr 1fr; align-items:stretch;
   }
   .testi-card-text{ padding:clamp(28px,3.5vw,40px); display:flex; flex-direction:column; justify-content:center; }
   .testi-quote{ font-size:19px; line-height:1.5; font-weight:500; color:var(--ink); margin-bottom:24px; }
-  .testi-attrib{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .testi-attrib{ display:flex; align-items:center; gap:0; flex-wrap:wrap; }
   .testi-name{ font-size:13px; font-weight:700; background:var(--paper-alt); border-radius:999px; padding:6px 12px; }
   .testi-role{ font-size:13px; color:var(--ink-faint); background:var(--paper-alt); border-radius:999px; padding:6px 12px; }
+  .testi-mini-connector{ width:8px; height:14px; flex:none; }
   .testi-card-photo{ position:relative; overflow:hidden; min-height:260px; }
   .testi-card-photo img{ width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0; }
-  .testi-dots{ position:relative; z-index:1; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:clamp(32px,5vw,48px); }
-  .testi-dot{ width:8px; height:8px; border-radius:999px; background:rgba(255,255,255,0.4); cursor:pointer; transition:width 260ms ease, background 260ms ease; }
-  .testi-dot.active{ width:24px; background:#fff; }
+  .testi-dots{ position:relative; z-index:1; display:flex; align-items:center; justify-content:center; gap:6px; margin-top:clamp(32px,5vw,48px); }
+  .testi-dot{ height:8px; width:8px; border-radius:3px; background:rgba(255,255,255,0.35); overflow:hidden; cursor:pointer; transition:width 300ms ease; }
+  .testi-dot.active{ width:64px; }
+  .testi-dot-fill{ display:block; height:100%; width:100%; background:#fff; transform-origin:0% 50%; transform:scaleX(0); }
+  .testi-dot.active .testi-dot-fill{ animation:testiDotFill 6s linear forwards; }
+  @keyframes testiDotFill{ from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
 
   .tools-section{ padding-block:clamp(56px,8vw,96px); text-align:center; }
   .tools-section h2{ font-weight:700; font-size:clamp(22px,2.4vw,28px); margin-top:8px; margin-bottom:clamp(28px,4vw,40px); letter-spacing:-0.01em; }
@@ -345,7 +351,8 @@
   .footer-links{ display:flex; align-items:center; gap:20px; font-size:14px; }
 
   @media (max-width:860px){
-    .testi-peek{ flex:0 0 44px; width:44px; height:220px; }
+    .testi-peek.far, .testi-connector.outer{ display:none; }
+    .testi-peek.near{ flex:0 0 40px; width:40px; height:180px; }
     .testi-connector svg{ width:16px; height:30px; }
     .testi-card{ grid-template-columns:1fr; width:calc(100% - 32px); }
     .testi-card-photo{ min-height:180px; order:-1; }
@@ -867,30 +874,32 @@
   </div>
 
   <div class="testi-carousel" id="testiCarousel">
-    <div class="testi-peek" id="testiPrev"><img src="images/testi-4.jpg" alt=""></div>
-    <div class="testi-connector" aria-hidden="true"><svg viewBox="0 0 34 64" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 2 23 17 23C32 23 34 0 34 0V64C34 64 32 41 17 41C2 41 0 64 0 64V0Z" fill="#fff"/></svg></div>
+    <div class="testi-peek far" id="testiFarPrev"><img src="" alt=""></div>
+    <div class="testi-connector outer" aria-hidden="true"><svg viewBox="0 0 16 28" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 0.993759 10.1818 8 10.1818C15.0062 10.1818 16 0 16 0V28C16 28 15.0062 17.8182 8 17.8182C0.993759 17.8182 0 28 0 28V0Z" fill="#fff"/></svg></div>
+
+    <div class="testi-peek near" id="testiNearPrev"><img src="" alt=""></div>
+    <div class="testi-connector" aria-hidden="true"><svg viewBox="0 0 20 37.3338" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 1.2422 13.5759 10 13.5759C18.7578 13.5759 20 0 20 0V37.3338C20 37.3338 18.7578 23.7578 10 23.7578C1.2422 23.7578 0 37.3338 0 37.3338V0Z" fill="#fff"/></svg></div>
 
     <div class="testi-card" id="testiCard">
       <div class="testi-card-text">
-        <p class="testi-quote" id="testiQuote">"He is a thoughtful, hardworking, and highly professional product designer who approaches problems with a strong user-first mindset."</p>
+        <p class="testi-quote" id="testiQuote"></p>
         <div class="testi-attrib">
-          <span class="testi-name" id="testiName">Abdullah</span>
-          <span class="testi-role" id="testiRole">CEO, MindSynth Technologies</span>
+          <span class="testi-name" id="testiName"></span>
+          <svg class="testi-mini-connector" viewBox="0 0 8 14" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 0.49688 5.09091 4 5.09091C7.50312 5.09091 8 0 8 0V14C8 14 7.50312 8.90909 4 8.90909C0.49688 8.90909 0 14 0 14V0Z" fill="var(--paper-alt)"/></svg>
+          <span class="testi-role" id="testiRole"></span>
         </div>
       </div>
-      <div class="testi-card-photo"><img id="testiPhoto" src="images/testi-1.jpg" alt=""></div>
+      <div class="testi-card-photo"><img id="testiPhoto" src="" alt=""></div>
     </div>
 
-    <div class="testi-connector" aria-hidden="true"><svg viewBox="0 0 34 64" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 2 23 17 23C32 23 34 0 34 0V64C34 64 32 41 17 41C2 41 0 64 0 64V0Z" fill="#fff"/></svg></div>
-    <div class="testi-peek" id="testiNext"><img src="images/testi-2.jpg" alt=""></div>
+    <div class="testi-connector" aria-hidden="true"><svg viewBox="0 0 20 37.3338" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 1.2422 13.5759 10 13.5759C18.7578 13.5759 20 0 20 0V37.3338C20 37.3338 18.7578 23.7578 10 23.7578C1.2422 23.7578 0 37.3338 0 37.3338V0Z" fill="#fff"/></svg></div>
+    <div class="testi-peek near" id="testiNearNext"><img src="" alt=""></div>
+
+    <div class="testi-connector outer" aria-hidden="true"><svg viewBox="0 0 16 28" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 0.993759 10.1818 8 10.1818C15.0062 10.1818 16 0 16 0V28C16 28 15.0062 17.8182 8 17.8182C0.993759 17.8182 0 28 0 28V0Z" fill="#fff"/></svg></div>
+    <div class="testi-peek far" id="testiFarNext"><img src="" alt=""></div>
   </div>
 
-  <div class="testi-dots" id="testiDots">
-    <span class="testi-dot active"></span>
-    <span class="testi-dot"></span>
-    <span class="testi-dot"></span>
-    <span class="testi-dot"></span>
-  </div>
+  <div class="testi-dots" id="testiDots"></div>
 </div>
 
 <script>
@@ -901,43 +910,61 @@
     { quote: "“He seamlessly converted our mobile app to web with great UX and visuals.”", name: "Starlove Annulysse", role: "Founder, Booking Nest", photo: "images/testi-3.jpg" },
     { quote: "“He learns fast, takes feedback seriously, and always goes the extra mile.”", name: "SohanulL Habib", role: "CEO, OrbitX", photo: "images/testi-4.jpg" }
   ];
+  var n = testimonials.length;
 
   var quoteEl = document.getElementById('testiQuote');
   var nameEl = document.getElementById('testiName');
   var roleEl = document.getElementById('testiRole');
   var photoEl = document.getElementById('testiPhoto');
-  var prevEl = document.getElementById('testiPrev').querySelector('img');
-  var nextEl = document.getElementById('testiNext').querySelector('img');
-  var dots = document.querySelectorAll('.testi-dot');
+  var farPrevEl = document.getElementById('testiFarPrev').querySelector('img');
+  var nearPrevEl = document.getElementById('testiNearPrev').querySelector('img');
+  var nearNextEl = document.getElementById('testiNearNext').querySelector('img');
+  var farNextEl = document.getElementById('testiFarNext').querySelector('img');
+  var dotsWrap = document.getElementById('testiDots');
   var current = 0;
+  var autoplayTimer = null;
+
+  testimonials.forEach(function(){
+    var dot = document.createElement('span');
+    dot.className = 'testi-dot';
+    var fill = document.createElement('span');
+    fill.className = 'testi-dot-fill';
+    dot.appendChild(fill);
+    dotsWrap.appendChild(dot);
+  });
+  var dots = dotsWrap.querySelectorAll('.testi-dot');
+
+  function wrap(i){ return (i % n + n) % n; }
 
   function render(idx){
-    current = idx;
-    var t = testimonials[idx];
-    var prevT = testimonials[(idx - 1 + testimonials.length) % testimonials.length];
-    var nextT = testimonials[(idx + 1) % testimonials.length];
+    current = wrap(idx);
+    var t = testimonials[current];
     quoteEl.textContent = t.quote;
     nameEl.textContent = t.name;
     roleEl.textContent = t.role;
     photoEl.src = t.photo;
-    prevEl.src = prevT.photo;
-    nextEl.src = nextT.photo;
-    dots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+    nearPrevEl.src = testimonials[wrap(current - 1)].photo;
+    nearNextEl.src = testimonials[wrap(current + 1)].photo;
+    farPrevEl.src = testimonials[wrap(current - 2)].photo;
+    farNextEl.src = testimonials[wrap(current + 2)].photo;
+    dots.forEach(function(d, i){ d.classList.toggle('active', i === current); });
+    startAutoplay();
+  }
+
+  function startAutoplay(){
+    if (autoplayTimer) clearTimeout(autoplayTimer);
+    autoplayTimer = setTimeout(function(){ render(current + 1); }, 6000);
   }
 
   dots.forEach(function(dot, i){
     dot.addEventListener('click', function(){ render(i); });
   });
-  document.getElementById('testiPrev').addEventListener('click', function(){
-    render((current - 1 + testimonials.length) % testimonials.length);
-  });
-  document.getElementById('testiNext').addEventListener('click', function(){
-    render((current + 1) % testimonials.length);
-  });
+  document.getElementById('testiNearPrev').addEventListener('click', function(){ render(current - 1); });
+  document.getElementById('testiFarPrev').addEventListener('click', function(){ render(current - 2); });
+  document.getElementById('testiNearNext').addEventListener('click', function(){ render(current + 1); });
+  document.getElementById('testiFarNext').addEventListener('click', function(){ render(current + 2); });
 
-  setInterval(function(){
-    render((current + 1) % testimonials.length);
-  }, 6000);
+  render(0);
 })();
 </script>
 
