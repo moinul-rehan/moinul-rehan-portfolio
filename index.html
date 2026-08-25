@@ -260,8 +260,12 @@
   .deck-card.active{ flex:0 0 400px; width:400px; border-color:transparent; box-shadow:0 20px 48px -12px rgba(11,53,88,0.16); }
   .deck-card::before{
     content:attr(data-step); position:absolute; right:-10px; bottom:-40px; z-index:0;
-    font-size:180px; font-weight:800; line-height:1; color:var(--ink); opacity:0.04; pointer-events:none;
+    font-size:180px; font-weight:800; line-height:1; opacity:0.35; pointer-events:none;
   }
+  .deck-card[data-theme="p1"]::before{ color:var(--hn-vivid); }
+  .deck-card[data-theme="p2"]::before{ color:var(--sd-vivid); }
+  .deck-card[data-theme="p3"]::before{ color:var(--tr-vivid); }
+  .deck-card[data-theme="p4"]::before{ color:var(--p4); }
   .deck-bg{ position:absolute; inset:0; z-index:0; opacity:0; transition:opacity 500ms ease; }
   .deck-card.active .deck-bg{ opacity:1; }
   .deck-card[data-theme="p1"] .deck-bg{ background:radial-gradient(120% 100% at 100% 0%, var(--hn-soft), var(--paper) 65%); }
@@ -269,11 +273,6 @@
   .deck-card[data-theme="p3"] .deck-bg{ background:radial-gradient(120% 100% at 100% 0%, var(--tr-soft), var(--paper) 65%); }
   .deck-card[data-theme="p4"] .deck-bg{ background:radial-gradient(120% 100% at 100% 0%, var(--p4-soft), var(--paper) 65%); }
   .deck-content{ position:relative; z-index:1; padding:26px; display:flex; flex-direction:column; height:100%; }
-  .deck-step-icon{ width:auto; height:auto; padding:7px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; flex:none; margin-bottom:16px; }
-  .deck-card[data-theme="p1"] .deck-step-icon{ background:var(--hn-vivid); color:var(--ink); }
-  .deck-card[data-theme="p2"] .deck-step-icon{ background:var(--sd-vivid); color:var(--ink); }
-  .deck-card[data-theme="p3"] .deck-step-icon{ background:var(--tr-vivid); color:var(--ink); }
-  .deck-card[data-theme="p4"] .deck-step-icon{ background:var(--p4); color:#fff; }
   .deck-heading{ font-weight:700; font-size:20px; letter-spacing:-0.01em; margin-bottom:10px; white-space:nowrap; }
   .deck-body{ position:relative; flex:1; min-height:0; }
   .deck-resting-desc, .deck-active-body{
@@ -580,7 +579,6 @@
     <div class="deck-card active" data-theme="p1" data-step="1" role="tab" aria-selected="true" tabindex="0">
       <div class="deck-bg"></div>
       <div class="deck-content">
-        <span class="deck-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="M20 20L15.5 15.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
         <div class="deck-heading">Discover</div>
         <div class="deck-body">
         <p class="deck-resting-desc">Understand before designing anything.</p>
@@ -599,7 +597,6 @@
     <div class="deck-card" data-theme="p2" data-step="2" role="tab" aria-selected="false" tabindex="0">
       <div class="deck-bg"></div>
       <div class="deck-content">
-        <span class="deck-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 20l1-4.5L15.5 5 19 8.5 8.5 19 4 20z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
         <div class="deck-heading">Design</div>
         <div class="deck-body">
         <p class="deck-resting-desc">Explore wide, then commit.</p>
@@ -618,7 +615,6 @@
     <div class="deck-card" data-theme="p3" data-step="3" role="tab" aria-selected="false" tabindex="0">
       <div class="deck-bg"></div>
       <div class="deck-content">
-        <span class="deck-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M10 9l5 3.2-5 3.2V9z" fill="currentColor"/></svg></span>
         <div class="deck-heading">Prototype</div>
         <div class="deck-body">
         <p class="deck-resting-desc">Make it feel real before it's built.</p>
@@ -637,7 +633,6 @@
     <div class="deck-card" data-theme="p4" data-step="4" role="tab" aria-selected="false" tabindex="0">
       <div class="deck-bg"></div>
       <div class="deck-content">
-        <span class="deck-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         <div class="deck-heading">Deliver</div>
         <div class="deck-body">
         <p class="deck-resting-desc">Handoff that doesn't lose the details.</p>
