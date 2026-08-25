@@ -185,15 +185,15 @@
   .showcase-card{
     position:relative; overflow:hidden;
     width:min(920px, calc(100% - 48px));
-    background:var(--paper); border-radius:20px;
+    background:var(--paper); border-radius:20px; corner-shape:squircle;
     box-shadow:0 30px 60px -20px rgba(7,26,49,0.24);
   }
   .sc-track{ display:flex; width:300%; align-items:stretch; transition:transform 420ms cubic-bezier(.4,0,.2,1); }
   .sc-panel{ flex:0 0 calc(100% / 3); width:calc(100% / 3); display:grid; grid-template-columns:1fr 1fr; }
   .sc-text{ padding:clamp(28px,4vw,48px); display:flex; flex-direction:column; justify-content:center; }
-  .sc-eyebrow{ display:flex; align-items:center; gap:9px; font-size:14px; font-weight:600; color:var(--ink); margin-bottom:16px; }
-  .sc-eyebrow-icon{ width:auto; height:auto; padding:5px; border-radius:7px; display:flex; align-items:center; justify-content:center; flex:none; }
-  .sc-pill{ display:inline-block; align-self:flex-start; font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; border-radius:6px; padding:4px 9px; margin-bottom:12px; }
+  .sc-eyebrow{ display:flex; align-items:center; flex-wrap:wrap; gap:9px; font-size:14px; font-weight:600; color:var(--ink); margin-bottom:16px; }
+  .sc-eyebrow-icon{ width:auto; height:auto; padding:5px; clip-path:url(#squircle-tab); display:flex; align-items:center; justify-content:center; flex:none; }
+  .sc-pill{ display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; border-radius:6px; padding:4px 9px; flex:none; }
   .sc-title{ font-weight:700; font-size:clamp(24px,2.6vw,32px); line-height:1.15; letter-spacing:-0.015em; margin:0 0 14px 0; }
   .sc-desc{ font-size:15.5px; line-height:1.55; color:var(--ink-soft); margin:0 0 22px 0; max-width:340px; }
   .sc-link{ display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:14.5px; text-decoration:underline; text-underline-offset:3px; }
@@ -435,7 +435,7 @@
             </div>
             <h2 class="sc-title">Find a trusted pro, in minutes</h2>
             <p class="sc-desc">A home service marketplace built around one thing: trust. Browse vetted providers, compare real reviews, and book with confidence.</p>
-            <a href="#" class="sc-link">View case study &rarr;</a>
+            <a href="#" class="sc-link">View case study<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
           <div class="sc-visual">
             <div class="sc-mock">
@@ -469,14 +469,14 @@
 
         <div class="sc-panel" id="panel-suede">
           <div class="sc-text">
-            <div class="sc-pill">In Progress</div>
             <div class="sc-eyebrow">
               <span class="sc-eyebrow-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5.3a2 2 0 10-2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 7.3v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 9.3L4 15a1.15 1.15 0 00.6 2.1h14.8a1.15 1.15 0 00.6-2.1l-8-5.7z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
               SUEDE
+              <span class="sc-pill">In Progress</span>
             </div>
             <h2 class="sc-title">Reviews that actually fit</h2>
             <p class="sc-desc">Redesigning a fashion review platform that matches real body measurements to real reviews, so shoppers can buy with confidence.</p>
-            <a href="#" class="sc-link">View case study &rarr;</a>
+            <a href="#" class="sc-link">View case study<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
           <div class="sc-visual">
             <div class="sc-mock">
@@ -508,7 +508,7 @@
             </div>
             <h2 class="sc-title">Every run claims new ground</h2>
             <p class="sc-desc">A running app where every run expands your territory, builds personalized heatmaps, and rewards consistency with streaks and milestones.</p>
-            <a href="#" class="sc-link">View case study &rarr;</a>
+            <a href="#" class="sc-link">View case study<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
           <div class="sc-visual">
             <div class="sc-mock">
