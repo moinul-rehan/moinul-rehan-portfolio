@@ -255,11 +255,11 @@
   .deck-connector svg{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:24px; height:44.8px; display:block; }
   .deck-card{
     position:relative; flex:0 0 180px; width:180px; height:360px; overflow:hidden;
-    background:var(--paper); border-radius:20px; border:1px solid var(--line);
-    transition:flex-basis 500ms cubic-bezier(.4,0,.2,1), width 500ms cubic-bezier(.4,0,.2,1), box-shadow 500ms ease, border-color 500ms ease;
+    background:#fff; border-radius:20px; border:none;
+    transition:flex-basis 500ms cubic-bezier(.4,0,.2,1), width 500ms cubic-bezier(.4,0,.2,1), box-shadow 500ms ease;
     cursor:pointer;
   }
-  .deck-card.active{ flex:0 0 400px; width:400px; border-color:transparent; box-shadow:0 20px 48px -12px rgba(11,53,88,0.16); }
+  .deck-card.active{ flex:0 0 400px; width:400px; box-shadow:0 20px 48px -12px rgba(11,53,88,0.16); }
   .deck-card::before{
     content:attr(data-step); position:absolute; right:-10px; bottom:-40px; z-index:0;
     font-size:180px; font-weight:800; line-height:1; opacity:0.35; pointer-events:none;
