@@ -1,3 +1,7 @@
+Also needed: rehan.jpg — your hero-section portrait/photo, shown right
+below the "Let's Talk"/"Email Me" buttons. Any reasonable landscape or
+portrait photo works; the hero-photo box caps at 760px wide.
+
 Drop project photos here using this naming convention — the slideshow
 picks them up automatically, no code changes needed:
 
