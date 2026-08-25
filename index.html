@@ -180,7 +180,7 @@
   .tab-btn.active .tab-goo{ opacity:1; }
   .goo-blob{ position:absolute; background:#fff; }
   .goo-blob.goo-circle{ inset:0; clip-path:url(#squircle-tab); }
-  .goo-blob.goo-stem{ left:50%; top:100%; transform:translateX(-50%); width:18px; height:26px; border-radius:9px; }
+  .goo-neck{ position:absolute; left:50%; top:100%; transform:translateX(-50%); width:32px; height:14px; }
   .showcase-card-zone{ position:relative; z-index:1; width:100%; display:flex; justify-content:center; padding-top:14px; }
   .showcase-card{
     position:relative; overflow:hidden;
@@ -407,17 +407,17 @@
 
       <div class="showcase-tabs" id="showcaseTabs">
         <button class="tab-btn active" data-target="handynaija" aria-label="HandyNaija">
-          <span class="tab-goo" aria-hidden="true"><span class="goo-blob goo-circle"></span><span class="goo-blob goo-stem"></span></span>
+          <span class="tab-goo" aria-hidden="true"><span class="goo-blob goo-circle"></span><svg class="goo-neck" viewBox="0 0 32 14" fill="none" preserveAspectRatio="none"><path d="M25.0486 1.4497e-07C25.0486 1.4497e-07 20.3636 0.869539 20.3636 7C20.3636 13.1305 32 14 32 14L0 14C0 14 11.6364 13.1305 11.6364 7C11.6364 0.869539 6.95136 -1.07942e-06 6.95136 -1.07942e-06L25.0486 1.4497e-07Z" fill="#fff"/></svg></span>
           <span class="tab-indicator" aria-hidden="true"></span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 11L12 4l8 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9a1 1 0 001 1h3v-5h4v5h3a1 1 0 001-1v-9" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
         </button>
         <button class="tab-btn" data-target="suede" aria-label="SUEDE">
-          <span class="tab-goo" aria-hidden="true"><span class="goo-blob goo-circle"></span><span class="goo-blob goo-stem"></span></span>
+          <span class="tab-goo" aria-hidden="true"><span class="goo-blob goo-circle"></span><svg class="goo-neck" viewBox="0 0 32 14" fill="none" preserveAspectRatio="none"><path d="M25.0486 1.4497e-07C25.0486 1.4497e-07 20.3636 0.869539 20.3636 7C20.3636 13.1305 32 14 32 14L0 14C0 14 11.6364 13.1305 11.6364 7C11.6364 0.869539 6.95136 -1.07942e-06 6.95136 -1.07942e-06L25.0486 1.4497e-07Z" fill="#fff"/></svg></span>
           <span class="tab-indicator" aria-hidden="true"></span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5.3a2 2 0 10-2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 7.3v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 9.3L4 15a1.15 1.15 0 00.6 2.1h14.8a1.15 1.15 0 00.6-2.1l-8-5.7z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
         </button>
         <button class="tab-btn" data-target="terrava" aria-label="Terrava">
-          <span class="tab-goo" aria-hidden="true"><span class="goo-blob goo-circle"></span><span class="goo-blob goo-stem"></span></span>
+          <span class="tab-goo" aria-hidden="true"><span class="goo-blob goo-circle"></span><svg class="goo-neck" viewBox="0 0 32 14" fill="none" preserveAspectRatio="none"><path d="M25.0486 1.4497e-07C25.0486 1.4497e-07 20.3636 0.869539 20.3636 7C20.3636 13.1305 32 14 32 14L0 14C0 14 11.6364 13.1305 11.6364 7C11.6364 0.869539 6.95136 -1.07942e-06 6.95136 -1.07942e-06L25.0486 1.4497e-07Z" fill="#fff"/></svg></span>
           <span class="tab-indicator" aria-hidden="true"></span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-7.58 7-12A7 7 0 105 9c0 4.42 7 12 7 12z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg>
         </button>
