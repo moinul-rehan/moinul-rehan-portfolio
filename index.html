@@ -969,6 +969,8 @@
     el.style.opacity = visible ? '1' : '0';
   }
 
+  var prevX = {};
+
   function apply(){
     cards.forEach(function(el, i){
       var role = signedRole(i, current);
@@ -980,8 +982,25 @@
       el.style.pointerEvents = 'auto';
       el.style.width = r.w + 'px';
       el.style.height = r.h + 'px';
-      el.style.zIndex = isCenter ? 2 : 1;
       el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
+
+      // A card recycling from one edge to the other (e.g. leaving the left
+      // side to become the new far-right peek) travels the full width of the
+      // carousel. At equal z-index it can paint over whichever stationary
+      // card it happens to be later than in the DOM, which looks broken —
+      // so during that long slide it drops behind everything, then resumes
+      // normal stacking once it has settled into its new spot.
+      var oldX = prevX[i];
+      var bigJump = oldX !== undefined && Math.abs(r.x - oldX) > 700;
+      if (bigJump) {
+        el.style.zIndex = 0;
+        (function(el, isCenter){
+          setTimeout(function(){ el.style.zIndex = isCenter ? 2 : 1; }, 560);
+        })(el, isCenter);
+      } else {
+        el.style.zIndex = isCenter ? 2 : 1;
+      }
+      prevX[i] = r.x;
     });
     // Roles present depend on n: signedRole() only ever produces -2 once n>=5,
     // so with n=4 the far-left slot is structurally always empty — no card ever
