@@ -309,30 +309,33 @@
   .testi-head{ position:relative; z-index:1; text-align:center; margin-bottom:clamp(40px,6vw,64px); }
   .testi-eyebrow{ color:rgba(255,255,255,0.75); }
   .testi-heading{ font-weight:700; font-size:clamp(30px,4vw,44px); line-height:1.15; letter-spacing:-0.015em; color:#fff; margin-top:10px; }
-  .testi-carousel{ position:relative; z-index:1; display:flex; align-items:stretch; justify-content:center; gap:10px; max-width:1160px; margin-inline:auto; padding-inline:16px; }
-  .testi-peek{ position:relative; z-index:1; border-radius:20px; overflow:hidden; align-self:center; border:12px solid #fff; box-shadow:0 16px 32px -16px rgba(7,26,49,0.32); cursor:pointer; }
-  .testi-peek img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .testi-peek.far{ flex:0 0 74px; width:74px; height:205px; }
-  .testi-peek.near{ flex:0 0 105px; width:105px; height:344px; }
-  .testi-connector{ flex:0 0 0; width:0; align-self:center; position:relative; z-index:0; pointer-events:none; }
+  .testi-carousel{ position:relative; z-index:1; height:513px; max-width:1160px; margin-inline:auto; padding-inline:16px; }
+  .testi-connector{ position:absolute; top:50%; left:50%; z-index:0; pointer-events:none; transition:transform 550ms cubic-bezier(.4,0,.2,1), opacity 550ms ease; }
   .testi-connector svg{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:22px; height:38px; display:block; }
-  .testi-card{
-    position:relative; z-index:1;
-    flex:0 0 auto; width:min(762px, 100%); height:513px; background:#fff; border-radius:24px; overflow:hidden;
-    border:12px solid #fff; box-shadow:0 30px 60px -20px rgba(7,26,49,0.35);
-    display:grid; grid-template-columns:1fr 1fr; align-items:stretch; gap:16px; padding:16px;
+  .testi-card-el{
+    position:absolute; top:50%; left:50%; z-index:1;
+    border-radius:20px; overflow:hidden; background:#fff; border:12px solid #fff;
+    box-shadow:0 16px 32px -16px rgba(7,26,49,0.32);
+    cursor:pointer;
+    transition:width 550ms cubic-bezier(.4,0,.2,1), height 550ms cubic-bezier(.4,0,.2,1), transform 550ms cubic-bezier(.4,0,.2,1), box-shadow 550ms ease;
   }
-  .testi-card-text{ padding:16px; display:flex; flex-direction:column; justify-content:center; }
-  .testi-card-text > *{ transition:opacity 280ms ease, transform 280ms ease; }
-  .testi-card.swapping .testi-card-text > *{ opacity:0; transform:translateY(10px); }
+  .testi-card-el.is-center{ box-shadow:0 30px 60px -20px rgba(7,26,49,0.35); cursor:default; }
+  .testi-bg-photo{ position:absolute; inset:0; }
+  .testi-bg-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .testi-overlay{
+    position:absolute; inset:0; background:#fff; opacity:0; pointer-events:none;
+    display:grid; grid-template-columns:1fr 1fr; align-items:stretch; gap:16px; padding:16px;
+    transition:opacity 400ms ease 120ms;
+  }
+  .testi-card-el.is-center .testi-overlay{ opacity:1; pointer-events:auto; }
+  .testi-card-text{ padding:16px; display:flex; flex-direction:column; justify-content:center; min-width:0; }
   .testi-quote{ font-size:19px; line-height:1.5; font-weight:500; color:var(--ink); margin-bottom:24px; }
   .testi-attrib{ display:flex; align-items:center; gap:0; flex-wrap:wrap; }
   .testi-name{ font-size:13px; font-weight:700; background:var(--paper-alt); border-radius:999px; padding:6px 12px; }
   .testi-role{ font-size:13px; color:var(--ink-faint); background:var(--paper-alt); border-radius:999px; padding:6px 12px; }
   .testi-mini-connector{ width:8px; height:14px; flex:none; }
-  .testi-card-photo{ position:relative; overflow:hidden; border-radius:16px; }
-  .testi-card-photo img{ width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0; transition:opacity 280ms ease, transform 280ms ease; }
-  .testi-card.swapping .testi-card-photo img{ opacity:0; transform:scale(1.04); }
+  .testi-card-photo{ position:relative; overflow:hidden; border-radius:16px; min-width:0; }
+  .testi-card-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
   .testi-dots{ position:relative; z-index:1; display:flex; align-items:center; justify-content:center; gap:6px; margin-top:clamp(32px,5vw,48px); }
   .testi-dot{ height:8px; width:8px; border-radius:3px; background:rgba(255,255,255,0.35); overflow:hidden; cursor:pointer; transition:width 300ms ease; }
   .testi-dot.active{ width:64px; }
@@ -355,10 +358,12 @@
   .footer-links{ display:flex; align-items:center; gap:20px; font-size:14px; }
 
   @media (max-width:860px){
-    .testi-peek.far, .testi-connector.outer{ display:none; }
-    .testi-peek.near{ flex:0 0 40px; width:40px; height:180px; }
-    .testi-connector svg{ width:16px; height:30px; }
-    .testi-card{ grid-template-columns:1fr; width:calc(100% - 32px); }
+    .testi-carousel{ height:auto; }
+    .testi-connector{ display:none; }
+    .testi-card-el{ display:none; }
+    .testi-card-el.is-center{ display:block; position:relative; top:auto; left:auto; transform:none !important; width:calc(100% - 32px) !important; height:auto !important; margin-inline:auto; }
+    .testi-bg-photo{ display:none; }
+    .testi-overlay{ position:relative; inset:auto; opacity:1 !important; pointer-events:auto !important; grid-template-columns:1fr; }
     .testi-card-photo{ min-height:180px; order:-1; }
     .nav-links{ display:none; }
     .tools-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
@@ -878,29 +883,11 @@
   </div>
 
   <div class="testi-carousel" id="testiCarousel">
-    <div class="testi-peek far" id="testiFarPrev"><img src="" alt=""></div>
-    <div class="testi-connector outer" aria-hidden="true"><svg viewBox="0 0 16 28" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 0.993759 10.1818 8 10.1818C15.0062 10.1818 16 0 16 0V28C16 28 15.0062 17.8182 8 17.8182C0.993759 17.8182 0 28 0 28V0Z" fill="#fff"/></svg></div>
-
-    <div class="testi-peek near" id="testiNearPrev"><img src="" alt=""></div>
-    <div class="testi-connector" aria-hidden="true"><svg viewBox="0 0 20 37.3338" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 1.2422 13.5759 10 13.5759C18.7578 13.5759 20 0 20 0V37.3338C20 37.3338 18.7578 23.7578 10 23.7578C1.2422 23.7578 0 37.3338 0 37.3338V0Z" fill="#fff"/></svg></div>
-
-    <div class="testi-card" id="testiCard">
-      <div class="testi-card-text">
-        <p class="testi-quote" id="testiQuote"></p>
-        <div class="testi-attrib">
-          <span class="testi-name" id="testiName"></span>
-          <svg class="testi-mini-connector" viewBox="0 0 8 14" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 0.49688 5.09091 4 5.09091C7.50312 5.09091 8 0 8 0V14C8 14 7.50312 8.90909 4 8.90909C0.49688 8.90909 0 14 0 14V0Z" fill="var(--paper-alt)"/></svg>
-          <span class="testi-role" id="testiRole"></span>
-        </div>
-      </div>
-      <div class="testi-card-photo"><img id="testiPhoto" src="" alt=""></div>
-    </div>
-
-    <div class="testi-connector" aria-hidden="true"><svg viewBox="0 0 20 37.3338" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 1.2422 13.5759 10 13.5759C18.7578 13.5759 20 0 20 0V37.3338C20 37.3338 18.7578 23.7578 10 23.7578C1.2422 23.7578 0 37.3338 0 37.3338V0Z" fill="#fff"/></svg></div>
-    <div class="testi-peek near" id="testiNearNext"><img src="" alt=""></div>
-
-    <div class="testi-connector outer" aria-hidden="true"><svg viewBox="0 0 16 28" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 0.993759 10.1818 8 10.1818C15.0062 10.1818 16 0 16 0V28C16 28 15.0062 17.8182 8 17.8182C0.993759 17.8182 0 28 0 28V0Z" fill="#fff"/></svg></div>
-    <div class="testi-peek far" id="testiFarNext"><img src="" alt=""></div>
+    <div class="testi-connector" id="testiConnLeft" aria-hidden="true"><svg viewBox="0 0 20 37.3338" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 1.2422 13.5759 10 13.5759C18.7578 13.5759 20 0 20 0V37.3338C20 37.3338 18.7578 23.7578 10 23.7578C1.2422 23.7578 0 37.3338 0 37.3338V0Z" fill="#fff"/></svg></div>
+    <div class="testi-connector" id="testiConnRight" aria-hidden="true"><svg viewBox="0 0 20 37.3338" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 1.2422 13.5759 10 13.5759C18.7578 13.5759 20 0 20 0V37.3338C20 37.3338 18.7578 23.7578 10 23.7578C1.2422 23.7578 0 37.3338 0 37.3338V0Z" fill="#fff"/></svg></div>
+    <div class="testi-connector" id="testiConnFarLeft" aria-hidden="true"><svg viewBox="0 0 16 28" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 0.993759 10.1818 8 10.1818C15.0062 10.1818 16 0 16 0V28C16 28 15.0062 17.8182 8 17.8182C0.993759 17.8182 0 28 0 28V0Z" fill="#fff"/></svg></div>
+    <div class="testi-connector" id="testiConnFarRight" aria-hidden="true"><svg viewBox="0 0 16 28" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 0.993759 10.1818 8 10.1818C15.0062 10.1818 16 0 16 0V28C16 28 15.0062 17.8182 8 17.8182C0.993759 17.8182 0 28 0 28V0Z" fill="#fff"/></svg></div>
+    <div id="testiCards"></div>
   </div>
 
   <div class="testi-dots" id="testiDots"></div>
@@ -916,19 +903,49 @@
   ];
   var n = testimonials.length;
 
-  var quoteEl = document.getElementById('testiQuote');
-  var nameEl = document.getElementById('testiName');
-  var roleEl = document.getElementById('testiRole');
-  var photoEl = document.getElementById('testiPhoto');
-  var farPrevEl = document.getElementById('testiFarPrev').querySelector('img');
-  var nearPrevEl = document.getElementById('testiNearPrev').querySelector('img');
-  var nearNextEl = document.getElementById('testiNearNext').querySelector('img');
-  var farNextEl = document.getElementById('testiFarNext').querySelector('img');
+  // Each role is a fixed point in space (offset from center, plus a width/height).
+  // Every testimonial's own card element animates between these roles via CSS
+  // transitions on width/height/transform — the card that was full-size shrinks
+  // and slides to become the new left peek, the right peek grows into the new
+  // center card, etc. Nothing is swapped in place; the elements themselves move.
+  var ROLES = {
+    '-2': { x: -560, w: 74,  h: 205 },
+    '-1': { x: -450, w: 105, h: 344 },
+    '0':  { x: 0,    w: 762, h: 513 },
+    '1':  { x: 450,  w: 105, h: 344 },
+    '2':  { x: 560,  w: 74,  h: 205 }
+  };
+
+  var cardsWrap = document.getElementById('testiCards');
   var dotsWrap = document.getElementById('testiDots');
-  var cardEl = document.getElementById('testiCard');
+  var connLeft = document.getElementById('testiConnLeft');
+  var connRight = document.getElementById('testiConnRight');
+  var connFarLeft = document.getElementById('testiConnFarLeft');
+  var connFarRight = document.getElementById('testiConnFarRight');
   var current = 0;
   var autoplayTimer = null;
-  var swapTimer = null;
+  var cards = [];
+
+  testimonials.forEach(function(t, i){
+    var el = document.createElement('div');
+    el.className = 'testi-card-el';
+    el.innerHTML =
+      '<div class="testi-bg-photo"><img src="' + t.photo + '" alt=""></div>' +
+      '<div class="testi-overlay">' +
+        '<div class="testi-card-text">' +
+          '<p class="testi-quote">' + t.quote + '</p>' +
+          '<div class="testi-attrib">' +
+            '<span class="testi-name">' + t.name + '</span>' +
+            '<svg class="testi-mini-connector" viewBox="0 0 8 14" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 0.49688 5.09091 4 5.09091C7.50312 5.09091 8 0 8 0V14C8 14 7.50312 8.90909 4 8.90909C0.49688 8.90909 0 14 0 14V0Z" fill="var(--paper-alt)"/></svg>' +
+            '<span class="testi-role">' + t.role + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="testi-card-photo"><img src="' + t.photo + '" alt=""></div>' +
+      '</div>';
+    el.addEventListener('click', function(){ render(i); });
+    cardsWrap.appendChild(el);
+    cards.push(el);
+  });
 
   testimonials.forEach(function(){
     var dot = document.createElement('span');
@@ -942,23 +959,40 @@
 
   function wrap(i){ return (i % n + n) % n; }
 
+  function signedRole(i, cur){
+    var raw = wrap(i - cur);
+    return raw > n / 2 ? raw - n : raw;
+  }
+
+  function positionConnector(el, x, visible){
+    el.style.transform = 'translateX(' + x + 'px)';
+    el.style.opacity = visible ? '1' : '0';
+  }
+
+  function apply(){
+    cards.forEach(function(el, i){
+      var role = signedRole(i, current);
+      var isCenter = role === 0;
+      el.classList.toggle('is-center', isCenter);
+      var r = ROLES[String(Math.max(-2, Math.min(2, role)))];
+      if (!r) { el.style.opacity = '0'; el.style.pointerEvents = 'none'; return; }
+      el.style.opacity = '1';
+      el.style.pointerEvents = 'auto';
+      el.style.width = r.w + 'px';
+      el.style.height = r.h + 'px';
+      el.style.zIndex = isCenter ? 2 : 1;
+      el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
+    });
+    positionConnector(connLeft, -213, n > 1);
+    positionConnector(connRight, 213, n > 1);
+    positionConnector(connFarLeft, -503, n > 3);
+    positionConnector(connFarRight, 503, n > 3);
+    dots.forEach(function(d, i){ d.classList.toggle('active', i === current); });
+  }
+
   function render(idx){
-    if (swapTimer) clearTimeout(swapTimer);
-    cardEl.classList.add('swapping');
-    swapTimer = setTimeout(function(){
-      current = wrap(idx);
-      var t = testimonials[current];
-      quoteEl.textContent = t.quote;
-      nameEl.textContent = t.name;
-      roleEl.textContent = t.role;
-      photoEl.src = t.photo;
-      nearPrevEl.src = testimonials[wrap(current - 1)].photo;
-      nearNextEl.src = testimonials[wrap(current + 1)].photo;
-      farPrevEl.src = testimonials[wrap(current - 2)].photo;
-      farNextEl.src = testimonials[wrap(current + 2)].photo;
-      dots.forEach(function(d, i){ d.classList.toggle('active', i === current); });
-      cardEl.classList.remove('swapping');
-    }, 260);
+    current = wrap(idx);
+    apply();
     startAutoplay();
   }
 
@@ -970,10 +1004,6 @@
   dots.forEach(function(dot, i){
     dot.addEventListener('click', function(){ render(i); });
   });
-  document.getElementById('testiNearPrev').addEventListener('click', function(){ render(current - 1); });
-  document.getElementById('testiFarPrev').addEventListener('click', function(){ render(current - 2); });
-  document.getElementById('testiNearNext').addEventListener('click', function(){ render(current + 1); });
-  document.getElementById('testiFarNext').addEventListener('click', function(){ render(current + 2); });
 
   render(0);
 })();
