@@ -367,7 +367,10 @@
   .gallery-section{ padding-block:clamp(56px,8vw,96px); text-align:center; overflow:hidden; }
   .gallery-section h2{ font-weight:700; font-size:clamp(28px,3.6vw,42px); line-height:1.15; letter-spacing:-0.015em; max-width:640px; margin-inline:auto; }
   .gallery-section .lede{ font-size:15.5px; color:var(--ink-soft); max-width:480px; margin:16px auto 28px; }
-  .gallery-row{ display:flex; justify-content:center; gap:24px; margin-top:clamp(40px,6vw,64px); }
+  .gallery-viewport{ overflow:hidden; margin-top:clamp(40px,6vw,64px); -webkit-mask-image:linear-gradient(to right, transparent, #000 6%, #000 94%, transparent); mask-image:linear-gradient(to right, transparent, #000 6%, #000 94%, transparent); }
+  .gallery-row{ display:flex; width:max-content; gap:24px; animation:gallerySlide 28s linear infinite; }
+  .gallery-row:hover{ animation-play-state:paused; }
+  @keyframes gallerySlide{ from{ transform:translateX(0); } to{ transform:translateX(calc(-50% - 12px)); } }
   .gallery-card{
     position:relative; flex:0 0 auto; width:min(560px,72vw); aspect-ratio:16/10; border-radius:24px;
     overflow:hidden; display:flex; align-items:flex-end;
@@ -382,8 +385,7 @@
   .gallery-badge-icon{ width:32px; height:32px; border-radius:999px; display:flex; align-items:center; justify-content:center; flex:none; }
   .gallery-badge-label{ font-size:13.5px; font-weight:600; color:var(--ink); padding-right:8px; }
   @media (max-width:860px){
-    .gallery-row{ flex-wrap:nowrap; overflow-x:auto; justify-content:flex-start; padding-inline:24px; scroll-snap-type:x mandatory; }
-    .gallery-card{ width:80vw; scroll-snap-align:center; }
+    .gallery-card{ width:78vw; }
   }
 
   .tools-section{ padding-block:clamp(56px,8vw,96px); text-align:center; }
@@ -1191,7 +1193,8 @@
   <h2>From the first pixel to the finished product</h2>
   <p class="lede">A closer look at the screens, flows, and details behind each project — the parts that don't always make it into a case study.</p>
   <a href="#work" class="btn btn-primary">View all work</a>
-  <div class="gallery-row">
+  <div class="gallery-viewport">
+  <div class="gallery-row" id="galleryRow">
     <div class="gallery-card">
       <img src="images/handynaija-1.png" alt="HandyNaija">
       <div class="gallery-badge">
@@ -1220,7 +1223,16 @@
       </div>
     </div>
   </div>
+  </div>
 </div>
+<script>
+(function(){
+  var row = document.getElementById('galleryRow');
+  if (!row) return;
+  var clone = row.innerHTML;
+  row.insertAdjacentHTML('beforeend', clone);
+})();
+</script>
 
 <div class="tools-section wrap">
   <div class="eyebrow">Tools I Work In</div>
