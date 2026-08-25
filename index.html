@@ -312,22 +312,22 @@
   .testi-carousel{ position:relative; z-index:1; display:flex; align-items:stretch; justify-content:center; gap:0; max-width:1160px; margin-inline:auto; padding-inline:16px; }
   .testi-peek{ border-radius:20px; overflow:hidden; align-self:center; box-shadow:0 16px 32px -16px rgba(7,26,49,0.32); cursor:pointer; }
   .testi-peek img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .testi-peek.far{ flex:0 0 64px; width:64px; height:180px; }
-  .testi-peek.near{ flex:0 0 96px; width:96px; height:300px; }
+  .testi-peek.far{ flex:0 0 74px; width:74px; height:205px; }
+  .testi-peek.near{ flex:0 0 105px; width:105px; height:344px; }
   .testi-connector{ flex:0 0 0; width:0; align-self:center; position:relative; z-index:1; pointer-events:none; }
   .testi-connector svg{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:22px; height:38px; display:block; }
   .testi-card{
-    flex:0 0 auto; width:min(680px, 100%); background:#fff; border-radius:24px; overflow:hidden;
+    flex:0 0 auto; width:min(762px, 100%); height:513px; background:#fff; border-radius:24px; overflow:hidden;
     box-shadow:0 30px 60px -20px rgba(7,26,49,0.35);
-    display:grid; grid-template-columns:1fr 1fr; align-items:stretch;
+    display:grid; grid-template-columns:1fr 1fr; align-items:stretch; gap:16px; padding:16px;
   }
-  .testi-card-text{ padding:clamp(28px,3.5vw,40px); display:flex; flex-direction:column; justify-content:center; }
+  .testi-card-text{ padding:16px; display:flex; flex-direction:column; justify-content:center; }
   .testi-quote{ font-size:19px; line-height:1.5; font-weight:500; color:var(--ink); margin-bottom:24px; }
   .testi-attrib{ display:flex; align-items:center; gap:0; flex-wrap:wrap; }
   .testi-name{ font-size:13px; font-weight:700; background:var(--paper-alt); border-radius:999px; padding:6px 12px; }
   .testi-role{ font-size:13px; color:var(--ink-faint); background:var(--paper-alt); border-radius:999px; padding:6px 12px; }
   .testi-mini-connector{ width:8px; height:14px; flex:none; }
-  .testi-card-photo{ position:relative; overflow:hidden; min-height:260px; }
+  .testi-card-photo{ position:relative; overflow:hidden; border-radius:16px; }
   .testi-card-photo img{ width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0; }
   .testi-dots{ position:relative; z-index:1; display:flex; align-items:center; justify-content:center; gap:6px; margin-top:clamp(32px,5vw,48px); }
   .testi-dot{ height:8px; width:8px; border-radius:3px; background:rgba(255,255,255,0.35); overflow:hidden; cursor:pointer; transition:width 300ms ease; }
