@@ -251,10 +251,10 @@
   .process-head{ max-width:600px; margin-bottom:clamp(32px,5vw,48px); }
   .process-head h2{ font-weight:700; font-size:clamp(26px,2.8vw,32px); letter-spacing:-0.015em; margin-top:8px; }
   .deck-cards{ display:flex; align-items:stretch; gap:12px; width:100%; }
-  .deck-connector{ flex:0 0 0; width:0; align-self:center; position:relative; z-index:1; pointer-events:none; }
+  .deck-connector{ flex:0 0 0; width:0; align-self:center; position:relative; z-index:0; pointer-events:none; }
   .deck-connector svg{ position:absolute; left:50%; top:50%; transform:translate(-50%, calc(-50% - 70% - 50px)); width:24px; height:44.8px; display:block; }
   .deck-card{
-    position:relative; flex:0 0 180px; width:180px; height:360px; overflow:hidden;
+    position:relative; z-index:1; flex:0 0 180px; width:180px; height:360px; overflow:hidden;
     background:#fff; border-radius:20px; border:none;
     transition:flex-basis 500ms cubic-bezier(.4,0,.2,1), width 500ms cubic-bezier(.4,0,.2,1), box-shadow 500ms ease;
     cursor:pointer;
