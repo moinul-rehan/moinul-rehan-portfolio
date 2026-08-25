@@ -423,6 +423,36 @@
   .tool-badge{ width:64px; height:64px; display:flex; align-items:center; justify-content:center; flex:none; }
   .tool-badge img{ width:56px; height:56px; }
 
+  .journey-section{ padding-block:clamp(56px,8vw,96px); text-align:center; }
+  .journey-section h2{ font-weight:700; font-size:clamp(28px,3.6vw,42px); margin-top:8px; margin-bottom:16px; letter-spacing:-0.015em; }
+  .journey-section .lede{ font-size:15.5px; line-height:1.6; color:var(--ink-soft); max-width:640px; margin:0 auto clamp(48px,7vw,72px); }
+  .journey-fan{ position:relative; display:flex; justify-content:center; align-items:flex-start; height:340px; margin-inline:auto; max-width:1040px; }
+  .journey-card{
+    position:relative; flex:0 0 auto; width:240px; min-height:280px; margin-inline:-34px;
+    background:var(--paper); border:1px solid var(--line); border-radius:18px;
+    box-shadow:0 20px 40px -20px rgba(7,26,49,0.18);
+    padding:20px; text-align:left; cursor:pointer;
+    transition:transform 380ms cubic-bezier(.22,1,.36,1), box-shadow 380ms ease, z-index 0s;
+  }
+  .journey-card:nth-child(1){ transform:rotate(-9deg) translateY(10px); z-index:1; }
+  .journey-card:nth-child(2){ transform:rotate(-4.5deg) translateY(2px); z-index:2; }
+  .journey-card:nth-child(3){ transform:rotate(0deg) translateY(-6px); z-index:3; }
+  .journey-fan:not(:hover) .journey-card:nth-child(2){ transform:rotate(-4.5deg) translateY(2px); }
+  .journey-card:hover{
+    transform:rotate(0deg) translateY(-22px) scale(1.04) !important;
+    box-shadow:0 32px 56px -20px rgba(7,26,49,0.3); z-index:10 !important;
+  }
+  .journey-card-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:18px; }
+  .journey-card-company{ font-weight:800; font-size:15px; color:var(--ink); letter-spacing:-0.01em; }
+  .journey-card-dates{ font-size:11.5px; color:var(--ink-faint); font-weight:600; white-space:nowrap; }
+  .journey-card-role{ font-weight:700; font-size:15.5px; color:var(--ink); margin-bottom:8px; }
+  .journey-card-desc{ font-size:13px; line-height:1.55; color:var(--ink-soft); }
+  @media (max-width:720px){
+    .journey-fan{ flex-direction:column; align-items:center; height:auto; gap:20px; }
+    .journey-card{ margin-inline:0; transform:none !important; width:min(320px,86vw); }
+    .journey-card:hover{ transform:translateY(-6px) scale(1.02) !important; }
+  }
+
   .closing{ background:var(--dark); color:var(--dark-text); text-align:center; padding-block:clamp(64px,10vw,120px); }
   .closing h2{ font-weight:700; font-size:clamp(28px,3.6vw,42px); letter-spacing:-0.015em; margin-bottom:28px; max-width:600px; margin-inline:auto; }
 
@@ -1301,6 +1331,38 @@
   });
 })();
 </script>
+
+<div class="journey-section wrap">
+  <div class="eyebrow">My Journey</div>
+  <h2>Where the experience comes from</h2>
+  <p class="lede">A product-focused designer working at the intersection of design, usability, and problem-solving &mdash; turning complex ideas into clear, meaningful interfaces across real client and internal products.</p>
+  <div class="journey-fan">
+    <div class="journey-card">
+      <div class="journey-card-top">
+        <span class="journey-card-company">MindSynth Technologies</span>
+        <span class="journey-card-dates">Aug&ndash;Oct 2024</span>
+      </div>
+      <div class="journey-card-role">UI/UX Designer (Intern)</div>
+      <p class="journey-card-desc">Worked on real client and internal product projects, supporting the design team across research, interface design, and design system work.</p>
+    </div>
+    <div class="journey-card">
+      <div class="journey-card-top">
+        <span class="journey-card-company">MindSynth Technologies</span>
+        <span class="journey-card-dates">Nov 2024&ndash;May 2025</span>
+      </div>
+      <div class="journey-card-role">Junior UX Engineer</div>
+      <p class="journey-card-desc">Contributed to real client and internal products across web and SaaS platforms &mdash; clear user flows, intuitive interfaces, and scalable design systems.</p>
+    </div>
+    <div class="journey-card">
+      <div class="journey-card-top">
+        <span class="journey-card-company">Softvence IT Ltd.</span>
+        <span class="journey-card-dates">Jun 2025&ndash;Present</span>
+      </div>
+      <div class="journey-card-role">UI/UX Designer</div>
+      <p class="journey-card-desc">Designing user interfaces and improving usability on real client projects, collaborating with cross-functional teams in a professional product environment.</p>
+    </div>
+  </div>
+</div>
 
 <div class="closing" id="contact">
   <div class="wrap">
