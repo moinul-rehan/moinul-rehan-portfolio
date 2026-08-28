@@ -87,17 +87,21 @@
   .strip-close{ position:absolute; right:0; top:50%; transform:translateY(-50%); background:none; border:none; padding:4px; cursor:pointer; opacity:0.75; color:var(--accent-on); display:flex; }
   .strip-close:hover{ opacity:1; }
 
-  .nav-glass{
-    position:sticky; top:0; z-index:50;
-    background:rgba(253,251,244,0.62); backdrop-filter:blur(16px) saturate(160%); -webkit-backdrop-filter:blur(16px) saturate(160%);
-    border-bottom:1px solid rgba(255,255,255,0.4);
-    box-shadow:0 8px 32px -16px rgba(7,26,49,0.1);
+  .nav-glass{ position:sticky; top:0; z-index:50; display:flex; justify-content:center; padding-block:16px; pointer-events:none; }
+  .nav-pill{
+    pointer-events:auto; display:inline-flex; align-items:center; gap:10px;
+    padding:7px 14px 7px 8px; border-radius:999px;
+    background:rgba(253,251,244,0.72); backdrop-filter:blur(18px) saturate(160%); -webkit-backdrop-filter:blur(18px) saturate(160%);
+    border:1px solid rgba(255,255,255,0.55);
+    box-shadow:0 16px 36px -18px rgba(7,26,49,0.22);
   }
-  .nav{ display:flex; align-items:center; justify-content:space-between; padding-block:14px; }
-  .nav-left{ display:flex; align-items:center; gap:28px; }
-  .wordmark{ font-weight:800; font-size:17px; letter-spacing:-0.01em; }
-  .nav-links{ display:flex; align-items:center; gap:4px; }
-  .nav-right{ display:flex; align-items:center; gap:12px; }
+  .nav-logo-badge{ width:28px; height:28px; border-radius:8px; background:var(--ink); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:12.5px; flex:none; }
+  .wordmark{ font-weight:800; font-size:14.5px; letter-spacing:-0.01em; white-space:nowrap; }
+  .nav-divider{ width:1px; height:18px; background:var(--line); flex:none; }
+  .nav-icons{ display:flex; align-items:center; gap:2px; }
+  .nav-icon-link{ width:32px; height:32px; border-radius:999px; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); transition:background 150ms ease, color 150ms ease; }
+  .nav-icon-link:hover{ background:var(--paper-alt); color:var(--ink); }
+  .nav-icon-link svg{ width:16px; height:16px; }
 
   /* HERO — soft rounded panel with a blurred mesh-gradient backdrop, matching the reference's real hero treatment */
   .hero-panel{ position:relative; background:var(--hero-panel); border-radius:32px; margin:16px 16px 0 16px; overflow:hidden; isolation:isolate; }
@@ -522,19 +526,31 @@
 </div>
 
 <div class="nav-glass">
-<div class="wrap nav">
-  <div class="nav-left">
-    <div class="wordmark">Moinul Rehan</div>
-    <div class="nav-links">
-      <a href="#work" class="nav-link">Work</a>
-      <a href="#about" class="nav-link">About</a>
+  <div class="nav-pill">
+    <span class="nav-logo-badge">MR</span>
+    <span class="wordmark">Moinul Rehan</span>
+    <span class="nav-divider"></span>
+    <div class="nav-icons">
+      <a href="#" class="nav-icon-link" title="Home" aria-label="Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5L12 4l9 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1v-9"/></svg>
+      </a>
+      <a href="#journey" class="nav-icon-link" title="Journey" aria-label="Journey">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></svg>
+      </a>
+      <a href="#work" class="nav-icon-link" title="Work" aria-label="Work">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h15A1.5 1.5 0 0 1 21 7.5V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7.5Z"/><path d="M3 10.5h18"/></svg>
+      </a>
+      <a href="#testimonials" class="nav-icon-link" title="Testimonials" aria-label="Testimonials">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4.5"/><path d="M8.3 12.2 6.5 21l5.5-3 5.5 3-1.8-8.8"/></svg>
+      </a>
+      <a href="#tools" class="nav-icon-link" title="Tools" aria-label="Tools">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 4 14h6l-1 7 9-11h-6l1-7Z"/></svg>
+      </a>
+      <a href="#contact" class="nav-icon-link" title="Contact" aria-label="Contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+      </a>
     </div>
   </div>
-  <div class="nav-right">
-    <a href="mailto:rehan.moinul.10@gmail.com" class="nav-link">Email Me</a>
-    <a href="#contact" class="btn btn-primary" style="min-height:40px; padding:9px 18px; font-size:14px;">Let's Talk</a>
-  </div>
-</div>
 </div>
 
 <div class="hero-panel">
@@ -580,7 +596,7 @@
 <div class="hero-fade-bottom"></div>
 </div>
 
-<div class="journey-section wrap">
+<div class="journey-section wrap" id="journey">
   <div class="eyebrow">My Journey</div>
   <h2>Where the experience comes from</h2>
   <p class="lede">A product-focused designer working at the intersection of design, usability, and problem-solving &mdash; turning complex ideas into clear, meaningful interfaces across real client and internal products.</p>
@@ -1071,7 +1087,7 @@
 })();
 </script>
 
-<div class="testi-section">
+<div class="testi-section" id="testimonials">
   <div class="mesh-layer theme-suede active"></div>
   <div class="wrap testi-head">
     <div class="eyebrow testi-eyebrow">Client Feedback</div>
@@ -1350,7 +1366,7 @@
 })();
 </script>
 
-<div class="tools-section wrap">
+<div class="tools-section wrap" id="tools">
   <div class="eyebrow">Tools I Work In</div>
   <h2>Design, prototype, hand off, repeat.</h2>
   <p class="lede">The everyday toolkit behind my process, from first wireframe to shipped product.</p>
