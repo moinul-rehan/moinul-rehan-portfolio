@@ -87,6 +87,12 @@
   .strip-close{ position:absolute; right:0; top:50%; transform:translateY(-50%); background:none; border:none; padding:4px; cursor:pointer; opacity:0.75; color:var(--accent-on); display:flex; }
   .strip-close:hover{ opacity:1; }
 
+  .nav-glass{
+    position:sticky; top:0; z-index:50;
+    background:rgba(253,251,244,0.62); backdrop-filter:blur(16px) saturate(160%); -webkit-backdrop-filter:blur(16px) saturate(160%);
+    border-bottom:1px solid rgba(255,255,255,0.4);
+    box-shadow:0 8px 32px -16px rgba(7,26,49,0.1);
+  }
   .nav{ display:flex; align-items:center; justify-content:space-between; padding-block:14px; }
   .nav-left{ display:flex; align-items:center; gap:28px; }
   .wordmark{ font-weight:800; font-size:17px; letter-spacing:-0.01em; }
@@ -515,6 +521,7 @@
   </div>
 </div>
 
+<div class="nav-glass">
 <div class="wrap nav">
   <div class="nav-left">
     <div class="wordmark">Moinul Rehan</div>
@@ -527,6 +534,7 @@
     <a href="mailto:rehan.moinul.10@gmail.com" class="nav-link">Email Me</a>
     <a href="#contact" class="btn btn-primary" style="min-height:40px; padding:9px 18px; font-size:14px;">Let's Talk</a>
   </div>
+</div>
 </div>
 
 <div class="hero-panel">
