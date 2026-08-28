@@ -434,9 +434,10 @@
     padding:20px; text-align:left; cursor:pointer;
     transition:transform 380ms cubic-bezier(.22,1,.36,1), box-shadow 380ms ease, z-index 0s;
   }
-  .journey-card:nth-child(1){ transform:rotate(-10deg) translate(6px, 18px); z-index:1; }
-  .journey-card:nth-child(2){ transform:rotate(7deg) translate(-4px, -14px); z-index:2; }
-  .journey-card:nth-child(3){ transform:rotate(-4deg) translate(10px, 6px); z-index:3; }
+  .journey-card:nth-child(1){ transform:rotate(-6deg) translate(-8px, -10px); z-index:4; }
+  .journey-card:nth-child(2){ transform:rotate(9deg) translate(10px, 16px); z-index:1; }
+  .journey-card:nth-child(3){ transform:rotate(-9deg) translate(4px, 4px); z-index:2; }
+  .journey-card:nth-child(4){ transform:rotate(5deg) translate(-6px, -6px); z-index:3; }
   .journey-card:hover{
     transform:rotate(0deg) translateY(-22px) scale(1.04) !important;
     box-shadow:0 32px 56px -20px rgba(7,26,49,0.3); z-index:10 !important;
@@ -445,6 +446,8 @@
   .journey-card-company{ font-weight:800; font-size:15px; color:var(--ink); letter-spacing:-0.01em; }
   .journey-logo img{ height:20px; width:auto; display:block; filter:grayscale(1); opacity:0.55; transition:filter 380ms ease, opacity 380ms ease; }
   .journey-card:hover .journey-logo img{ filter:grayscale(0); opacity:1; }
+  .journey-logo.on-dark{ background:var(--ink); border-radius:6px; padding:6px 10px; }
+  .journey-logo.on-dark img{ height:16px; }
   .journey-card-dates{ font-size:11.5px; color:var(--ink-faint); font-weight:600; white-space:nowrap; }
   .journey-card-role{ font-weight:700; font-size:15.5px; color:var(--ink); margin-bottom:8px; }
   .journey-card-desc{ font-size:13px; line-height:1.55; color:var(--ink-soft); }
@@ -574,6 +577,14 @@
   <h2>Where the experience comes from</h2>
   <p class="lede">A product-focused designer working at the intersection of design, usability, and problem-solving &mdash; turning complex ideas into clear, meaningful interfaces across real client and internal products.</p>
   <div class="journey-fan">
+    <div class="journey-card">
+      <div class="journey-card-top">
+        <span class="journey-logo on-dark"><img src="images/logos/tuliptech.webp" alt="Tulip Tech"></span>
+        <span class="journey-card-dates">Sep 2026&ndash;Present</span>
+      </div>
+      <div class="journey-card-role">UI/UX Designer</div>
+      <p class="journey-card-desc">Currently designing user interfaces and shaping product experience as part of the Tulip Tech team.</p>
+    </div>
     <div class="journey-card">
       <div class="journey-card-top">
         <span class="journey-logo"><img src="images/logos/mindsynth.png" alt="MindSynth Technologies"></span>
