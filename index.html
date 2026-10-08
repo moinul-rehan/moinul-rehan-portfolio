@@ -318,7 +318,7 @@
   /* On narrow screens the phrase breaks after "usable" on purpose, so the box hugs the text
      (Figma's "hug contents") instead of stretching to the column. */
   .br-narrow{ display:none; }
-  @media (max-width:560px){
+  @media (max-width:560px), (min-width:1176px){
     .br-narrow{ display:inline; }
   }
   @media (max-width:480px){
@@ -466,6 +466,114 @@
     .note-b{ --lx:-330px; --ly:250px; }
     .note-c{ --lx:-130px; --ly:400px; }
   }
+
+  /* PLAYABLE CANVAS UI, drawn in the selection system. Everything here exists only when the
+     script has wired the canvas (html.cv-on); the static page never shows a control that does
+     nothing. */
+  .cv-on .sel-cover .sel-deco{ transform-origin:0 0; }
+  .cv-on .sel-cover .sel-box{ pointer-events:auto; }
+  .cv-on .sel-cover .sel-cursor{ pointer-events:none; }
+  .cv-on .sel-cover .sel-handle::before,
+  .cv-handle::before{ content:""; position:absolute; inset:-17px; }
+  .sel-cover .sel-deco.is-selected .sel-box{ background:var(--select-fill); }
+  .sel-cover .sel-deco.is-selected .sel-box,
+  .sel-cover .sel-deco.is-selected .sel-handle{ touch-action:none; }
+  .sel-cover .sel-deco.is-focus .sel-box{ outline:2px solid var(--select-strong); outline-offset:3px; }
+  .cv-on .cover-notes .note{ pointer-events:auto; }
+  .cv-on .note, .cv-on .cv-portrait{ -webkit-user-select:none; user-select:none; }
+  .note.is-selected{ z-index:1; }
+  .note.is-dragging, .cv-portrait.is-dragging{ z-index:4; }
+  .note.is-selected, .cv-portrait.is-selected, .cv-portrait.is-selected .cv-handle{ touch-action:none; }
+  .cv-portrait.is-selected img{ -webkit-touch-callout:none; }
+  .cv-portrait.is-selected .cv-label{ color:var(--select-strong); }
+
+  /* A layer's own selection: the teal box, its size badge and, on the frame, one resize handle.
+     Pointing at a layer draws a thin outline first, as Figma does. */
+  .cv-chrome{ position:absolute; inset:-4px; pointer-events:none; opacity:0; transition:opacity var(--dur-ui) var(--ease); }
+  .cv-frame-wrap > .cv-chrome{ inset:-2px; }
+  .cv-box{ position:absolute; inset:0; border:2px solid var(--select); }
+  .cv-chrome .sel-badge, .cv-handle{ visibility:hidden; }
+  .is-selected > .cv-chrome, .is-selected > .cv-frame-wrap > .cv-chrome{ opacity:1; }
+  .is-selected > .cv-chrome .sel-badge, .is-selected .cv-handle{ visibility:visible; }
+  .cv-handle{
+    position:absolute; right:-6px; bottom:-6px; width:var(--handle); height:var(--handle);
+    background:var(--paper); border:2px solid var(--select); pointer-events:auto;
+  }
+  @media (hover:hover){
+    [data-cv-tool="move"] .note:not(.is-selected):hover > .cv-chrome,
+    [data-cv-tool="move"] .cv-portrait:not(.is-selected):hover .cv-chrome{ opacity:1; }
+    [data-cv-tool="move"] .note:not(.is-selected):hover .cv-box,
+    [data-cv-tool="move"] .cv-portrait:not(.is-selected):hover .cv-box{ border-width:1px; }
+  }
+
+  /* Cursors per tool. */
+  [data-cv-tool="move"] .note, [data-cv-tool="move"] .cv-portrait,
+  [data-cv-tool="move"] .sel-cover .sel-box{ cursor:move; }
+  .cv-on .sel-cover .sel-handle:nth-child(1), .cv-on .sel-cover .sel-handle:nth-child(4), .cv-handle{ cursor:nwse-resize; }
+  .cv-on .sel-cover .sel-handle:nth-child(2), .cv-on .sel-cover .sel-handle:nth-child(3){ cursor:nesw-resize; }
+  [data-cv-tool="hand"], [data-cv-tool="hand"] *{ cursor:grab; }
+  [data-cv-tool="hand"].is-panning, [data-cv-tool="hand"].is-panning *{ cursor:grabbing; }
+  [data-cv-tool="hand"] .cv-toolbar, [data-cv-tool="hand"] .cv-toolbar *{ cursor:pointer; }
+  [data-cv-tool="inspect"] .note, [data-cv-tool="inspect"] .cv-portrait, [data-cv-tool="inspect"] .sel-cover .sel-box,
+  [data-cv-tool="inspect"] [data-inspect]{ cursor:crosshair; }
+  [data-cv-tool="inspect"] .sel-cover .sel-handle{ cursor:crosshair; }
+
+  /* The floating toolbar, Figma style: it rides the bottom of the screen while the cover is in
+     view and settles under the file when the page moves on. Space is reserved from first paint. */
+  .cv-dock{ display:none; position:sticky; bottom:16px; z-index:6; justify-content:center; margin-top:24px; pointer-events:none; }
+  .js .cv-dock{ display:flex; visibility:hidden; }
+  .cv-on .cv-dock{ visibility:visible; }
+  .cv-toolbar{
+    pointer-events:auto; display:flex; align-items:center; gap:4px; padding:4px;
+    background:var(--paper); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow-float);
+  }
+  .cv-tool, .cv-act{
+    position:relative; display:inline-flex; align-items:center; justify-content:center; gap:4px;
+    min-width:44px; min-height:44px; padding:0 10px; border:0; border-radius:8px;
+    background:transparent; color:var(--ink); font-family:inherit; font-size:14px; font-weight:600; line-height:1; cursor:pointer;
+  }
+  .cv-act{ padding:0 14px; }
+  .cv-tool:hover, .cv-act:hover{ background:var(--paper-alt); }
+  .cv-tool[aria-pressed="true"]{ background:var(--select); color:var(--select-on); }
+  .cv-icon{ width:20px; height:20px; flex:none; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+  .cv-key{ font-family:inherit; font-size:11px; font-weight:600; color:var(--ink-soft); }
+  .cv-tool[aria-pressed="true"] .cv-key{ color:var(--select-on); }
+  .cv-sep{ width:1px; height:24px; margin-inline:4px; background:var(--line); }
+  .cv-tool::after{
+    content:attr(data-tip); position:absolute; left:50%; bottom:calc(100% + 8px);
+    padding:4px 8px; border-radius:6px; background:var(--ink); color:var(--paper);
+    font-size:12px; font-weight:600; line-height:1.5; white-space:nowrap;
+    opacity:0; pointer-events:none; transform:translateX(-50%); transition:opacity var(--dur-ui) var(--ease);
+  }
+  .cv-tool:hover::after, .cv-tool:focus-visible::after{ opacity:1; }
+  @media (hover:none) and (pointer:coarse){
+    .cv-tool[data-tool="hand"], .cv-key, .cv-tool::after{ display:none; }
+  }
+
+  /* Inspect: measured redlines and an honest spec card, drawn above the layers. */
+  .cv-inspect{ position:absolute; inset:0; z-index:5; pointer-events:none; display:none; }
+  .cv-inspect.is-on{ display:block; }
+  .cv-ins-box, .cv-ins-nbr, .cv-ins-line, .cv-ins-gap, .cv-ins-spec{ position:absolute; left:0; top:0; }
+  .cv-ins-box{ border:1px solid var(--select-strong); }
+  .cv-ins-nbr{ border:1px dashed var(--select-strong); }
+  .cv-ins-line{ background:var(--select-strong); }
+  .cv-ins-line::before, .cv-ins-line::after{ content:""; position:absolute; background:var(--select-strong); }
+  .cv-ins-line.is-v::before, .cv-ins-line.is-v::after{ left:-4px; width:9px; height:1px; }
+  .cv-ins-line.is-v::before{ top:0; } .cv-ins-line.is-v::after{ bottom:0; }
+  .cv-ins-line.is-h::before, .cv-ins-line.is-h::after{ top:-4px; width:1px; height:9px; }
+  .cv-ins-line.is-h::before{ left:0; } .cv-ins-line.is-h::after{ right:0; }
+  .cv-ins-gap{
+    padding:2px 6px; border-radius:3px; background:var(--select); color:var(--select-on);
+    font-size:12px; font-weight:600; line-height:1.5; white-space:nowrap; font-variant-numeric:tabular-nums;
+  }
+  .cv-ins-spec{
+    display:grid; gap:2px; padding:8px 10px; border-radius:8px;
+    background:var(--paper); border:1px solid var(--line); box-shadow:var(--shadow-float);
+    font-size:12px; line-height:1.5; color:var(--ink); white-space:nowrap; font-variant-numeric:tabular-nums;
+  }
+  .cv-ins-name{ font-weight:700; }
+  .cv-ins-font{ color:var(--ink-soft); }
+  .cv-ins-gap:empty, .cv-ins-line.is-off, .cv-ins-nbr.is-off, .cv-ins-gap.is-off{ display:none; }
 
   /* CONTENTS: a ruled index; every row is one link to its section. */
   .contents{ margin-top:clamp(40px,6vw,64px); }
@@ -687,7 +795,7 @@
   }
   @media print{
     .masthead{ position:static; }
-    .canvas-grid, .cover-notes, .cover-marquee, .skip-link{ display:none; }
+    .canvas-grid, .cover-notes, .cover-marquee, .skip-link, .cv-dock, .cv-inspect, .cv-hint{ display:none; }
   }
 </style>
 </head>
@@ -697,6 +805,9 @@
   <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12"/></symbol>
   <symbol id="i-frame" viewBox="0 0 12 12"><path d="M4 1v10M8 1v10M1 4h10M1 8h10"/></symbol>
   <symbol id="i-cursor" viewBox="0 0 17 19"><path d="M2 2l4.5 15 2-6 6-2L2 2z"/></symbol>
+  <symbol id="i-move" viewBox="0 0 24 24"><path d="M6 4l12.5 7.3-5.6 1.5-2.7 5.4L6 4z"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M8.5 12.5V6.25a1.5 1.5 0 013 0V11.5M11.5 11V4.75a1.5 1.5 0 013 0V11M14.5 11V6.25a1.5 1.5 0 013 0v7.25a6.5 6.5 0 01-6.5 6.5h-.6a6 6 0 01-4.6-2.15L4.5 14.6a1.45 1.45 0 012.2-1.9l1.8 1.8"/></symbol>
+  <symbol id="i-inspect" viewBox="0 0 24 24"><path d="M4.5 5v14M19.5 5v14M8 12h8M8 12l2.5-2.5M8 12l2.5 2.5M16 12l-2.5-2.5M16 12l-2.5 2.5"/></symbol>
 </svg>
 
 <!-- DRAFT COPY for Rehan's approval -->
@@ -740,40 +851,76 @@
 
   <!-- COVER -->
   <section class="cover" id="top" data-spy="" aria-labelledby="cover-title">
-    <div class="wrap">
-      <!-- DRAFT COPY for Rehan's approval -->
-      <p class="frame-label" aria-hidden="true"><svg class="i-frame"><use href="#i-frame"/></svg>Cover</p>
-      <!-- /DRAFT COPY -->
-      <div class="cover-stage" data-cover>
-        <p class="cover-byline">
-          <!-- Portrait: images/rehan.png for now. Swap it for images/rehan-polo.png (the TulipTech polo headshot) once that file is supplied. -->
-          <img class="cover-avatar" src="images/rehan.png" width="800" height="800" alt="Portrait of Moinul Islam Rehan" decoding="async">
-          <span><strong>Moinul Islam Rehan</strong>&nbsp;· UI/UX Designer at TulipTech&nbsp;· Dhaka</span>
-        </p>
-        <h1 class="cover-title" id="cover-title"><span class="cover-title-lead">I turn messy product ideas into</span> <span class="sel sel-cover">clear, usable<br class="br-narrow"> products.<span class="sel-deco" aria-hidden="true"><span class="sel-drag"></span><span class="sel-box"><span class="sel-handle"></span><span class="sel-handle"></span><span class="sel-handle"></span><span class="sel-handle"></span></span><span class="sel-badge"></span><span class="sel-cursor"><svg class="sel-arrow"><use href="#i-cursor"/></svg></span></span></span></h1>
-        <!-- DRAFT COPY for Rehan's approval -->
-        <p class="cover-lede">I work research first and end to end, from discovery to developer handoff. AI speeds up the execution; the design decisions stay mine.</p>
-        <!-- /DRAFT COPY -->
-        <ul class="cover-stats">
-          <li class="stat-pill"><strong>2.5+</strong> years</li>
-          <li class="stat-pill"><strong>30+</strong> company projects</li>
-          <li class="stat-pill"><strong>10+</strong> industries</li>
-        </ul>
-        <div class="cover-actions">
-          <a class="btn btn-primary" href="#work">See the work<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <a class="btn btn-ghost" href="mailto:rehan.moinul.10@gmail.com">Email me</a>
+    <!-- The cover is a small canvas. Without JS it is the finished frame; with JS its layers (the
+         headline selection, the portrait frame and the three notes) can be moved, resized, panned
+         and inspected. -->
+    <div class="cover-canvas" data-canvas data-cv-tool="move">
+      <div class="wrap">
+        <div class="cover-head">
+          <!-- DRAFT COPY for Rehan's approval -->
+          <p class="frame-label" aria-hidden="true"><svg class="i-frame"><use href="#i-frame"/></svg>Cover</p>
+          <!-- /DRAFT COPY -->
+          <!-- DRAFT COPY for Rehan's approval (canvas hint; one line shows per input type) -->
+          <p class="cv-hint"><span class="cv-hint-pointer">Live file: drag, resize, inspect</span><span class="cv-hint-touch">Live file: tap, then drag</span></p>
+          <!-- /DRAFT COPY -->
         </div>
-        <!-- The mess: decorative duplicates of the brief questions, shown only in the start state. -->
-        <!-- DRAFT COPY for Rehan's approval -->
-        <div class="cover-notes" aria-hidden="true">
-          <p class="note note-a">Who is the user?</p>
-          <p class="note note-b">What's actually broken today?</p>
-          <p class="note note-c">What does success look like?</p>
+        <div class="cover-stage" data-cover>
+          <p class="cover-byline" data-inspect="Text"><strong>Moinul Islam Rehan</strong>&nbsp;· UI/UX Designer at TulipTech&nbsp;· Dhaka</p>
+          <h1 class="cover-title" id="cover-title"><span class="cover-title-lead" data-inspect="Text">I turn messy product ideas into</span> <span class="sel sel-cover">clear, usable<br class="br-narrow"> products.<span class="sel-deco" aria-hidden="true"><span class="sel-drag"></span><span class="sel-box"><span class="sel-handle"></span><span class="sel-handle"></span><span class="sel-handle"></span><span class="sel-handle"></span></span><span class="sel-badge"></span><span class="sel-cursor"><svg class="sel-arrow"><use href="#i-cursor"/></svg></span></span></span></h1>
+          <div class="cover-portrait">
+            <!-- DRAFT COPY for Rehan's approval (frame name and alt text) -->
+            <div class="cv-portrait" data-obj="portrait">
+              <p class="cv-label" aria-hidden="true"><svg class="i-frame"><use href="#i-frame"/></svg><span class="cv-label-name">Rehan</span><span class="cv-size"></span></p>
+              <div class="cv-frame-wrap">
+                <div class="cv-frame">
+                  <img src="images/web/rehan-portrait.png" srcset="images/web/rehan-portrait.png 718w, images/rehan-portrait.png 870w" sizes="(min-width: 1176px) clamp(420px, 34vw, 520px), min(520px, 75vw)" width="718" height="900" alt="Moinul Islam Rehan in a white TulipTech polo, arms crossed" decoding="async" fetchpriority="high" draggable="false">
+                </div>
+              </div>
+            </div>
+            <!-- /DRAFT COPY -->
+            <!-- The brief's three questions as sticky notes. They start loose on the first visit,
+                 get tidied into this stack, and stay on the canvas to be played with. -->
+            <!-- DRAFT COPY for Rehan's approval -->
+            <div class="cover-notes" aria-hidden="true">
+              <p class="note note-a">Who is the user?</p>
+              <p class="note note-b">What's actually broken today?</p>
+              <p class="note note-c">What does success look like?</p>
+            </div>
+            <!-- /DRAFT COPY -->
+          </div>
+          <!-- DRAFT COPY for Rehan's approval -->
+          <p class="cover-lede" data-inspect="Text">I work research first and end to end, from discovery to developer handoff. AI speeds up the execution; the design decisions stay mine.</p>
+          <!-- /DRAFT COPY -->
+          <ul class="cover-stats">
+            <li class="stat-pill" data-inspect="Pill"><strong>2.5+</strong> years</li>
+            <li class="stat-pill" data-inspect="Pill"><strong>30+</strong> company projects</li>
+            <li class="stat-pill" data-inspect="Pill"><strong>10+</strong> industries</li>
+          </ul>
+          <div class="cover-actions">
+            <a class="btn btn-primary" href="#work" data-inspect="Button">See the work<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-ghost" href="mailto:rehan.moinul.10@gmail.com" data-inspect="Button">Email me</a>
+          </div>
+          <span class="cover-marquee" aria-hidden="true"></span>
         </div>
-        <!-- /DRAFT COPY -->
-        <span class="cover-marquee" aria-hidden="true"></span>
       </div>
+      <div class="cv-dock">
+        <!-- DRAFT COPY for Rehan's approval (toolbar names, tooltips and the screen-reader instructions below) -->
+        <div class="cv-toolbar" role="toolbar" aria-label="Canvas tools" data-toolbar>
+          <button type="button" class="cv-tool" data-tool="move" aria-pressed="true" aria-label="Move (V)" aria-keyshortcuts="V" data-tip="Move"><svg class="cv-icon" aria-hidden="true"><use href="#i-move"/></svg><kbd class="cv-key" aria-hidden="true">V</kbd></button>
+          <button type="button" class="cv-tool" data-tool="hand" aria-pressed="false" aria-label="Hand (H)" aria-keyshortcuts="H" data-tip="Hand"><svg class="cv-icon" aria-hidden="true"><use href="#i-hand"/></svg><kbd class="cv-key" aria-hidden="true">H</kbd></button>
+          <button type="button" class="cv-tool" data-tool="inspect" aria-pressed="false" aria-label="Inspect (I)" aria-keyshortcuts="I" data-tip="Inspect"><svg class="cv-icon" aria-hidden="true"><use href="#i-inspect"/></svg><kbd class="cv-key" aria-hidden="true">I</kbd></button>
+          <span class="cv-sep" aria-hidden="true"></span>
+          <button type="button" class="cv-act" data-act="tidy">Tidy up</button>
+          <button type="button" class="cv-act" data-act="reset">Reset</button>
+        </div>
+        <p id="cv-help" hidden>Arrow keys move it by 8 pixels. Shift with an arrow key resizes it, where it can be resized. Escape clears the selection, and Reset in the canvas tools puts everything back.</p>
+        <!-- /DRAFT COPY -->
+      </div>
+      <div class="cv-inspect" aria-hidden="true" data-inspect-layer><span class="cv-ins-nbr"></span><span class="cv-ins-box"></span><span class="cv-ins-line"></span><span class="cv-ins-gap"></span><span class="cv-ins-spec"><span class="cv-ins-name"></span><span class="cv-ins-size"></span><span class="cv-ins-font"></span></span></div>
+      <p class="vh" aria-live="polite" data-cv-live></p>
+    </div>
 
+    <div class="wrap">
       <nav class="contents" aria-labelledby="contents-label">
         <!-- DRAFT COPY for Rehan's approval -->
         <p class="label contents-label" id="contents-label">Contents</p>
