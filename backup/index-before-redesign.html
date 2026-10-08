@@ -1,0 +1,1563 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moinul Rehan — Product Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap">
+<style>
+
+  :root{
+    --paper:#FCFBF8;
+    --paper-alt:#F5F3EE;
+    --hero-panel:#FCFBF8;
+    --ink:#071A31;
+    --ink-soft:#5F6D77;
+    --ink-faint:#8B93A0;
+    --line:#E4E6E9;
+    --accent:#3C90FF;
+    --accent-strong:#167EB4;
+    --accent-soft:#EDF5FF;
+    --accent-on:#FCFBF8;
+    --dark:#071A31;
+    --dark-line:#1B2E44;
+    --dark-text:#FCFBF8;
+    --dark-text-soft:#A9B4BE;
+    --mesh-blue: rgba(35,120,255,0.72);
+    --mesh-cyan: rgba(50,220,205,0.62);
+    --mesh-pink: rgba(230,80,235,0.62);
+    --mesh-sky: rgba(100,175,255,0.68);
+    --mesh-purple: rgba(140,70,230,0.72);
+    --mesh-teal: rgba(10,175,130,0.62);
+
+    --hero-mesh-blue: rgba(60,144,255,0.30);
+    --hero-mesh-cyan: rgba(93,223,215,0.28);
+    --hero-mesh-pink: rgba(240,122,242,0.20);
+    --hero-mesh-sky: rgba(132,193,255,0.30);
+
+    --hn:#3C90FF; --hn-strong:#167EB4; --hn-soft:#EDF5FF; --hn-vivid:#6BB1FF;
+    --sd:#9B5DE5; --sd-strong:#7C3AED; --sd-soft:#F4EDFD; --sd-vivid:#B89FFA;
+    --tr:#12A67D; --tr-strong:#0C7F60; --tr-soft:#E6F7F1; --tr-vivid:#5DDFD7;
+    --p4:#D98A2B; --p4-soft:#FBF1E3;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Geist','Inter',system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{ color:var(--accent); text-decoration:none; }
+  a:hover{ color:var(--accent-strong); }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:2px; }
+  h1,h2,p{ margin:0; text-wrap:balance; }
+  .eyebrow{ font-size:12px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint); }
+  .wrap{ max-width:1176px; margin:0 auto; padding-inline:clamp(20px,5vw,48px); }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    min-height:48px; padding:12px 26px; border-radius:999px;
+    font-family:inherit; font-weight:600; font-size:15px;
+    border:1px solid transparent; cursor:pointer; transition:background 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+  .btn-primary{ background:var(--ink); color:var(--paper); }
+  .btn-primary:hover{ background:var(--accent); color:#fff; }
+  .btn-ghost{ background:transparent; color:var(--ink); border-color:var(--line); }
+  .btn-ghost:hover{ border-color:var(--ink); }
+  .btn-on-dark{ background:var(--paper); color:var(--dark); }
+  .btn-on-dark:hover{ background:var(--accent); color:#fff; }
+  .nav-link{ color:var(--ink); font-weight:500; font-size:15px; padding:8px 4px; }
+  .nav-link:hover{ color:var(--accent); }
+  .fade-up{ opacity:0; transform:translateY(12px); animation:fadeUp 640ms ease forwards; }
+  .d1{animation-delay:60ms;} .d2{animation-delay:160ms;} .d3{animation-delay:260ms;}
+  @keyframes fadeUp{ to{ opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .fade-up{ animation:none; opacity:1; transform:none; }
+  }
+
+  /* Announcement strip — solid-color full-bleed bar, echoing the reference's structural pattern (own color, not theirs) */
+  .strip{ background:var(--accent); }
+  .strip-inner{ display:flex; align-items:center; justify-content:center; gap:10px; padding-block:11px; font-size:13.5px; font-weight:500; color:var(--accent-on); text-align:center; position:relative; }
+  .strip svg{ flex:none; opacity:0.9; }
+  .strip-cta{ display:inline-flex; align-items:center; gap:4px; background:rgba(255,255,255,0.16); color:var(--accent-on); font-weight:600; font-size:12.5px; padding:5px 12px; border-radius:999px; margin-left:4px; white-space:nowrap; }
+  .strip-cta:hover{ background:rgba(255,255,255,0.26); color:var(--accent-on); }
+  .strip-close{ position:absolute; right:0; top:50%; transform:translateY(-50%); background:none; border:none; padding:4px; cursor:pointer; opacity:0.75; color:var(--accent-on); display:flex; }
+  .strip-close:hover{ opacity:1; }
+
+  .nav-glass{ position:sticky; top:0; z-index:50; display:flex; justify-content:center; padding-block:16px; pointer-events:none; }
+  .nav-pill{
+    pointer-events:auto; display:inline-flex; align-items:center; gap:12px;
+    padding:9px 18px 9px 10px; border-radius:999px;
+    background:rgba(253,251,244,0.72); backdrop-filter:blur(18px) saturate(160%); -webkit-backdrop-filter:blur(18px) saturate(160%);
+    border:1px solid rgba(255,255,255,0.55);
+    box-shadow:0 16px 36px -18px rgba(7,26,49,0.22);
+  }
+  .nav-logo-badge{ width:30px; height:30px; border-radius:8px; background:var(--ink); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:12.5px; flex:none; }
+  .wordmark{ font-weight:800; font-size:14.5px; letter-spacing:-0.01em; white-space:nowrap; }
+  .nav-divider{ width:1px; height:20px; background:var(--line); flex:none; }
+  .nav-icons{ display:flex; align-items:center; gap:2px; }
+  .nav-icon-link{ width:38px; height:38px; border-radius:999px; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); transition:background 150ms ease, color 150ms ease; }
+  .nav-icon-link:hover{ background:var(--paper-alt); color:var(--ink); }
+  .nav-icon-link svg{ width:20px; height:20px; }
+
+  /* HERO — soft rounded panel with a blurred mesh-gradient backdrop, matching the reference's real hero treatment */
+  .hero-panel{ position:relative; background:var(--hero-panel); border-radius:32px; margin:16px 16px 0 16px; overflow:hidden; isolation:isolate; }
+  .hero-panel::before{
+    content:''; position:absolute; inset:-15%; z-index:0; filter:blur(70px); opacity:0.9;
+    background:
+      radial-gradient(38% 46% at 82% 18%, var(--hero-mesh-blue), transparent 70%),
+      radial-gradient(34% 40% at 92% 62%, var(--hero-mesh-sky), transparent 70%),
+      radial-gradient(30% 36% at 46% 58%, var(--hero-mesh-pink), transparent 70%),
+      radial-gradient(30% 34% at 66% 88%, var(--hero-mesh-cyan), transparent 70%);
+  }
+  .hero-panel::after{
+    content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
+    background-image:repeating-linear-gradient(to right, var(--line) 0 1px, transparent 1px 20%);
+    background-size:20% 100%;
+    -webkit-mask-image:linear-gradient(to bottom, #000, #000 75%, transparent);
+    mask-image:linear-gradient(to bottom, #000, #000 75%, transparent);
+  }
+  .hero-fade-bottom{
+    position:absolute; left:0; right:0; bottom:0; height:220px; z-index:0; pointer-events:none;
+    background:linear-gradient(to bottom, transparent, var(--paper));
+  }
+  .hero{ position:relative; z-index:1; padding-block:clamp(56px,9vw,104px) clamp(48px,7vw,88px); display:flex; flex-direction:column; align-items:center; text-align:center; }
+  .hero-status{ font-size:13.5px; font-weight:500; color:var(--ink-soft); margin-bottom:20px; display:inline-flex; align-items:center; gap:7px; }
+  .hero-status .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); }
+  .hero h1{
+    font-weight:800; font-size:clamp(40px,7vw,72px); line-height:1.08; letter-spacing:-0.03em;
+    max-width:880px; margin-bottom:20px; color:var(--ink);
+  }
+  .hero h1 .hero-label{ font-weight:400; color:var(--ink-faint); }
+  .hero p.lede{ font-size:clamp(16px,1.6vw,18px); line-height:1.5; color:var(--ink-soft); max-width:560px; margin-bottom:36px; }
+  .hero-actions{ display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; margin-bottom:16px; }
+  .hero-trust-label{ font-size:13.5px; color:var(--ink-faint); margin-bottom:18px; }
+  .hero-trust-row{ display:flex; align-items:center; justify-content:center; gap:clamp(24px,4vw,44px); flex-wrap:wrap; margin-bottom:40px; }
+  .hero-trust-row .stat-num{ font-size:24px; }
+  .hero-trust-row .stat-div{ height:28px; }
+  .hero-pill{
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+    width:min(620px,100%); border:1px solid var(--line); border-radius:999px;
+    padding:8px 8px 8px 26px; background:var(--paper);
+    box-shadow:0 12px 28px -16px rgba(7,26,49,0.16);
+  }
+  .hero-pill-text{ font-size:14.5px; font-weight:600; color:var(--ink); text-align:left; line-height:1.3; }
+  .hero-email-link{ font-size:13.5px; color:var(--ink-faint); margin-top:16px; text-decoration:underline; text-underline-offset:3px; }
+  .hero-photo-wrap{ width:min(560px,100%); margin:44px 0 8px; perspective:1400px; }
+  .hero-photo{
+    position:relative; width:100%; aspect-ratio:4/5; border-radius:24px; border:16px solid var(--ink);
+    overflow:hidden; transform-style:preserve-3d;
+    transition:transform 700ms cubic-bezier(.4,0,.2,1);
+    will-change:transform;
+  }
+  .hero-photo-slide{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;
+    opacity:0;
+  }
+  .hero-photo-slide.active{ opacity:1; z-index:2; }
+
+  .stat-row{ display:flex; align-items:center; justify-content:center; gap:clamp(28px,6vw,56px); flex-wrap:wrap; }
+  .stat{ text-align:center; }
+  .stat-num{ font-size:32px; font-weight:700; letter-spacing:-0.01em; color:var(--ink); font-variant-numeric:tabular-nums; }
+  .stat-label{ font-size:13px; color:var(--ink-faint); font-weight:500; margin-top:4px; }
+  .stat-div{ width:1px; height:36px; background:var(--line); }
+
+  .section-label{ padding-block:8px 0; }
+
+  /* PROJECT SHOWCASE — sticky scroll-driven gradient card, matching the reference's tab-switcher + expand-on-scroll pattern */
+  .showcase-wrap{ position:relative; height:calc(100vh + 60vh); }
+  .showcase-stage{
+    position:sticky; top:0; height:100vh; display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .gradient-card{
+    position:relative; overflow:hidden; isolation:isolate;
+    background:var(--paper-alt);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    /* Always laid out at full size. JS animates a clip-path (the visible rounded window)
+       between compact and expanded, so nothing re-lays out or re-blurs during the animation. */
+    width:calc(100% - 56px); height:calc(100% - 56px);
+    clip-path:inset(0px 0px 0px 0px round 32px);
+    transition:clip-path 620ms cubic-bezier(.4,0,.2,1);
+  }
+  .mesh-stage{ position:absolute; inset:0; z-index:0; transform-origin:50% 50%; will-change:transform; transition:transform 620ms cubic-bezier(.4,0,.2,1); }
+  .mesh-layer{ position:absolute; inset:-15%; z-index:0; filter:blur(60px); opacity:0; transition:opacity 700ms ease; will-change:opacity; }
+  .mesh-layer.active{ opacity:1; }
+  .mesh-layer.theme-handynaija{
+    background:
+      radial-gradient(60% 70% at 80% 12%, var(--mesh-blue), transparent 88%),
+      radial-gradient(55% 65% at 95% 70%, var(--mesh-sky), transparent 88%),
+      radial-gradient(50% 60% at 15% 65%, var(--mesh-pink), transparent 88%),
+      radial-gradient(50% 58% at 55% 98%, var(--mesh-cyan), transparent 88%),
+      var(--mesh-blue);
+  }
+  .mesh-layer.theme-suede{
+    background:
+      radial-gradient(62% 72% at 15% 15%, var(--mesh-pink), transparent 88%),
+      radial-gradient(58% 68% at 88% 25%, var(--mesh-purple), transparent 88%),
+      radial-gradient(52% 62% at 75% 92%, var(--mesh-blue), transparent 88%),
+      radial-gradient(50% 58% at 10% 85%, var(--mesh-cyan), transparent 88%),
+      var(--mesh-purple);
+  }
+  .mesh-layer.theme-terrava{
+    background:
+      radial-gradient(62% 72% at 82% 15%, var(--mesh-cyan), transparent 88%),
+      radial-gradient(58% 68% at 12% 28%, var(--mesh-teal), transparent 88%),
+      radial-gradient(52% 62% at 58% 95%, var(--mesh-sky), transparent 88%),
+      radial-gradient(50% 58% at 95% 88%, var(--mesh-pink), transparent 88%),
+      var(--mesh-teal);
+  }
+  .showcase-tabs{ position:relative; z-index:1; display:flex; align-items:center; gap:12px; margin-bottom:0; flex:none; transition:opacity 120ms linear; }
+  .tab-btn{
+    width:52px; height:52px; background:transparent; border:none; padding:0;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    color:var(--ink); position:relative; overflow:visible;
+  }
+  .tab-frame{
+    position:absolute; inset:0; z-index:0;
+    background:#fff; border:1px solid var(--line); clip-path:url(#squircle-tab);
+  }
+  .tab-btn svg{ position:absolute; inset:14.29%; width:71.42%; height:71.42%; z-index:3; opacity:0.4; transition:opacity 220ms ease; }
+  .tab-btn.active svg{ opacity:1; }
+  .tab-indicator{
+    position:absolute; z-index:2; inset:5px; clip-path:url(#squircle-tab);
+    opacity:0; transform:scale(0.8); transition:opacity 220ms ease, transform 220ms ease;
+  }
+  .tab-btn.active .tab-indicator{ opacity:1; transform:scale(1); }
+  .tab-btn[data-target="handynaija"] .tab-indicator{ background:var(--hn-vivid); }
+  .tab-btn[data-target="suede"] .tab-indicator{ background:var(--sd-vivid); }
+  .tab-btn[data-target="terrava"] .tab-indicator{ background:var(--tr-vivid); }
+  .tab-goo{
+    position:absolute; left:0; top:0; width:100%; height:100%;
+    z-index:1; pointer-events:none; opacity:0; transition:opacity 260ms ease;
+    filter:url(#tab-goo);
+  }
+  .tab-btn.active .tab-goo{ opacity:1; }
+  .goo-blob{ position:absolute; background:#fff; }
+  .goo-blob.goo-circle{ inset:0; border-radius:16px; }
+  .goo-neck{ position:absolute; left:0; right:0; top:100%; transform:translateY(calc(50% + 14px)); margin-inline:auto; width:22.4px; height:14px; }
+  .showcase-card-zone{ position:relative; z-index:2; width:100%; display:flex; justify-content:center; padding-top:14px; }
+  .showcase-card{
+    position:relative; overflow:hidden;
+    width:min(920px, calc(100% - 48px));
+    background:var(--paper); border-radius:20px; corner-shape:squircle;
+    box-shadow:0 30px 60px -20px rgba(7,26,49,0.24);
+  }
+  .sc-track{ display:flex; width:300%; align-items:stretch; transition:transform 420ms cubic-bezier(.4,0,.2,1); }
+  .sc-panel{ flex:0 0 calc(100% / 3); width:calc(100% / 3); display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+  .sc-text{ padding:clamp(28px,4vw,48px) 0 clamp(28px,4vw,48px) clamp(28px,4vw,48px); display:flex; flex-direction:column; justify-content:center; }
+  .sc-eyebrow{ display:flex; align-items:center; flex-wrap:wrap; gap:9px; font-size:14px; font-weight:600; color:var(--ink); margin-bottom:16px; }
+  .sc-eyebrow-icon{ width:auto; height:auto; padding:5px; clip-path:url(#squircle-tab); display:flex; align-items:center; justify-content:center; flex:none; }
+  .sc-pill{ display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; border-radius:6px; padding:4px 9px; flex:none; }
+  .sc-title{ font-weight:700; font-size:clamp(24px,2.6vw,32px); line-height:1.15; letter-spacing:-0.015em; margin:0 0 14px 0; }
+  .sc-desc{ font-size:15.5px; line-height:1.55; color:var(--ink-soft); margin:0 0 22px 0; max-width:340px; }
+  .sc-link{ display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:14.5px; text-decoration:underline; text-underline-offset:3px; }
+  .sc-visual{ margin:48px 48px 48px 0; border-radius:20px; position:relative; overflow:hidden; }
+  .sc-mock{ position:absolute; inset:0; }
+
+  .photo-slideshow{ position:absolute; inset:0; overflow:hidden; z-index:2; }
+  .photo-slide{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0; transform:translateY(100%);
+    transition:transform 650ms cubic-bezier(.4,0,.2,1), opacity 400ms ease;
+  }
+  .photo-slide.active{ opacity:1; transform:translateY(0); z-index:2; }
+  .photo-slide.exiting{ opacity:0; transform:translateY(-100%); z-index:1; }
+
+  #panel-handynaija .sc-eyebrow-icon{ background:var(--hn-vivid); color:var(--ink); }
+  #panel-handynaija .sc-link{ color:var(--hn-strong); }
+  #panel-handynaija .sc-visual{ background:var(--hn-soft); }
+  #panel-suede .sc-eyebrow-icon{ background:var(--sd-vivid); color:var(--ink); }
+  #panel-suede .sc-link{ color:var(--sd-strong); }
+  #panel-suede .sc-visual{ background:var(--sd-soft); }
+  #panel-suede .sc-pill{ color:var(--sd-strong); background:var(--sd-soft); }
+  #panel-terrava .sc-eyebrow-icon{ background:var(--tr-vivid); color:var(--ink); }
+  #panel-terrava .sc-link{ color:var(--tr-strong); }
+  #panel-terrava .sc-visual{ background:var(--tr-soft); }
+
+  /* HandyNaija mock — service booking rows */
+  .mock-row{ position:absolute; left:8%; right:8%; height:15%; background:#fff; border-radius:10px; box-shadow:0 6px 14px -6px rgba(7,26,49,0.15); display:flex; align-items:center; padding-inline:14px; gap:10px; }
+  .mock-avatar{ width:26px; height:26px; border-radius:50%; background:var(--hn); flex:none; opacity:0.85; }
+  .mock-line{ height:7px; border-radius:4px; background:var(--line); }
+  .mock-chip{ margin-left:auto; font-size:9px; font-weight:700; color:var(--hn-strong); background:var(--hn-soft); border-radius:999px; padding:4px 8px; flex:none; }
+
+  /* SUEDE mock — review card grid */
+  .mock-card{ position:absolute; width:44%; height:38%; background:#fff; border-radius:12px; box-shadow:0 6px 14px -6px rgba(7,26,49,0.15); padding:12px; }
+  .mock-stars{ display:flex; gap:2px; margin-top:8px; }
+  .mock-star{ width:8px; height:8px; border-radius:2px; background:#FFB020; }
+
+  /* Terrava mock — route path */
+  .mock-dot{ position:absolute; width:9px; height:9px; border-radius:50%; background:var(--tr); box-shadow:0 0 0 4px rgba(18,166,125,0.18); }
+  .mock-stat{ position:absolute; background:#fff; border-radius:10px; box-shadow:0 6px 14px -6px rgba(7,26,49,0.18); padding:8px 12px; font-size:12px; font-weight:700; color:var(--ink); }
+
+  /* HOW I WORK — hover-expanding card deck, matching the reference's timeline-feature-deck pattern */
+  .process-section{ padding-block:clamp(56px,8vw,104px); }
+  .process-head{ max-width:600px; margin-bottom:clamp(32px,5vw,48px); }
+  .process-head h2{ font-weight:700; font-size:clamp(26px,2.8vw,32px); letter-spacing:-0.015em; margin-top:8px; }
+  .deck-cards{ display:flex; align-items:stretch; gap:12px; width:100%; }
+  .deck-connector{ flex:0 0 0; width:0; align-self:center; position:relative; z-index:0; pointer-events:none; }
+  .deck-connector svg{ position:absolute; left:50%; top:50%; transform:translate(-50%, calc(-50% - 70% - 50px)); width:24px; height:44.8px; display:block; }
+  .deck-card{
+    position:relative; z-index:1; flex:0 0 180px; width:180px; height:360px; overflow:hidden;
+    background:#fff; border-radius:20px; border:none;
+    transition:flex-basis 500ms cubic-bezier(.4,0,.2,1), width 500ms cubic-bezier(.4,0,.2,1), box-shadow 500ms ease;
+    cursor:pointer;
+  }
+  .deck-card.active{ flex:0 0 400px; width:400px; box-shadow:0 20px 48px -12px rgba(11,53,88,0.16); }
+  .deck-card::before{
+    content:attr(data-step); position:absolute; right:-10px; bottom:-40px; z-index:0;
+    font-size:180px; font-weight:800; line-height:1; opacity:0.35; pointer-events:none;
+  }
+  .deck-card[data-theme="p1"]::before{ color:var(--hn-vivid); }
+  .deck-card[data-theme="p2"]::before{ color:var(--sd-vivid); }
+  .deck-card[data-theme="p3"]::before{ color:var(--tr-vivid); }
+  .deck-card[data-theme="p4"]::before{ color:var(--p4); }
+  .deck-bg{ position:absolute; inset:0; z-index:0; opacity:0; transition:opacity 500ms ease; }
+  .deck-card.active .deck-bg{ opacity:1; }
+  .deck-card[data-theme="p1"] .deck-bg{ background:radial-gradient(120% 100% at 100% 0%, var(--hn-soft), var(--paper) 65%); }
+  .deck-card[data-theme="p2"] .deck-bg{ background:radial-gradient(120% 100% at 100% 0%, var(--sd-soft), var(--paper) 65%); }
+  .deck-card[data-theme="p3"] .deck-bg{ background:radial-gradient(120% 100% at 100% 0%, var(--tr-soft), var(--paper) 65%); }
+  .deck-card[data-theme="p4"] .deck-bg{ background:radial-gradient(120% 100% at 100% 0%, var(--p4-soft), var(--paper) 65%); }
+  .deck-content{ position:relative; z-index:1; padding:26px; display:flex; flex-direction:column; height:100%; }
+  .deck-heading{ font-weight:700; font-size:20px; letter-spacing:-0.01em; margin-bottom:10px; white-space:nowrap; }
+  .deck-body{ position:relative; flex:1; min-height:0; }
+  /* Fixed text widths (card width minus 2 x 26px padding) so the text never re-wraps
+     while a card widens; only the card box animates. */
+  .deck-resting-desc, .deck-active-body{
+    position:absolute; left:0; top:0;
+    transition:opacity 320ms ease, filter 320ms ease;
+    will-change:opacity, filter;
+  }
+  .deck-resting-desc{ width:128px; }
+  .deck-active-body{ width:348px; }
+  .deck-resting-desc{ font-size:14px; line-height:1.5; color:var(--ink-soft); opacity:1; filter:blur(0); }
+  .deck-active-body{ display:flex; flex-direction:column; gap:16px; opacity:0; filter:blur(6px); pointer-events:none; }
+  .deck-card.active .deck-resting-desc{ opacity:0; filter:blur(6px); pointer-events:none; transition-duration:120ms; }
+  .deck-card.active .deck-active-body{ opacity:1; filter:blur(0); pointer-events:auto; transition-delay:500ms; }
+  .deck-active-desc{ font-size:14.5px; line-height:1.55; color:var(--ink-soft); }
+  .deck-steps{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:11px; }
+  .deck-steps li{ display:flex; align-items:center; gap:10px; font-size:13.5px; color:var(--ink); }
+  .deck-step-badge{ width:auto; height:auto; padding:6px; border-radius:7px; display:inline-flex; align-items:center; justify-content:center; flex:none; }
+  .deck-card[data-theme="p1"] .deck-step-badge{ background:var(--hn-vivid); color:var(--ink); }
+  .deck-card[data-theme="p2"] .deck-step-badge{ background:var(--sd-vivid); color:var(--ink); }
+  .deck-card[data-theme="p3"] .deck-step-badge{ background:var(--tr-vivid); color:var(--ink); }
+  .deck-card[data-theme="p4"] .deck-step-badge{ background:var(--p4); color:#fff; }
+  @media (max-width:860px){
+    .deck-cards{ flex-direction:column; }
+    .deck-connector{ display:none; }
+    .deck-card{ flex:0 0 auto; width:100%; height:auto; }
+    .deck-card::before{ display:none; }
+    .deck-card .deck-bg{ opacity:1; }
+    .deck-body{ position:static; }
+    .deck-card .deck-resting-desc{ display:none; }
+    .deck-card .deck-active-body{ position:static; display:flex; opacity:1; filter:none; pointer-events:auto; width:auto; }
+  }
+
+  .testi-section{ position:relative; overflow:hidden; padding-block:clamp(64px,10vw,120px); }
+  .testi-section .mesh-layer{ opacity:1; }
+  .testi-section::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:180px;
+    background:linear-gradient(to bottom, transparent, var(--paper));
+    pointer-events:none; z-index:1;
+  }
+  .testi-section::before{
+    content:''; position:absolute; left:0; right:0; top:0; height:180px;
+    background:linear-gradient(to bottom, var(--paper), transparent);
+    pointer-events:none; z-index:1;
+  }
+  .testi-head{ position:relative; z-index:1; text-align:center; margin-bottom:clamp(40px,6vw,64px); }
+  .testi-eyebrow{ color:rgba(255,255,255,0.75); }
+  .testi-heading{ font-weight:700; font-size:clamp(30px,4vw,44px); line-height:1.15; letter-spacing:-0.015em; color:#fff; margin-top:10px; }
+  .testi-carousel{ position:relative; z-index:1; height:513px; max-width:1160px; margin-inline:auto; padding-inline:16px; }
+  .testi-connector{ position:absolute; top:50%; left:50%; z-index:0; pointer-events:none; transition:opacity 550ms ease, transform 550ms cubic-bezier(.4,0,.2,1); will-change:transform; }
+  .testi-connector.tc-mirror svg{ transform:translate(-50%,-50%) scaleX(-1); }
+  .testi-connector svg{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:22px; height:38px; display:block; }
+  .testi-card-el{
+    position:absolute; top:50%; left:50%; z-index:1;
+    border-radius:20px; overflow:hidden; background:#fff; border:12px solid #fff;
+    box-shadow:0 16px 32px -16px rgba(7,26,49,0.32);
+    cursor:pointer;
+    transition:width 550ms cubic-bezier(.4,0,.2,1), height 550ms cubic-bezier(.4,0,.2,1), transform 550ms cubic-bezier(.4,0,.2,1), box-shadow 550ms ease, opacity 350ms ease;
+  }
+  .testi-card-el.is-center{ box-shadow:0 30px 60px -20px rgba(7,26,49,0.35); cursor:default; }
+  .testi-bg-photo{ position:absolute; inset:0; overflow:hidden; transition:opacity 200ms ease; }
+  /* The centre card is fully covered by its white overlay, so hide the photo underneath once
+     the overlay is opaque (120ms delay + 400ms fade). Otherwise its dark edge pixels show
+     through as a hairline when the card lands on a half-pixel position. */
+  .testi-card-el.is-center .testi-bg-photo{ opacity:0; transition:opacity 0s linear 520ms; }
+  .testi-bg-photo img{ width:118%; height:118%; margin:-9%; object-fit:cover; object-position:center 22%; display:block; }
+  .testi-overlay{
+    position:absolute; inset:0; background:#fff; opacity:0; pointer-events:none;
+    display:grid; grid-template-columns:1fr 1fr; align-items:stretch; gap:16px; padding:16px;
+    transition:opacity 400ms ease 120ms;
+  }
+  .testi-card-el.is-center .testi-overlay{ opacity:1; pointer-events:auto; }
+  .testi-card-text{ padding:16px; display:flex; flex-direction:column; justify-content:center; min-width:0; }
+  .testi-quote{ font-family:Georgia,'Times New Roman',serif; font-size:clamp(22px,2.4vw,28px); line-height:1.35; font-weight:700; color:var(--ink); margin-bottom:24px; }
+  .testi-attrib{ display:flex; flex-direction:column; align-items:center; gap:0; }
+  .testi-name{ font-size:13px; font-weight:700; background:var(--paper-alt); border-radius:999px; padding:6px 12px; }
+  .testi-role{ font-size:13px; color:var(--ink-faint); background:var(--paper-alt); border-radius:999px; padding:6px 12px; }
+  .testi-mini-connector{ width:14px; height:8px; flex:none; }
+  .testi-card-photo{ position:relative; overflow:hidden; border-radius:16px; min-width:0; }
+  .testi-card-photo img{ width:118%; height:118%; margin:-9%; object-fit:cover; object-position:center 15%; display:block; }
+  .testi-dots{ position:relative; z-index:1; display:flex; align-items:center; justify-content:center; gap:6px; margin-top:clamp(32px,5vw,48px); }
+  .testi-dot{ height:8px; width:8px; border-radius:3px; background:rgba(255,255,255,0.35); overflow:hidden; cursor:pointer; transition:width 300ms ease; }
+  .testi-dot.active{ width:64px; }
+  .testi-dot-fill{ display:block; height:100%; width:100%; background:#fff; transform-origin:0% 50%; transform:scaleX(0); }
+  .testi-dot.active .testi-dot-fill{ animation:testiDotFill 6s linear forwards; }
+  @keyframes testiDotFill{ from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
+  .testi-dots.is-paused .testi-dot-fill{ animation-play-state:paused; }
+
+  .gallery-section{ padding-block:clamp(56px,8vw,96px); text-align:center; overflow:hidden; }
+  .gallery-section h2{ font-weight:700; font-size:clamp(28px,3.6vw,42px); line-height:1.15; letter-spacing:-0.015em; max-width:640px; margin-inline:auto; }
+  .gallery-section .lede{ font-size:15.5px; color:var(--ink-soft); max-width:480px; margin:16px auto 28px; }
+  .gallery-viewport{ overflow:hidden; margin-top:clamp(40px,6vw,64px); -webkit-mask-image:linear-gradient(to right, transparent, #000 6%, #000 94%, transparent); mask-image:linear-gradient(to right, transparent, #000 6%, #000 94%, transparent); }
+  .gallery-row{ display:flex; width:max-content; gap:24px; animation:gallerySlide 28s linear infinite; will-change:transform; }
+  .gallery-row:hover, .gallery-row.is-paused{ animation-play-state:paused; }
+  @keyframes gallerySlide{ from{ transform:translateX(0); } to{ transform:translateX(calc(-50% - 12px)); } }
+  .gallery-card{
+    position:relative; flex:0 0 auto; width:min(560px,72vw); aspect-ratio:16/10; border-radius:24px;
+    overflow:hidden; display:flex; align-items:flex-end;
+  }
+  .gallery-card img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .gallery-card::after{ content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(7,26,49,0.35), transparent 55%); }
+  .gallery-badge{
+    position:relative; z-index:1; display:inline-flex; align-items:center; gap:10px;
+    margin:0 0 24px 24px; padding:8px 8px 8px 8px; border-radius:999px;
+    background:rgba(255,255,255,0.85); box-shadow:0 8px 20px -8px rgba(7,26,49,0.3);
+  }
+  .gallery-badge-icon{ width:32px; height:32px; border-radius:999px; display:flex; align-items:center; justify-content:center; flex:none; }
+  .gallery-badge-label{ font-size:13.5px; font-weight:600; color:var(--ink); padding-right:8px; }
+  @media (max-width:860px){
+    .gallery-card{ width:78vw; }
+  }
+
+  .tools-section{ padding-block:clamp(56px,8vw,96px); text-align:center; }
+  .tools-section h2{ font-weight:700; font-size:clamp(22px,2.4vw,28px); margin-top:8px; margin-bottom:12px; letter-spacing:-0.01em; }
+  .tools-section .lede{ font-size:15.5px; color:var(--ink-soft); max-width:440px; margin:0 auto clamp(28px,4vw,40px); }
+  .tools-grid{ display:flex; flex-wrap:wrap; justify-content:center; gap:14px; max-width:840px; margin-inline:auto; }
+  .tool-tile{ position:relative; width:112px; height:112px; padding:24px; box-sizing:border-box; border-radius:20px; background:#F5F3EE; display:flex; align-items:center; justify-content:center; flex:none; }
+  .tool-connector{ position:absolute; top:50%; width:7px; height:40px; transform:translateY(-50%); pointer-events:none; }
+  .tool-connector.tc-left{ left:-14px; }
+  .tool-connector.tc-right{ right:-14px; }
+  .tool-connector svg path{ fill:#F5F3EE; }
+  .tool-badge{ width:64px; height:64px; display:flex; align-items:center; justify-content:center; flex:none; }
+  .tool-badge img{ width:56px; height:56px; }
+
+  .journey-section{ padding-block:clamp(56px,8vw,96px); text-align:center; }
+  .journey-section h2{ font-weight:700; font-size:clamp(28px,3.6vw,42px); margin-top:8px; margin-bottom:16px; letter-spacing:-0.015em; }
+  .journey-section .lede{ font-size:15.5px; line-height:1.6; color:var(--ink-soft); max-width:640px; margin:0 auto clamp(48px,7vw,72px); }
+  .journey-fan{ position:relative; display:flex; justify-content:center; align-items:flex-start; height:340px; margin-inline:auto; max-width:1040px; }
+  .journey-card{
+    position:relative; flex:0 0 auto; width:290px; min-height:280px; margin-inline:-44px;
+    background:var(--paper); border:1px solid var(--line); border-radius:18px;
+    box-shadow:0 20px 40px -20px rgba(7,26,49,0.18);
+    padding:20px; text-align:left; cursor:pointer;
+    transition:transform 380ms cubic-bezier(.22,1,.36,1), box-shadow 380ms ease, z-index 0s;
+  }
+  .journey-card:nth-child(1){ transform:rotate(-6deg) translate(-8px, -10px); z-index:4; }
+  .journey-card:nth-child(2){ transform:rotate(9deg) translate(10px, 16px); z-index:1; }
+  .journey-card:nth-child(3){ transform:rotate(-9deg) translate(4px, 4px); z-index:2; }
+  .journey-card:nth-child(4){ transform:rotate(5deg) translate(-6px, -6px); z-index:3; }
+  .journey-card:hover{
+    transform:rotate(0deg) translateY(-22px) scale(1.04) !important;
+    box-shadow:0 32px 56px -20px rgba(7,26,49,0.3); z-index:10 !important;
+  }
+  .journey-card-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+  .journey-card-company{ font-weight:800; font-size:15px; color:var(--ink); letter-spacing:-0.01em; }
+  .journey-logo img{ height:20px; width:auto; display:block; filter:grayscale(1); opacity:0.55; transition:filter 380ms ease, opacity 380ms ease; }
+  .journey-card:hover .journey-logo img{ filter:grayscale(0); opacity:1; }
+  .journey-card-dates{ font-size:11.5px; color:var(--ink-faint); font-weight:600; white-space:nowrap; }
+  .journey-card-role{ font-weight:700; font-size:15.5px; color:var(--ink); margin-bottom:6px; }
+  .journey-card-location{ display:flex; align-items:center; gap:4px; font-size:12px; color:var(--ink-faint); font-weight:500; margin-bottom:10px; }
+  .journey-card-location svg{ flex:none; }
+  .journey-card-desc{ font-size:13px; line-height:1.55; color:var(--ink-soft); }
+  @media (max-width:720px){
+    .journey-fan{ flex-direction:column; align-items:center; height:auto; gap:20px; }
+    .journey-card{ margin-inline:0; transform:none !important; width:min(320px,86vw); }
+    .journey-card:hover{ transform:translateY(-6px) scale(1.02) !important; }
+  }
+
+  .closing{ background:var(--dark); color:var(--dark-text); text-align:center; padding-block:clamp(64px,10vw,120px); }
+  .closing h2{ font-weight:700; font-size:clamp(28px,3.6vw,42px); letter-spacing:-0.015em; margin-bottom:28px; max-width:600px; margin-inline:auto; }
+
+  .footer{ padding-block:40px; border-top:1px solid var(--line); }
+  .footer-row{ display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; }
+  .footer-name{ font-weight:800; font-size:15px; margin-bottom:4px; }
+  .footer-meta{ font-size:13.5px; color:var(--ink-faint); }
+  .footer-links{ display:flex; align-items:center; gap:20px; font-size:14px; }
+
+  @media (max-width:860px){
+    .testi-carousel{ height:auto; }
+    .testi-connector{ display:none; }
+    .testi-card-el{ display:none; }
+    .testi-card-el.is-center{ display:block; position:relative; top:auto; left:auto; transform:none !important; width:calc(100% - 32px) !important; height:auto !important; margin-inline:auto; }
+    .testi-bg-photo{ display:none; }
+    .testi-overlay{ position:relative; inset:auto; opacity:1 !important; pointer-events:auto !important; grid-template-columns:1fr; }
+    .testi-card-photo{ min-height:180px; order:-1; }
+    .nav-links{ display:none; }
+    .tools-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .stat-div{ display:none; }
+    .showcase-wrap{ height:auto; }
+    .showcase-stage{ position:relative; height:auto; padding-block:32px 16px; }
+    .gradient-card{ width:100% !important; height:auto !important; border-radius:24px !important; padding-block:20px; clip-path:none !important; transition:none; }
+    .mesh-stage{ transform:none !important; }
+    .showcase-card{ width:calc(100% - 32px); }
+    .sc-panel{ grid-template-columns:1fr; gap:0; }
+    .sc-text{ padding:clamp(28px,4vw,48px); }
+    .sc-visual{ margin:0; min-height:180px; order:-1; border-radius:16px 16px 0 0; }
+    .tab-btn{ width:44px; height:44px; }
+  }
+
+  /* Respect the visitor's reduced-motion setting everywhere, not just the hero fade-in. */
+  @media (prefers-reduced-motion: reduce){
+    .gradient-card, .mesh-stage, .mesh-layer, .sc-track, .photo-slide, .hero-photo,
+    .deck-card, .deck-bg, .deck-resting-desc, .deck-active-body,
+    .testi-card-el, .testi-connector, .testi-overlay, .testi-bg-photo, .testi-dot, .journey-card{ transition:none !important; }
+    .gallery-row{ animation:none; }
+    .gallery-viewport{ overflow-x:auto; }
+    .gallery-clone{ display:none; }
+    .testi-dot.active .testi-dot-fill{ animation:none; transform:scaleX(1); }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="tab-goo" x="-20%" y="-50%" width="140%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo"/>
+    </filter>
+    <clipPath id="squircle-tab" clipPathUnits="objectBoundingBox">
+      <path d="M1 0.5 C1 0.877202 0.830064 1 0.5 1 C0.169910 1 0 0.877177 0 0.5 C0 0.122799 0.169886 0 0.5 0 C0.830089 0 1 0.122799 1 0.5 Z"/>
+    </clipPath>
+  </defs>
+</svg>
+
+<div class="strip">
+  <div class="wrap strip-inner">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 9.5V6.5C2 5.94772 2.44772 5.5 3 5.5H4.5L10 2V14L4.5 10.5H3C2.44772 10.5 2 10.0523 2 9.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M12.5 6C13 6.7 13 9.3 12.5 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    Currently open to new product design opportunities
+    <a href="#contact" class="strip-cta">Let's talk
+      <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="strip-close" aria-label="Dismiss">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="nav-glass">
+  <div class="nav-pill">
+    <span class="nav-logo-badge">MR</span>
+    <span class="wordmark">Moinul Rehan</span>
+    <span class="nav-divider"></span>
+    <div class="nav-icons">
+      <a href="#" class="nav-icon-link" title="Home" aria-label="Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5L12 4l9 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1v-9"/></svg>
+      </a>
+      <a href="#journey" class="nav-icon-link" title="Journey" aria-label="Journey">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></svg>
+      </a>
+      <a href="#work" class="nav-icon-link" title="Work" aria-label="Work">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h15A1.5 1.5 0 0 1 21 7.5V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7.5Z"/><path d="M3 10.5h18"/></svg>
+      </a>
+      <a href="#testimonials" class="nav-icon-link" title="Testimonials" aria-label="Testimonials">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4.5"/><path d="M8.3 12.2 6.5 21l5.5-3 5.5 3-1.8-8.8"/></svg>
+      </a>
+      <a href="#tools" class="nav-icon-link" title="Tools" aria-label="Tools">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 4 14h6l-1 7 9-11h-6l1-7Z"/></svg>
+      </a>
+      <a href="#contact" class="nav-icon-link" title="Contact" aria-label="Contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="hero-panel">
+<div class="wrap hero">
+  <div class="fade-up d1" style="display:flex; flex-direction:column; align-items:center;">
+    <h1>Product design work that <span class="hero-label">ships, and performs</span></h1>
+    <p class="lede">Designing user-centered digital products with a strong focus on usability, clarity, and real-world problem solving.</p>
+  </div>
+  <div class="fade-up d2" style="display:flex; flex-direction:column; align-items:center;">
+    <div class="hero-trust-label">A quick look at the track record</div>
+    <div class="hero-trust-row">
+      <div class="stat">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Years designing</div>
+      </div>
+      <div class="stat-div"></div>
+      <div class="stat">
+        <div class="stat-num">25+</div>
+        <div class="stat-label">Client projects</div>
+      </div>
+      <div class="stat-div"></div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Case studies below</div>
+      </div>
+    </div>
+    <div class="hero-pill">
+      <span class="hero-pill-text">Have a project in mind?<br>Let's build something great.</span>
+      <a href="#contact" class="btn btn-primary" style="min-height:44px; padding:11px 22px; font-size:14.5px;">Let's Talk
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <a href="mailto:rehan.moinul.10@gmail.com" class="hero-email-link">or email me directly</a>
+    <div class="hero-photo-wrap">
+      <div class="hero-photo" id="heroPhoto">
+        <img class="hero-photo-slide active" src="images/rehan.png" alt="Moinul Islam Rehan" decoding="async">
+        <img class="hero-photo-slide" src="images/web/rehan-2.jpg" alt="Moinul Islam Rehan" decoding="async">
+        <img class="hero-photo-slide" src="images/rehan-3.jpg" alt="Moinul Islam Rehan" decoding="async">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="hero-fade-bottom"></div>
+</div>
+
+<div class="journey-section wrap" id="journey">
+  <div class="eyebrow">My Journey</div>
+  <h2>Where the experience comes from</h2>
+  <p class="lede">A product-focused designer working at the intersection of design, usability, and problem-solving &mdash; turning complex ideas into clear, meaningful interfaces across real client and internal products.</p>
+  <div class="journey-fan">
+    <div class="journey-card">
+      <div class="journey-card-top">
+        <span class="journey-logo"><img loading="lazy" decoding="async" src="images/logos/tuliptech.png" alt="Tulip Tech"></span>
+        <span class="journey-card-dates">Sep 2026&ndash;Present</span>
+      </div>
+      <div class="journey-card-role">UI/UX Designer</div>
+      <div class="journey-card-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.58 7-13a7 7 0 10-14 0c0 5.42 7 13 7 13z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.3" stroke="currentColor" stroke-width="1.8"/></svg>Badda, Dhaka</div>
+      <p class="journey-card-desc">Currently designing user interfaces and shaping product experience as part of the Tulip Tech team.</p>
+    </div>
+    <div class="journey-card">
+      <div class="journey-card-top">
+        <span class="journey-logo"><img loading="lazy" decoding="async" src="images/logos/softvence.png" alt="Softvence IT Ltd."></span>
+        <span class="journey-card-dates">Jun 2025&ndash;Aug 2026</span>
+      </div>
+      <div class="journey-card-role">UI/UX Designer</div>
+      <div class="journey-card-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.58 7-13a7 7 0 10-14 0c0 5.42 7 13 7 13z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.3" stroke="currentColor" stroke-width="1.8"/></svg>Mohakhali, Dhaka</div>
+      <p class="journey-card-desc">Designing user interfaces and improving usability on real client projects, collaborating with cross-functional teams in a professional product environment.</p>
+    </div>
+    <div class="journey-card">
+      <div class="journey-card-top">
+        <span class="journey-logo"><img loading="lazy" decoding="async" src="images/logos/mindsynth.png" alt="MindSynth Technologies"></span>
+        <span class="journey-card-dates">Nov 2024&ndash;May 2025</span>
+      </div>
+      <div class="journey-card-role">UI/UX Engineer</div>
+      <div class="journey-card-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.58 7-13a7 7 0 10-14 0c0 5.42 7 13 7 13z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.3" stroke="currentColor" stroke-width="1.8"/></svg>Hybrid (Banani, Dhaka)</div>
+      <p class="journey-card-desc">Contributed to real client and internal products across web and SaaS platforms &mdash; clear user flows, intuitive interfaces, and scalable design systems.</p>
+    </div>
+    <div class="journey-card">
+      <div class="journey-card-top">
+        <span class="journey-logo"><img loading="lazy" decoding="async" src="images/logos/mindsynth.png" alt="MindSynth Technologies"></span>
+        <span class="journey-card-dates">Aug&ndash;Oct 2024</span>
+      </div>
+      <div class="journey-card-role">UI/UX Designer (Intern)</div>
+      <div class="journey-card-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.58 7-13a7 7 0 10-14 0c0 5.42 7 13 7 13z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.3" stroke="currentColor" stroke-width="1.8"/></svg>Hybrid (Banani, Dhaka)</div>
+      <p class="journey-card-desc">Worked on real client and internal product projects, supporting the design team across research, interface design, and design system work.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap section-label" id="work">
+  <div class="eyebrow">Selected Work</div>
+</div>
+
+<div class="showcase-wrap" id="showcaseWrap">
+  <div class="showcase-stage" id="showcaseStage">
+    <div class="gradient-card" id="gradientCard">
+      <div class="mesh-stage" id="meshStage" aria-hidden="true">
+        <div class="mesh-layer theme-handynaija active" data-theme="handynaija"></div>
+        <div class="mesh-layer theme-suede" data-theme="suede"></div>
+        <div class="mesh-layer theme-terrava" data-theme="terrava"></div>
+      </div>
+
+      <div class="showcase-tabs" id="showcaseTabs">
+        <button class="tab-btn active" data-target="handynaija" aria-label="HandyNaija">
+          <span class="tab-frame" aria-hidden="true"></span>
+          <span class="tab-goo" aria-hidden="true"><span class="goo-blob goo-circle"></span><svg class="goo-neck" viewBox="0 0 32 14" fill="none" preserveAspectRatio="none"><path d="M25.0486 1.4497e-07C25.0486 1.4497e-07 20.3636 0.869539 20.3636 7C20.3636 13.1305 32 14 32 14L0 14C0 14 11.6364 13.1305 11.6364 7C11.6364 0.869539 6.95136 -1.07942e-06 6.95136 -1.07942e-06L25.0486 1.4497e-07Z" fill="#fff"/></svg></span>
+          <span class="tab-indicator" aria-hidden="true"></span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 11L12 4l8 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9a1 1 0 001 1h3v-5h4v5h3a1 1 0 001-1v-9" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="tab-btn" data-target="suede" aria-label="SUEDE">
+          <span class="tab-frame" aria-hidden="true"></span>
+          <span class="tab-goo" aria-hidden="true"><span class="goo-blob goo-circle"></span><svg class="goo-neck" viewBox="0 0 32 14" fill="none" preserveAspectRatio="none"><path d="M25.0486 1.4497e-07C25.0486 1.4497e-07 20.3636 0.869539 20.3636 7C20.3636 13.1305 32 14 32 14L0 14C0 14 11.6364 13.1305 11.6364 7C11.6364 0.869539 6.95136 -1.07942e-06 6.95136 -1.07942e-06L25.0486 1.4497e-07Z" fill="#fff"/></svg></span>
+          <span class="tab-indicator" aria-hidden="true"></span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5.3a2 2 0 10-2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 7.3v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 9.3L4 15a1.15 1.15 0 00.6 2.1h14.8a1.15 1.15 0 00.6-2.1l-8-5.7z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="tab-btn" data-target="terrava" aria-label="Terrava">
+          <span class="tab-frame" aria-hidden="true"></span>
+          <span class="tab-goo" aria-hidden="true"><span class="goo-blob goo-circle"></span><svg class="goo-neck" viewBox="0 0 32 14" fill="none" preserveAspectRatio="none"><path d="M25.0486 1.4497e-07C25.0486 1.4497e-07 20.3636 0.869539 20.3636 7C20.3636 13.1305 32 14 32 14L0 14C0 14 11.6364 13.1305 11.6364 7C11.6364 0.869539 6.95136 -1.07942e-06 6.95136 -1.07942e-06L25.0486 1.4497e-07Z" fill="#fff"/></svg></span>
+          <span class="tab-indicator" aria-hidden="true"></span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-7.58 7-12A7 7 0 105 9c0 4.42 7 12 7 12z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg>
+        </button>
+      </div>
+
+      <div class="showcase-card-zone">
+      <div class="showcase-card" id="showcaseCard">
+      <div class="sc-track" id="scTrack">
+
+        <div class="sc-panel" id="panel-handynaija">
+          <div class="sc-text">
+            <div class="sc-eyebrow">
+              <span class="sc-eyebrow-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 11L12 4l8 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9a1 1 0 001 1h3v-5h4v5h3a1 1 0 001-1v-9" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+              HandyNaija
+            </div>
+            <h2 class="sc-title">Find a trusted pro, in minutes</h2>
+            <p class="sc-desc">A home service marketplace built around one thing: trust. Browse vetted providers, compare real reviews, and book with confidence.</p>
+            <a href="#" class="sc-link">View case study<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+          <div class="sc-visual">
+            <div class="photo-slideshow">
+              <img decoding="async" class="photo-slide active" src="images/web/handynaija-1.jpg" alt="HandyNaija screenshot 1">
+              <img decoding="async" class="photo-slide" src="images/handynaija-2.png" alt="HandyNaija screenshot 2">
+              <img decoding="async" class="photo-slide" src="images/handynaija-3.png" alt="HandyNaija screenshot 3">
+            </div>
+          </div>
+        </div>
+
+        <div class="sc-panel" id="panel-suede">
+          <div class="sc-text">
+            <div class="sc-eyebrow">
+              <span class="sc-eyebrow-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5.3a2 2 0 10-2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 7.3v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 9.3L4 15a1.15 1.15 0 00.6 2.1h14.8a1.15 1.15 0 00.6-2.1l-8-5.7z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+              SUEDE
+              <span class="sc-pill">In Progress</span>
+            </div>
+            <h2 class="sc-title">Reviews that actually fit</h2>
+            <p class="sc-desc">Redesigning a fashion review platform that matches real body measurements to real reviews, so shoppers can buy with confidence.</p>
+            <a href="#" class="sc-link">View case study<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+          <div class="sc-visual">
+            <div class="photo-slideshow">
+              <img decoding="async" class="photo-slide active" src="images/web/suede-1.jpg" alt="SUEDE screenshot 1">
+              <img decoding="async" class="photo-slide" src="images/web/suede-2.jpg" alt="SUEDE screenshot 2">
+              <img decoding="async" class="photo-slide" src="images/suede-3.png" alt="SUEDE screenshot 3">
+            </div>
+          </div>
+        </div>
+
+        <div class="sc-panel" id="panel-terrava">
+          <div class="sc-text">
+            <div class="sc-eyebrow">
+              <span class="sc-eyebrow-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-7.58 7-12A7 7 0 105 9c0 4.42 7 12 7 12z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.8"/></svg></span>
+              Terrava
+            </div>
+            <h2 class="sc-title">Every run claims new ground</h2>
+            <p class="sc-desc">A running app where every run expands your territory, builds personalized heatmaps, and rewards consistency with streaks and milestones.</p>
+            <a href="#" class="sc-link">View case study<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+          <div class="sc-visual">
+            <div class="photo-slideshow">
+              <img decoding="async" class="photo-slide active" src="images/web/terrava-1.jpg" alt="Terrava screenshot 1">
+              <img decoding="async" class="photo-slide" src="images/web/terrava-2.jpg" alt="Terrava screenshot 2">
+              <img decoding="async" class="photo-slide" src="images/web/terrava-3.jpg" alt="Terrava screenshot 3">
+            </div>
+          </div>
+        </div>
+
+      </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="process-section wrap">
+  <div class="process-head">
+    <div class="eyebrow">How I Work</div>
+    <h2>From a messy brief to something users trust.</h2>
+  </div>
+  <div class="deck-cards" id="deckCards" role="tablist" aria-label="Design process steps">
+
+    <div class="deck-card active" data-theme="p1" data-step="1" role="tab" aria-selected="true" tabindex="0">
+      <div class="deck-bg"></div>
+      <div class="deck-content">
+        <div class="deck-heading">Discover</div>
+        <div class="deck-body">
+        <p class="deck-resting-desc">Understand before designing anything.</p>
+        <div class="deck-active-body">
+          <p class="deck-active-desc">Every project starts with questions, not screens. I sit with stakeholders, map the real workflow, and figure out what's actually broken before opening Figma.</p>
+          <ul class="deck-steps">
+            <li><span class="deck-step-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 5h16v11H9l-3.5 3V16H4V5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span>Stakeholder interviews</li>
+            <li><span class="deck-step-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="5" cy="6" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="18" r="1.6" fill="currentColor"/><path d="M6.5 7.3L10.5 10.7M13.5 13.3L17.5 16.7" stroke="currentColor" stroke-width="1.5"/></svg></span>Mapping the current workflow</li>
+            <li><span class="deck-step-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.6"/></svg></span>Defining what success looks like</li>
+          </ul>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-connector" aria-hidden="true"><svg viewBox="0 0 34 64" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 2 23 17 23C32 23 34 0 34 0V64C34 64 32 41 17 41C2 41 0 64 0 64V0Z" fill="#fff"/></svg></div>
+    <div class="deck-card" data-theme="p2" data-step="2" role="tab" aria-selected="false" tabindex="0">
+      <div class="deck-bg"></div>
+      <div class="deck-content">
+        <div class="deck-heading">Design</div>
+        <div class="deck-body">
+        <p class="deck-resting-desc">Explore wide, then commit.</p>
+        <div class="deck-active-body">
+          <p class="deck-active-desc">Low-fidelity flows first, then high-fidelity screens once the structure is agreed. Nothing goes to prototype until the layout has earned it.</p>
+          <ul class="deck-steps">
+            <li><span class="deck-step-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="7" height="7" rx="1.3" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="4" width="7" height="16" rx="1.3" stroke="currentColor" stroke-width="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.3" stroke="currentColor" stroke-width="1.6"/></svg></span>Wireframes and flows</li>
+            <li><span class="deck-step-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 4a8 8 0 100 16c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.3-.5-.8-.5-1.2 0-1 .8-1.8 1.8-1.8H17a3 3 0 003-3c0-3.9-3.6-6.7-8-6.7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="7.5" cy="10.5" r="1" fill="currentColor"/><circle cx="9.5" cy="7" r="1" fill="currentColor"/><circle cx="14.5" cy="7" r="1" fill="currentColor"/></svg></span>Visual design system</li>
+            <li><span class="deck-step-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 0113.7-5.7M20 12a8 8 0 01-13.7 5.7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M17 3v4h-4M7 21v-4h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Internal review loops</li>
+          </ul>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-connector" aria-hidden="true"><svg viewBox="0 0 34 64" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 2 23 17 23C32 23 34 0 34 0V64C34 64 32 41 17 41C2 41 0 64 0 64V0Z" fill="#fff"/></svg></div>
+    <div class="deck-card" data-theme="p3" data-step="3" role="tab" aria-selected="false" tabindex="0">
+      <div class="deck-bg"></div>
+      <div class="deck-content">
+        <div class="deck-heading">Prototype</div>
+        <div class="deck-body">
+        <p class="deck-resting-desc">Make it feel real before it's built.</p>
+        <div class="deck-active-body">
+          <p class="deck-active-desc">Interactive prototypes so stakeholders and users react to something real, not a static mockup. It's cheaper to change a prototype than a codebase.</p>
+          <ul class="deck-steps">
+            <li><span class="deck-step-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 3l4.5 15 2-6 6-2L6 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>Clickable Figma prototypes</li>
+            <li><span class="deck-step-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.6" stroke="currentColor" stroke-width="1.6"/></svg></span>Usability walkthroughs</li>
+            <li><span class="deck-step-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Edge cases caught early</li>
+          </ul>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-connector" aria-hidden="true"><svg viewBox="0 0 34 64" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 2 23 17 23C32 23 34 0 34 0V64C34 64 32 41 17 41C2 41 0 64 0 64V0Z" fill="#fff"/></svg></div>
+    <div class="deck-card" data-theme="p4" data-step="4" role="tab" aria-selected="false" tabindex="0">
+      <div class="deck-bg"></div>
+      <div class="deck-content">
+        <div class="deck-heading">Deliver</div>
+        <div class="deck-body">
+        <p class="deck-resting-desc">Handoff that doesn't lose the details.</p>
+        <div class="deck-active-body">
+          <p class="deck-active-desc">Specs, redlines, and a design system devs can actually build from — plus staying involved through implementation so nothing gets lost in translation.</p>
+          <ul class="deck-steps">
+            <li><span class="deck-step-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 3h7l4 4v14H7V3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M14 3v4h4" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>Dev handoff docs</li>
+            <li><span class="deck-step-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 12.3l2.3 2.3 4.7-4.9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Design QA on build</li>
+            <li><span class="deck-step-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3c3 1 5 4 5 8 0 2-1 4-2 5l-1.5-1.5M12 3c-3 1-5 4-5 8 0 2 1 4 2 5l1.5-1.5M9.5 14.5L7 17l1-3.5M14.5 14.5L17 17l-1-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="9" r="1.6" stroke="currentColor" stroke-width="1.4"/></svg></span>Post-launch iteration</li>
+          </ul>
+        </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* Shared motion helpers. Timers only run while their element is on screen and the tab is
+   visible, and never when the visitor has asked their system to reduce motion. */
+window.PortfolioMotion = (function(){
+  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  function reduceMotion(){ return !!(mq && mq.matches); }
+  function whenVisible(el, onStart, onStop){
+    var hasIO = 'IntersectionObserver' in window;
+    var inView = !hasIO;
+    var running = false;
+    function sync(){
+      var should = inView && !document.hidden && !reduceMotion();
+      if (should && !running) { running = true; onStart(); }
+      else if (!should && running) { running = false; onStop(); }
+    }
+    if (hasIO) {
+      new IntersectionObserver(function(entries){
+        inView = entries[entries.length - 1].isIntersecting;
+        sync();
+      }).observe(el);
+    }
+    document.addEventListener('visibilitychange', sync);
+    if (mq) {
+      if (mq.addEventListener) mq.addEventListener('change', sync);
+      else if (mq.addListener) mq.addListener(sync);
+    }
+    sync();
+  }
+  return { reduceMotion: reduceMotion, whenVisible: whenVisible };
+})();
+</script>
+
+<script>
+(function(){
+  var deckCards = document.getElementById('deckCards');
+  if (deckCards) {
+    var cards = deckCards.querySelectorAll('.deck-card');
+    var activeCard = cards[0];
+    function activateCard(card){
+      if (card === activeCard) return;
+      activeCard = card;
+      cards.forEach(function(c){
+        var isActive = c === card;
+        c.classList.toggle('active', isActive);
+        c.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+    }
+    cards.forEach(function(card){
+      card.addEventListener('click', function(){ activateCard(card); });
+      card.addEventListener('focus', function(){ activateCard(card); });
+    });
+
+    // Hit-test against each card's real live rect (driven only by actual mouse
+    // movement, never by animation frames) — NOT a fixed equal-width grid. The cards
+    // are visually unequal once one is expanded (400px vs 180px), so a fixed grid
+    // drifts out of sync with what's really under the cursor near boundaries, which
+    // kept re-triggering the active card mid-transition and restarting its reveal.
+    // mousemove can fire several times per frame and every hit-test reads live layout,
+    // so run at most one hit-test per animation frame.
+    var pendingX = null, hitFrame = 0;
+    function hitTest(x){
+      var closest = null, closestDist = Infinity;
+      cards.forEach(function(card){
+        var r = card.getBoundingClientRect();
+        if (x >= r.left && x < r.right) { closest = card; closestDist = 0; return; }
+        var d = x < r.left ? r.left - x : x - r.right;
+        if (d < closestDist) { closestDist = d; closest = card; }
+      });
+      if (closest) activateCard(closest);
+    }
+    deckCards.addEventListener('mousemove', function(e){
+      pendingX = e.clientX;
+      if (!hitFrame) hitFrame = requestAnimationFrame(function(){ hitFrame = 0; hitTest(pendingX); });
+    });
+    deckCards.addEventListener('mouseleave', function(){
+      if (hitFrame) { cancelAnimationFrame(hitFrame); hitFrame = 0; }
+      activateCard(cards[0]);
+    });
+  }
+})();
+</script>
+
+<script>
+(function(){
+  document.querySelectorAll('.photo-slideshow').forEach(function(el){
+    var slides = el.querySelectorAll('.photo-slide');
+    if (slides.length < 2) return;
+    var idx = 0, timer = null;
+    function advance(){
+      var current = slides[idx];
+      idx = (idx + 1) % slides.length;
+      var next = slides[idx];
+      current.classList.remove('active');
+      current.classList.add('exiting');
+      next.classList.add('active');
+      setTimeout(function(){ current.classList.remove('exiting'); }, 650);
+    }
+    // Only cycle while this slideshow is actually on screen (hidden project panels and
+    // background tabs stay idle).
+    function start(){ if (!timer) timer = setInterval(advance, 3000); }
+    function stop(){ clearInterval(timer); timer = null; }
+    if (window.PortfolioMotion) window.PortfolioMotion.whenVisible(el, start, stop); else start();
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var heroPhoto = document.getElementById('heroPhoto');
+  if (!heroPhoto) return;
+  var slides = Array.prototype.slice.call(heroPhoto.querySelectorAll('.hero-photo-slide'));
+  // Skip any photo that fails to load (e.g. a file not added yet) instead of flipping to it.
+  slides.forEach(function(img){
+    img.addEventListener('error', function(){
+      slides = slides.filter(function(s){ return s !== img; });
+    });
+  });
+  slides = slides.filter(function(img){ return !(img.complete && img.naturalWidth === 0); });
+  var rot = 0, timer = null;
+  function flip(){
+    if (slides.length < 2) return;
+    rot += 180;
+    heroPhoto.style.transform = 'rotateY(' + rot + 'deg)';
+    setTimeout(function(){
+      var current = heroPhoto.querySelector('.hero-photo-slide.active');
+      var next = slides[(slides.indexOf(current) + 1) % slides.length];
+      if (!next || next === current) return;
+      // After every odd flip the card is face-down, which would show the photo mirrored.
+      // Counter-rotate the incoming photo so it always reads the right way round.
+      next.style.transform = (rot / 180) % 2 === 1 ? 'rotateY(180deg)' : '';
+      if (current) current.classList.remove('active');
+      next.classList.add('active');
+    }, 350);
+  }
+  function start(){ if (!timer) timer = setInterval(flip, 3000); }
+  function stop(){ clearInterval(timer); timer = null; }
+  if (window.PortfolioMotion) window.PortfolioMotion.whenVisible(heroPhoto, start, stop); else start();
+})();
+</script>
+
+<script>
+(function(){
+  var wrap = document.getElementById('showcaseWrap');
+  var stage = document.getElementById('showcaseStage');
+  var gradientCard = document.getElementById('gradientCard');
+  var meshStage = document.getElementById('meshStage');
+  var tabsEl = document.getElementById('showcaseTabs');
+  var tabs = tabsEl.querySelectorAll('.tab-btn');
+  var track = document.getElementById('scTrack');
+  var meshLayers = gradientCard.querySelectorAll('.mesh-layer');
+  var tabOrder = ['handynaija', 'suede', 'terrava'];
+  var stepCount = tabOrder.length;
+  var BREAKPOINT = 860;
+  var motion = window.PortfolioMotion;
+
+  var currentIndex = 0;
+  var autoplayTimer = null;
+  var inView = false;
+
+  function setActive(name){
+    tabs.forEach(function(b){ b.classList.toggle('active', b.dataset.target === name); });
+    meshLayers.forEach(function(m){ m.classList.toggle('active', m.dataset.theme === name); });
+  }
+
+  function goToIndex(idx){
+    idx = Math.max(0, Math.min(stepCount - 1, idx));
+    currentIndex = idx;
+    setActive(tabOrder[idx]);
+    track.style.transform = 'translateX(-' + (idx * (100 / stepCount)) + '%)';
+  }
+
+  function isMobile(){ return window.innerWidth <= BREAKPOINT; }
+  function motionReduced(){ return !!(motion && motion.reduceMotion()); }
+
+  // The gradient card is always laid out at full size (equal 28px margin on every side).
+  // Compact vs expanded is only its clip-path (the visible rounded window) plus a GPU
+  // scale on the colour mesh, so the gradient still stretches as the card opens, exactly
+  // as before, without re-laying out the card or re-blurring the mesh on every frame.
+  // The white project card underneath never resizes, it just stays centered.
+  var compactW = 1000, compactH = 620;
+  var isExpanded = false;
+
+  function applyExpandState(expand, instant){
+    if (isMobile()) {
+      gradientCard.style.clipPath = '';
+      meshStage.style.transform = '';
+      return;
+    }
+    var fullW = gradientCard.offsetWidth, fullH = gradientCard.offsetHeight;
+    if (instant) { gradientCard.style.transition = 'none'; meshStage.style.transition = 'none'; }
+    if (expand) {
+      gradientCard.style.clipPath = 'inset(0px 0px 0px 0px round 20px)';
+      meshStage.style.transform = 'scale(1, 1)';
+    } else {
+      var w = Math.min(compactW, fullW), h = Math.min(compactH, fullH);
+      var ix = (fullW - w) / 2, iy = (fullH - h) / 2;
+      gradientCard.style.clipPath = 'inset(' + iy + 'px ' + ix + 'px ' + iy + 'px ' + ix + 'px round 32px)';
+      meshStage.style.transform = 'scale(' + (w / fullW) + ', ' + (h / fullH) + ')';
+    }
+    if (instant) {
+      gradientCard.offsetWidth; // commit the new state without animating it
+      gradientCard.style.transition = '';
+      meshStage.style.transition = '';
+    }
+  }
+
+  // Desktop/tablet: one deliberate wheel or trackpad gesture = one step. Step 0 is compact
+  // with the first project selected; step 1 expands to full page (still first project);
+  // steps 2..stepCount move to the next project each; the final step (stepCount+1)
+  // collapses back to compact after the last project. Reaching either end releases the
+  // wheel so the page scrolls normally past the section.
+  var virtualStep = 0;
+  var VSTEP_MAX = stepCount + 1; // + 1 final collapse-back-to-compact step
+  var STEP_COOLDOWN_MS = 650;    // minimum time between steps, lets each transition finish
+  var GESTURE_GAP_MS = 200;      // a pause this long between wheel events starts a new gesture
+  var wheelHistory = [], lastWheelAt = 0, lastStepAt = -Infinity;
+
+  function applyVirtualStep(){
+    var expand = virtualStep >= 1 && virtualStep <= stepCount;
+    if (expand !== isExpanded) {
+      isExpanded = expand;
+      applyExpandState(expand, false);
+    }
+    var projectIdx = virtualStep <= 0 ? 0 : Math.min(stepCount, virtualStep) - 1;
+    goToIndex(projectIdx);
+  }
+
+  function isStageEngaged(){
+    return Math.abs(stage.getBoundingClientRect().top) < 2;
+  }
+
+  function avgOf(list, count){
+    var part = list.slice(-count), total = 0;
+    for (var i = 0; i < part.length; i++) total += part[i];
+    return total / part.length;
+  }
+
+  function onWheel(e){
+    if (e.deltaY === 0 || isMobile() || motionReduced() || !isStageEngaged()) return;
+    var down = e.deltaY > 0;
+    if (down && virtualStep >= VSTEP_MAX) return;
+    if (!down && virtualStep <= 0) return;
+    e.preventDefault();
+    var now = performance.now();
+    if (now - lastWheelAt > GESTURE_GAP_MS) wheelHistory = [];
+    lastWheelAt = now;
+    wheelHistory.push(Math.abs(e.deltaY));
+    if (wheelHistory.length > 12) wheelHistory.shift();
+    // Trackpads keep sending ever-smaller "momentum" events after a swipe. Only treat the
+    // wheel as a new intent while its speed is holding or rising, so one swipe = one step.
+    var deliberate = wheelHistory.length < 3 || avgOf(wheelHistory, 3) >= avgOf(wheelHistory, 12);
+    if (!deliberate || now - lastStepAt < STEP_COOLDOWN_MS) return;
+    lastStepAt = now;
+    virtualStep = Math.max(0, Math.min(VSTEP_MAX, virtualStep + (down ? 1 : -1)));
+    applyVirtualStep();
+  }
+
+  // Mobile: no scroll-jacking; auto-advance on a timer instead, only while visible.
+  function startAutoplay(){
+    stopAutoplay();
+    autoplayTimer = setInterval(function(){
+      goToIndex((currentIndex + 1) % stepCount);
+    }, 6000);
+  }
+  function stopAutoplay(){
+    if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; }
+  }
+
+  function applyMode(){
+    if (isMobile() && inView) startAutoplay(); else stopAutoplay();
+    applyExpandState(isExpanded, true);
+  }
+
+  tabs.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var idx = tabOrder.indexOf(btn.dataset.target);
+      virtualStep = idx + 1;
+      applyVirtualStep();
+      if (isMobile() && inView) startAutoplay();
+    });
+  });
+
+  // Listen on the showcase only, not the whole window, so wheel scrolling everywhere else
+  // on the page stays on the browser's fast, non-blocking path.
+  wrap.addEventListener('wheel', onWheel, { passive: false });
+
+  var resizeFrame = 0;
+  window.addEventListener('resize', function(){
+    if (resizeFrame) return;
+    resizeFrame = requestAnimationFrame(function(){ resizeFrame = 0; applyMode(); });
+  });
+
+  applyExpandState(false, true);
+  if (motion) {
+    motion.whenVisible(wrap, function(){ inView = true; applyMode(); }, function(){ inView = false; stopAutoplay(); });
+  } else {
+    inView = true;
+    applyMode();
+  }
+})();
+</script>
+
+<div class="testi-section" id="testimonials">
+  <div class="mesh-layer theme-suede active"></div>
+  <div class="wrap testi-head">
+    <div class="eyebrow testi-eyebrow">Client Feedback</div>
+    <h2 class="testi-heading">Real people. Real feedback.</h2>
+  </div>
+
+  <div class="testi-carousel" id="testiCarousel">
+    <div class="testi-connector tc-mirror" id="testiConnLeft" aria-hidden="true"><svg viewBox="0 0 20 37.3338" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 1.2422 13.5759 10 13.5759C18.7578 13.5759 20 0 20 0V37.3338C20 37.3338 18.7578 23.7578 10 23.7578C1.2422 23.7578 0 37.3338 0 37.3338V0Z" fill="#fff"/></svg></div>
+    <div class="testi-connector" id="testiConnRight" aria-hidden="true"><svg viewBox="0 0 20 37.3338" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 1.2422 13.5759 10 13.5759C18.7578 13.5759 20 0 20 0V37.3338C20 37.3338 18.7578 23.7578 10 23.7578C1.2422 23.7578 0 37.3338 0 37.3338V0Z" fill="#fff"/></svg></div>
+    <div class="testi-connector tc-mirror" id="testiConnFarLeft" aria-hidden="true"><svg viewBox="0 0 16 28" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 0.993759 10.1818 8 10.1818C15.0062 10.1818 16 0 16 0V28C16 28 15.0062 17.8182 8 17.8182C0.993759 17.8182 0 28 0 28V0Z" fill="#fff"/></svg></div>
+    <div class="testi-connector" id="testiConnFarRight" aria-hidden="true"><svg viewBox="0 0 16 28" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 0.993759 10.1818 8 10.1818C15.0062 10.1818 16 0 16 0V28C16 28 15.0062 17.8182 8 17.8182C0.993759 17.8182 0 28 0 28V0Z" fill="#fff"/></svg></div>
+    <div id="testiCards"></div>
+  </div>
+
+  <div class="testi-dots" id="testiDots"></div>
+</div>
+
+<script>
+(function(){
+  var testimonials = [
+    { quote: "“He is a thoughtful, hardworking, and highly professional product designer who approaches problems with a strong user-first mindset.”", name: "Abdullah", role: "CEO, MindSynth Technologies", photo: "images/web/testi-1.jpg" },
+    { quote: "“Rehan consistently demonstrated strong design thinking, attention to detail, and the ability to turn ideas into intuitive, impactful visuals.”", name: "Shampa Banik", role: "Lecturer of CSE, BUBT", photo: "images/testi-2.jpg" },
+    { quote: "“He seamlessly converted our mobile app to web with great UX and visuals.”", name: "Starlove Annulysse", role: "Founder, Booking Nest", photo: "images/web/testi-3.jpg" },
+    { quote: "“He learns fast, takes feedback seriously, and always goes the extra mile.”", name: "SohanulL Habib", role: "CEO, OrbitX", photo: "images/testi-4.jpg" },
+    { quote: "“Great communicator, sharp eye for detail, and always delivers on time.”", name: "Add name", role: "Add role", photo: "images/testi-5.jpg" }
+  ];
+  var n = testimonials.length;
+
+  // Each role is a fixed point in space (offset from center, plus a width/height).
+  // Every testimonial's own card element animates between these roles via CSS
+  // transitions on width/height/transform — the card that was full-size shrinks
+  // and slides to become the new left peek, the right peek grows into the new
+  // center card, etc. Nothing is swapped in place; the elements themselves move.
+  var ROLES = {
+    '-2': { x: -560, w: 74,  h: 205 },
+    '-1': { x: -450, w: 105, h: 344 },
+    '0':  { x: 0,    w: 762, h: 513 },
+    '1':  { x: 450,  w: 105, h: 344 },
+    '2':  { x: 560,  w: 74,  h: 205 }
+  };
+
+  var cardsWrap = document.getElementById('testiCards');
+  var dotsWrap = document.getElementById('testiDots');
+  var connLeft = document.getElementById('testiConnLeft');
+  var connRight = document.getElementById('testiConnRight');
+  var connFarLeft = document.getElementById('testiConnFarLeft');
+  var connFarRight = document.getElementById('testiConnFarRight');
+  var current = 0;
+  var autoplayTimer = null;
+  var autoplayAllowed = false;
+  var cards = [];
+
+  testimonials.forEach(function(t, i){
+    var el = document.createElement('div');
+    el.className = 'testi-card-el';
+    el.innerHTML =
+      '<div class="testi-bg-photo"><img src="' + t.photo + '" alt="" loading="lazy" decoding="async"></div>' +
+      '<div class="testi-overlay">' +
+        '<div class="testi-card-text">' +
+          '<p class="testi-quote">' + t.quote + '</p>' +
+          '<div class="testi-attrib">' +
+            '<span class="testi-name">' + t.name + '</span>' +
+            '<svg class="testi-mini-connector" viewBox="0 0 14 8" fill="none" preserveAspectRatio="none"><path d="M0 0C0 0 5.09091 0.49688 5.09091 4C5.09091 7.50312 0 8 0 8H14C14 8 8.90909 7.50312 8.90909 4C8.90909 0.49688 14 0 14 0H0Z" fill="var(--paper-alt)"/></svg>' +
+            '<span class="testi-role">' + t.role + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="testi-card-photo"><img src="' + t.photo + '" alt="" loading="lazy" decoding="async"></div>' +
+      '</div>';
+    el.addEventListener('click', function(){ render(i); });
+    cardsWrap.appendChild(el);
+    cards.push(el);
+  });
+
+  testimonials.forEach(function(){
+    var dot = document.createElement('span');
+    dot.className = 'testi-dot';
+    var fill = document.createElement('span');
+    fill.className = 'testi-dot-fill';
+    dot.appendChild(fill);
+    dotsWrap.appendChild(dot);
+  });
+  var dots = dotsWrap.querySelectorAll('.testi-dot');
+
+  function wrap(i){ return (i % n + n) % n; }
+
+  function signedRole(i, cur){
+    var raw = wrap(i - cur);
+    return raw > n / 2 ? raw - n : raw;
+  }
+
+  function getRoleEl(roleNum){
+    for (var i = 0; i < cards.length; i++){
+      if (signedRole(i, current) === roleNum) return cards[i];
+    }
+    return null;
+  }
+
+  // Connectors bridge two specific adjacent cards (right card -> left card)
+  // and travel with them as they slide into their new roles (see startConnectors).
+  var connectorPairs = [
+    { el: connLeft, roleRight: 0, roleLeft: -1, minN: 2 },
+    { el: connRight, roleRight: 1, roleLeft: 0, minN: 2 },
+    { el: connFarLeft, roleRight: -1, roleLeft: -2, minN: 5 },
+    { el: connFarRight, roleRight: 2, roleLeft: 1, minN: 4 }
+  ];
+  var lastGeom = [];
+  var pendingConnectorFinish = null;
+
+  function edgeMid(rightGeom, leftGeom){
+    return ((rightGeom.x - rightGeom.w / 2) + (leftGeom.x + leftGeom.w / 2)) / 2;
+  }
+
+  function indexForRole(roleNum){
+    for (var i = 0; i < cards.length; i++){
+      if (signedRole(i, current) === roleNum) return i;
+    }
+    return -1;
+  }
+
+  // A connector sits halfway between two neighbouring cards' facing edges. Both cards move
+  // and resize on the same 550ms curve, so that halfway point moves on the same curve too:
+  // place each connector at its start point instantly, then let a CSS transition with the
+  // same curve carry it to its end point. Nothing reads layout while the cards animate.
+  function startConnectors(startGeom, endGeom){
+    var plans = connectorPairs.map(function(pair){
+      var iR = indexForRole(pair.roleRight), iL = indexForRole(pair.roleLeft);
+      if (n < pair.minN || iR < 0 || iL < 0 || !endGeom[iR] || !endGeom[iL]) return { el: pair.el, hide: true };
+      var to = edgeMid(endGeom[iR], endGeom[iL]);
+      var from = (startGeom[iR] && startGeom[iL]) ? edgeMid(startGeom[iR], startGeom[iL]) : to;
+      return { el: pair.el, from: from, to: to };
+    });
+    plans.forEach(function(p){
+      if (p.hide) { p.el.style.opacity = '0'; return; }
+      p.el.style.transition = 'none';
+      p.el.style.transform = 'translateX(' + p.from + 'px)';
+      p.el.style.opacity = '1';
+    });
+    if (plans.length) plans[0].el.offsetWidth; // commit the start positions before animating
+    return function finish(){
+      plans.forEach(function(p){
+        if (p.hide) return;
+        p.el.style.transition = '';
+        p.el.style.transform = 'translateX(' + p.to + 'px)';
+      });
+    };
+  }
+
+  var prevX = {};
+
+  function apply(){
+    var moves = cards.map(function(el, i){
+      var role = signedRole(i, current);
+      var isCenter = role === 0;
+      el.classList.toggle('is-center', isCenter);
+      var r = ROLES[String(Math.max(-2, Math.min(2, role)))];
+      var oldX = prevX[i];
+      var bigJump = !!r && oldX !== undefined && Math.abs(r.x - oldX) > 700;
+      return { i: i, el: el, role: role, isCenter: isCenter, r: r, oldX: oldX, bigJump: bigJump };
+    });
+
+    var hasBigJump = moves.some(function(m){ return m.bigJump; });
+    var startGeom = cards.map(function(el, i){ return lastGeom[i]; });
+
+    moves.forEach(function(m){
+      var el = m.el, r = m.r, isCenter = m.isCenter, role = m.role, bigJump = m.bigJump;
+      if (!r) { el.style.opacity = '0'; el.style.pointerEvents = 'none'; return; }
+      el.style.pointerEvents = 'auto';
+      el.style.opacity = '1';
+
+      if (bigJump) {
+        // A card recycling from one edge to the other has no adjacent slot
+        // to slide through, so it jumps straight (invisibly, no transition)
+        // to sit flush against the neighbor it's entering next to. Its move
+        // to the final slot is then deferred to the same shared rAF as every
+        // other card below, so all four genuinely start sliding on the same
+        // frame — one push, all at once.
+        var R = Math.max(-2, Math.min(2, role));
+        var dir = R === 0 ? 1 : R / Math.abs(R);
+        var neighbor = ROLES[String(R - dir)] || ROLES['0'];
+        var flushX = neighbor.x + dir * (neighbor.w / 2 + r.w / 2);
+        startGeom[m.i] = { x: flushX, w: r.w };
+        el.classList.remove('is-center');
+        el.style.zIndex = 0;
+        el.style.transition = 'none';
+        el.style.width = r.w + 'px';
+        el.style.height = r.h + 'px';
+        el.style.transform = 'translate(-50%, -50%) translateX(' + flushX + 'px)';
+        el.offsetHeight;
+      } else if (!hasBigJump) {
+        el.style.width = r.w + 'px';
+        el.style.height = r.h + 'px';
+        el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
+        el.style.zIndex = isCenter ? 2 : 1;
+      }
+    });
+
+    if (hasBigJump) {
+      // Restoring transitions and setting final values in the same tick as
+      // the flush teleport gets collapsed by the browser (no animation) — a
+      // double rAF forces that "flush" frame to actually paint first, then
+      // every card (the recycler included) gets its final transform set
+      // together in one pass, so they all move on the same frame.
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          moves.forEach(function(m){
+            var el = m.el, r = m.r, isCenter = m.isCenter;
+            if (!r) return;
+            el.classList.toggle('is-center', isCenter);
+            el.style.transition = '';
+            el.style.width = r.w + 'px';
+            el.style.height = r.h + 'px';
+            el.style.transform = 'translate(-50%, -50%) translateX(' + r.x + 'px)';
+            el.style.zIndex = isCenter ? 2 : 1;
+          });
+          if (pendingConnectorFinish) { pendingConnectorFinish(); pendingConnectorFinish = null; }
+        });
+      });
+    }
+
+    cards.forEach(function(el, i){ prevX[i] = moves[i].r ? moves[i].r.x : undefined; });
+
+    // Roles present depend on n: signedRole() only ever produces -2 once n>=5,
+    // so with n=4 the far-left slot is structurally always empty — no card ever
+    // sits there, so that connector must stay hidden (nothing to connect to).
+    var endGeom = moves.map(function(m){ return m.r ? { x: m.r.x, w: m.r.w } : null; });
+    var finishConnectors = startConnectors(startGeom, endGeom);
+    if (hasBigJump) pendingConnectorFinish = finishConnectors; else finishConnectors();
+    lastGeom = endGeom;
+    dots.forEach(function(d, i){ d.classList.toggle('active', i === current); });
+  }
+
+  function render(idx){
+    current = wrap(idx);
+    apply();
+    startAutoplay();
+  }
+
+  function startAutoplay(){
+    if (autoplayTimer) clearTimeout(autoplayTimer);
+    autoplayTimer = null;
+    if (!autoplayAllowed) return;
+    autoplayTimer = setTimeout(function(){ render(current + 1); }, 6000);
+  }
+
+  function restartDotFill(){
+    var fill = dots[current] && dots[current].querySelector('.testi-dot-fill');
+    if (!fill) return;
+    fill.style.animation = 'none';
+    fill.offsetWidth;
+    fill.style.animation = '';
+  }
+
+  dots.forEach(function(dot, i){
+    dot.addEventListener('click', function(){ render(i); });
+  });
+
+  render(0);
+
+  // Autoplay (and the progress bar in the active dot) only runs while the section is on
+  // screen and the tab is visible; it restarts cleanly when the visitor comes back.
+  var section = document.getElementById('testimonials');
+  if (window.PortfolioMotion && section) {
+    dotsWrap.classList.add('is-paused');
+    window.PortfolioMotion.whenVisible(section, function(){
+      autoplayAllowed = true;
+      dotsWrap.classList.remove('is-paused');
+      restartDotFill();
+      startAutoplay();
+    }, function(){
+      autoplayAllowed = false;
+      dotsWrap.classList.add('is-paused');
+      startAutoplay(); // clears the pending timer
+    });
+  } else {
+    autoplayAllowed = true;
+    startAutoplay();
+  }
+})();
+</script>
+
+<div class="gallery-section wrap">
+  <div class="eyebrow">Design Gallery</div>
+  <h2>From the first pixel to the finished product</h2>
+  <p class="lede">A closer look at the screens, flows, and details behind each project — the parts that don't always make it into a case study.</p>
+  <a href="#work" class="btn btn-primary">View all work</a>
+  <div class="gallery-viewport">
+  <div class="gallery-row" id="galleryRow">
+    <div class="gallery-card">
+      <img loading="lazy" decoding="async" src="images/web/handynaija-1.jpg" alt="HandyNaija">
+      <div class="gallery-badge">
+        <span class="gallery-badge-icon" style="background:var(--hn-vivid)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L10 18L20 6" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="gallery-badge-label">HandyNaija — Shipped</span>
+      </div>
+    </div>
+    <div class="gallery-card">
+      <img loading="lazy" decoding="async" src="images/web/suede-1.jpg" alt="SUEDE">
+      <div class="gallery-badge">
+        <span class="gallery-badge-icon" style="background:var(--sd-vivid)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L10 18L20 6" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="gallery-badge-label">SUEDE — Case Study</span>
+      </div>
+    </div>
+    <div class="gallery-card">
+      <img loading="lazy" decoding="async" src="images/web/terrava-1.jpg" alt="Terrava">
+      <div class="gallery-badge">
+        <span class="gallery-badge-icon" style="background:var(--tr-vivid)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12L10 18L20 6" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="gallery-badge-label">Terrava — Case Study</span>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<script>
+(function(){
+  var row = document.getElementById('galleryRow');
+  if (!row) return;
+  // Duplicate the cards once so the marquee loops seamlessly. The copies are decorative:
+  // hidden from screen readers, and hidden entirely when reduced motion is on.
+  Array.prototype.slice.call(row.children).forEach(function(card){
+    var copy = card.cloneNode(true);
+    copy.classList.add('gallery-clone');
+    copy.setAttribute('aria-hidden', 'true');
+    row.appendChild(copy);
+  });
+  if (window.PortfolioMotion) {
+    row.classList.add('is-paused');
+    window.PortfolioMotion.whenVisible(row.parentNode,
+      function(){ row.classList.remove('is-paused'); },
+      function(){ row.classList.add('is-paused'); });
+  }
+})();
+</script>
+
+<div class="tools-section wrap" id="tools">
+  <div class="eyebrow">Tools I Work In</div>
+  <h2>Design, prototype, hand off, repeat.</h2>
+  <p class="lede">The everyday toolkit behind my process, from first wireframe to shipped product.</p>
+  <div class="tools-grid" id="toolsGrid">
+    <div class="tool-tile"><div class="tool-badge"><img loading="lazy" decoding="async" src="images/logos/figma.svg" alt="Figma"></div></div>
+    <div class="tool-tile"><div class="tool-badge"><img loading="lazy" decoding="async" src="images/logos/slack.svg" alt="Slack"></div></div>
+    <div class="tool-tile"><div class="tool-badge"><img loading="lazy" decoding="async" src="images/logos/zoom.svg" alt="Zoom"></div></div>
+    <div class="tool-tile"><div class="tool-badge"><img loading="lazy" decoding="async" src="images/logos/notion.svg" alt="Notion"></div></div>
+    <div class="tool-tile"><div class="tool-badge"><img loading="lazy" decoding="async" src="images/logos/miro.svg" alt="Miro"></div></div>
+    <div class="tool-tile"><div class="tool-badge"><img loading="lazy" decoding="async" src="images/logos/adobephotoshop.svg" alt="Photoshop"></div></div>
+    <div class="tool-tile"><div class="tool-badge" style="background:#000"><img loading="lazy" decoding="async" src="images/logos/openai.svg" alt="ChatGPT"></div></div>
+    <div class="tool-tile"><div class="tool-badge"><img loading="lazy" decoding="async" src="images/logos/jira.svg" alt="Jira"></div></div>
+    <div class="tool-tile"><div class="tool-badge"><img loading="lazy" decoding="async" src="images/logos/stripe.svg" alt="Stripe"></div></div>
+    <div class="tool-tile"><div class="tool-badge"><img loading="lazy" decoding="async" src="images/logos/zapier.svg" alt="Zapier"></div></div>
+  </div>
+</div>
+<script>
+(function(){
+  var connSvg = '<svg viewBox="0 0 6.9722 40.5991" preserveAspectRatio="none"><path d="M6.9722 27.4315C3.53722 27.4319 0.944676 31.4613 0.412166 36.7245C-0.117137 41.9559 0.0285468 40.3814 0.0303304 40.3622V20.7186H6.9722ZM6.9722 20.7167H0.0234945L0.0205648 0.246933C0.0205648 0.246933 -0.133062 -1.4469 0.399471 4.03795C0.932075 9.52264 3.5312 13.7215 6.97076 13.7215V20.7167Z"></path></svg>';
+  var tiles = document.querySelectorAll('#toolsGrid .tool-tile');
+  tiles.forEach(function(tile, i){
+    if (i > 0) {
+      var left = document.createElement('div');
+      left.className = 'tool-connector tc-left';
+      left.innerHTML = connSvg;
+      tile.appendChild(left);
+    }
+    if (i < tiles.length - 1) {
+      var right = document.createElement('div');
+      right.className = 'tool-connector tc-right';
+      right.innerHTML = connSvg;
+      tile.appendChild(right);
+    }
+  });
+})();
+</script>
+
+<div class="closing" id="contact">
+  <div class="wrap">
+    <h2>Have a project in mind? Let's talk.</h2>
+    <a href="#" class="btn btn-on-dark">Let's Talk
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="wrap footer-row">
+    <div>
+      <div class="footer-name">Moinul Islam Rehan</div>
+      <div class="footer-meta">Product Designer &middot; <a href="mailto:rehan.moinul.10@gmail.com" style="color:var(--ink-faint);">rehan.moinul.10@gmail.com</a></div>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/moinul-rehan/" class="nav-link" style="padding:0;">LinkedIn</a>
+      <a href="https://www.behance.net/moinul_rehan" class="nav-link" style="padding:0;">Behance</a>
+      <a href="https://dribbble.com/moinul-rehan" class="nav-link" style="padding:0;">Dribbble</a>
+      <a href="https://github.com/moinul-rehan" class="nav-link" style="padding:0;">GitHub</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
