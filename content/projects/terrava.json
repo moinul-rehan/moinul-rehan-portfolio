@@ -1,0 +1,57 @@
+{
+  "title": "Terrava",
+  "published": true,
+  "featured": true,
+  "order": 3,
+  "headline": "Every run claims new ground",
+  "category": "Gamified running app",
+  "summary": "A running app where every run expands your territory, builds personalized heatmaps, and rewards consistency with streaks and milestones.",
+  "cover": "/images/projects/terrava/cover.jpg",
+  "cover_alt": "Terrava cover: a phone showing a glowing territory map, beside the line Every run expands your territory.",
+  "cover_caption": "Terrava cover: the territory map on a phone.",
+  "cover_focus": "Top",
+  "role": "",
+  "credit": "Designed with Interface Lab",
+  "client": "",
+  "year": "2026",
+  "status": "",
+  "platform": "Mobile app",
+  "tools": [],
+  "links": [
+    {
+      "label": "Behance case study",
+      "url": "https://www.behance.net/gallery/251718063/TERRAVA-Fitness-App-UIUX-Design-Case-study"
+    }
+  ],
+  "decision": "",
+  "story": [
+    {
+      "type": "text",
+      "heading": "Overview",
+      "body": "TERRAVA is a next-generation running experience that transforms every run into a living, evolving world. Instead of focusing solely on fitness statistics, TERRAVA rewards movement through territory expansion, heatmaps, achievements, streaks, and cinematic replay experiences."
+    },
+    {
+      "type": "text",
+      "heading": "The goal",
+      "body": "The goal was to create a product that motivates users not just to run farther, but to explore new places, build consistency, and share meaningful accomplishments with others."
+    },
+    {
+      "type": "image",
+      "image": "/images/projects/terrava/overview.jpg",
+      "alt": "Terrava project overview: a phone showing the territory map, with the project name, designed by Interface Lab, published June 2026, in mobile app design, fitness and gamified running.",
+      "caption": "Project overview."
+    },
+    {
+      "type": "image",
+      "image": "/images/projects/terrava/user-flow.jpg",
+      "alt": "Terrava user flow: get started, login and sign up lead to home, territory, heatmap, report, start run, achievements and profile.",
+      "caption": "User flow."
+    },
+    {
+      "type": "image",
+      "image": "/images/projects/terrava/typography-color.jpg",
+      "alt": "Typography and color: DM Sans in regular, medium, semi bold and bold, and the colors #10232C, #FDFDFD, #00EBFD, #FFCC00 and #FB5E5E.",
+      "caption": "Typography and color."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+<script>
+/* Runs before first paint. It marks JS as available and, only when the visitor allows motion,
+   puts the cover into its start state (the loose sticky notes). The cover sequence plays once
+   per browser session and never on a deep link. A 4-second safety timeout always lands on the
+   finished frame, even if the main script never runs. */
+(function(){
+  var html = document.documentElement;
+  html.classList.add('js');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var seen = false;
+  try { seen = window.sessionStorage.getItem('rehan-cover') === 'played'; } catch (e) {}
+  if (reduce || seen || window.location.hash) return;
+  try { window.sessionStorage.setItem('rehan-cover', 'played'); } catch (e) {}
+  html.classList.add('cover-play');
+  window.__coverSafety = setTimeout(function(){
+    html.classList.remove('cover-play');
+    html.classList.add('cover-done');
+    if (document.getAnimations) {
+      document.getAnimations().forEach(function(a){ try { a.finish(); } catch (e) {} });
+    }
+  }, 4000);
+})();
+</script>

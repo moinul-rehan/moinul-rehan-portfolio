@@ -1,0 +1,54 @@
+{
+  "title": "Prottoyon",
+  "published": true,
+  "featured": false,
+  "order": 4,
+  "headline": "All certificates in one place",
+  "category": "Government certificate app",
+  "summary": "A government app for easy digital certificate applications in Bangladesh.",
+  "cover": "/images/projects/prottoyon/cover.jpg",
+  "cover_alt": "Prottoyon cover: the app name in Bangla and English above three phones showing the splash screen, the home screen and the certificate services.",
+  "cover_caption": "Prottoyon: all certificates in one place.",
+  "cover_focus": "Center",
+  "role": "",
+  "credit": "UX redesign, in a team",
+  "client": "",
+  "year": "2025",
+  "status": "",
+  "platform": "Mobile app",
+  "tools": [],
+  "links": [
+    {
+      "label": "Behance case study",
+      "url": "https://www.behance.net/gallery/224308507/Prottoyon-App-Redesign-Case-Study"
+    }
+  ],
+  "decision": "",
+  "story": [
+    {
+      "type": "text",
+      "heading": "Overview",
+      "body": "Prottoyon is a government service app designed to help Bangladeshi citizens apply for various digital certificates (e.g., birth, death, nationality) in a hassle-free way. Our team conducted a complete UX redesign to improve the app’s usability, navigation, and accessibility, especially for users with limited digital literacy. By simplifying the user flow and making key services easier to access, we aimed to build a more inclusive digital experience for all citizens."
+    },
+    {
+      "type": "image",
+      "image": "/images/projects/prottoyon/screens.jpg",
+      "alt": "Six redesigned Prottoyon screens side by side, from the splash screen to the home screen, applications and certificate services.",
+      "caption": "The redesigned screens."
+    },
+    {
+      "type": "gallery",
+      "images": [
+        {
+          "image": "/images/projects/prottoyon/wireframes.jpg",
+          "alt": "Three low-fidelity wireframes of the redesigned app."
+        },
+        {
+          "image": "/images/projects/prottoyon/app.jpg",
+          "alt": "Two phones showing the Prottoyon home screen and splash screen beside the app name."
+        }
+      ],
+      "caption": "Wireframes, and the final home and splash screens."
+    }
+  ]
+}

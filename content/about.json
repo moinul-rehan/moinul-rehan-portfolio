@@ -1,0 +1,72 @@
+{
+  "headline": "Hi, I’m Rehan, designing digital products with clarity and purpose.",
+  "signed": "clarity and purpose.",
+  "intro": "I’m a product-focused designer with a strong interest in creating intuitive, user-centered digital experiences. I enjoy working at the intersection of design, usability, and problem-solving, turning complex ideas into clear, meaningful interfaces.\n\nMy approach is rooted in understanding users, defining problems clearly, and designing with intention. From websites and mobile apps to SaaS products and dashboards, I focus on structure, consistency, and real-world usability rather than visual noise.",
+  "portrait": "/images/site/rehan-portrait.png",
+  "portrait_alt": "Moinul Islam Rehan in a white TulipTech polo, arms crossed",
+  "stats": [
+    { "value": "2.5+", "label": "years" },
+    { "value": "30+", "label": "company projects" },
+    { "value": "10+", "label": "industries" }
+  ],
+  "experience": [
+    {
+      "dates": "Sep 2026 to present",
+      "role": "UI/UX Designer",
+      "company": "TulipTech",
+      "place": "Badda, Dhaka",
+      "current": true,
+      "text": "Designing product-based digital experiences at TulipTech. I work with cross-functional teams to understand user and business needs and turn them into interfaces that are intuitive, scalable and consistent to build."
+    },
+    {
+      "dates": "Jun 2025 to Aug 2026",
+      "role": "UI/UX Designer",
+      "company": "Softvence",
+      "place": "Mohakhali, Dhaka",
+      "current": false,
+      "text": "Led UX on 30+ client projects across fintech, edtech, B2B SaaS, hiring platforms and film production, working directly with developers and project managers. Built and maintained a shared component library that unified the design language across client products and made developer handoff smoother."
+    },
+    {
+      "dates": "Nov 2024 to May 2025",
+      "role": "UI/UX Engineer",
+      "company": "MindSynth Technologies",
+      "place": "",
+      "current": false,
+      "text": "Designed user flows, interfaces and design system components for client and internal products across web and SaaS platforms. Promoted from intern to UI/UX Engineer after three months."
+    },
+    {
+      "dates": "Aug to Oct 2024",
+      "role": "UI/UX Designer (Intern)",
+      "company": "MindSynth Technologies",
+      "place": "",
+      "current": false,
+      "text": "Supported the design team on client and internal products across user research, interface design and design system work."
+    }
+  ],
+  "education": [
+    {
+      "dates": "2022 to present",
+      "title": "B.Sc. in Computer Science and Engineering (major in AI)",
+      "school": "Bangladesh University of Business and Technology (BUBT)",
+      "text": "Served as Vice Chairperson of the IEEE BUBT Student Branch, organizing technical workshops and events that strengthened leadership, communication, and problem-solving skills through active collaboration and club activities."
+    },
+    {
+      "dates": "May 2024",
+      "title": "UI-UX Guided Program",
+      "school": "Ostad",
+      "text": "Completed the UI-UX Guided Program at Ostad, gaining practical knowledge of user research, wireframing, design systems, prototyping, and usability principles. Worked on hands-on projects to strengthen problem-solving skills and apply user-centered design thinking to real-world scenarios."
+    }
+  ],
+  "milestones": [
+    { "date": "Jan 2026", "text": "Co-authored “AGRO AI”, peer-reviewed research published by Elsevier (Applied Food Research), from a NASA Space Apps Challenge 2024 project." },
+    { "date": "May 2025 to Jul 2026", "text": "Vice Chairperson, IEEE BUBT Student Branch." },
+    { "date": "Dec 2024", "text": "1st Runner-Up, Fall 2024 Brainstorming Competition, Dept. of CSE, BUBT." }
+  ],
+  "skills": [
+    { "group": "Design", "items": ["UX", "Interaction design", "UI", "Design systems", "Visual design", "Prototyping", "Wireframing"] },
+    { "group": "Research", "items": ["User interviews", "User testing", "Journey mapping", "A/B testing", "Competitor analysis", "Design strategy"] },
+    { "group": "Tools", "items": ["Figma", "Framer", "Notion", "Adobe Illustrator", "Adobe Photoshop"] },
+    { "group": "AI workflow", "items": ["Figma AI", "ChatGPT", "Claude", "Gemini", "Banani AI", "Stitch", "Notion AI", "Lovable", "Relume"] }
+  ],
+  "contact_heading": "I’m always open to new ideas, collaborations, or a simple conversation."
+}

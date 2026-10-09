@@ -1,0 +1,46 @@
+{
+  "title": "SUEDE",
+  "published": true,
+  "featured": true,
+  "order": 2,
+  "headline": "Reviews that actually fit",
+  "category": "Fashion review platform · UX audit and redesign",
+  "summary": "Redesigning a fashion review platform that matches real body measurements to real reviews, so shoppers can buy with confidence.",
+  "cover": "/images/projects/suede/cover.jpg",
+  "cover_alt": "Black-and-white fashion photograph used as the SUEDE case study cover, titled UI/UX Audit & Product Redesign.",
+  "cover_caption": "SUEDE case study cover",
+  "cover_focus": "Center",
+  "role": "",
+  "credit": "UI/UX Designer (lead), at Softvence",
+  "client": "",
+  "year": "",
+  "status": "In progress",
+  "platform": "",
+  "tools": [],
+  "links": [
+    {
+      "label": "Behance case study",
+      "url": "https://www.behance.net/gallery/252365437/SUEDE-Fashion-Review-Platform-Audit-Redesign"
+    }
+  ],
+  "decision": "I put fit first: real reviews, matched to real body measurements.",
+  "story": [
+    {
+      "type": "text",
+      "heading": "Overview",
+      "body": "We're redesigning SUEDE, a fashion review platform that matches real body measurements to real reviews so shoppers can buy with confidence. The focus is on trust, fit accuracy, and a consistent, photo-first experience. We're currently finishing the before/after comparison and polishing the final case study."
+    },
+    {
+      "type": "image",
+      "image": "/images/projects/suede/redesign.jpg",
+      "alt": "SUEDE redesign board: a black-and-white portrait, the SUEDE mark, the tags Redesign, Fashion Design and Website Design, and the new homepage on a laptop.",
+      "caption": "The redesign."
+    },
+    {
+      "type": "image",
+      "image": "/images/projects/suede/homepage.jpg",
+      "alt": "The redesigned SUEDE homepage on a laptop: The trust layer for fashion, Stop shopping blind. Start shopping with intent, and a Leave a review link.",
+      "caption": "The new homepage."
+    }
+  ]
+}

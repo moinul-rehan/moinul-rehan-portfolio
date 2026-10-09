@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{title}}</title>
+{{meta}}
+<meta name="theme-color" content="#FCFBF8">
+<!-- Favicon: the selection glyph (a teal frame with four handles) drawn inline, so it costs no request. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23071A31'/%3E%3Crect x='8' y='8' width='16' height='16' fill='none' stroke='%2300B3C6' stroke-width='2'/%3E%3Cg fill='%23FCFBF8' stroke='%2300B3C6' stroke-width='2'%3E%3Crect x='5' y='5' width='6' height='6'/%3E%3Crect x='21' y='5' width='6' height='6'/%3E%3Crect x='5' y='21' width='6' height='6'/%3E%3Crect x='21' y='21' width='6' height='6'/%3E%3C/g%3E%3C/svg%3E">
+{{head_script}}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v={{version}}">
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12"/></symbol>
+  <symbol id="i-frame" viewBox="0 0 12 12"><path d="M4 1v10M8 1v10M1 4h10M1 8h10"/></symbol>
+  <symbol id="i-cursor" viewBox="0 0 17 19"><path d="M2 2l4.5 15 2-6 6-2L2 2z"/></symbol>
+  <symbol id="i-move" viewBox="0 0 24 24"><path d="M6 4l12.5 7.3-5.6 1.5-2.7 5.4L6 4z"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M8.5 12.5V6.25a1.5 1.5 0 013 0V11.5M11.5 11V4.75a1.5 1.5 0 013 0V11M14.5 11V6.25a1.5 1.5 0 013 0v7.25a6.5 6.5 0 01-6.5 6.5h-.6a6 6 0 01-4.6-2.15L4.5 14.6a1.45 1.45 0 012.2-1.9l1.8 1.8"/></symbol>
+  <symbol id="i-inspect" viewBox="0 0 24 24"><path d="M4.5 5v14M19.5 5v14M8 12h8M8 12l2.5-2.5M8 12l2.5 2.5M16 12l-2.5-2.5M16 12l-2.5 2.5"/></symbol>
+</svg>
+
+<!-- DRAFT COPY for Rehan's approval -->
+<a class="skip-link" href="{{skip_href}}">{{skip_text}}</a>
+<!-- /DRAFT COPY -->
+<div class="canvas-grid" aria-hidden="true"></div>
+
+<header class="masthead">
+  <div class="wrap masthead-row">
+    <a class="wordmark" href="{{home_href}}"><span class="wordmark-badge" aria-hidden="true">MR</span><span class="wordmark-text">Moinul Islam Rehan</span></a>
+    <p class="running-head is-empty" data-running-head aria-hidden="true"><span class="rh-sep">/</span><span class="rh-mark"></span><span class="rh-text"></span></p>
+    <nav class="primary-nav" aria-label="Primary">
+      <ul>
+{{nav_items}}
+      </ul>
+    </nav>
+    <details class="toc-menu" data-toc>
+      <!-- DRAFT COPY for Rehan's approval -->
+      <summary class="toc-summary">{{toc_label}}<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></summary>
+      <nav class="toc-panel" aria-label="{{toc_aria}}">
+        <ol>
+{{toc_items}}
+        </ol>
+      </nav>
+      <!-- /DRAFT COPY -->
+    </details>
+    <a class="btn btn-primary btn-masthead" href="{{contact_href}}">Get in touch</a>
+  </div>
+</header>
+
+<main id="main">
+{{main}}
+</main>
+
+<footer class="footer on-dark">
+  <div class="wrap footer-row">
+    <p class="footer-id">Moinul Islam Rehan&nbsp;· UI/UX Designer at TulipTech&nbsp;· Dhaka</p>
+    <ul class="footer-links">
+      <li><a href="https://www.linkedin.com/in/moinul-rehan/" target="_blank" rel="noopener">LinkedIn<span class="vh"> (opens in a new tab)</span></a></li>
+      <li><a href="https://www.behance.net/moinul_rehan" target="_blank" rel="noopener">Behance<span class="vh"> (opens in a new tab)</span></a></li>
+      <li><a href="https://dribbble.com/moinul-rehan" target="_blank" rel="noopener">Dribbble<span class="vh"> (opens in a new tab)</span></a></li>
+      <li><a href="https://github.com/moinul-rehan" target="_blank" rel="noopener">GitHub<span class="vh"> (opens in a new tab)</span></a></li>
+      <li><a href="https://x.com/moinul_rehan" target="_blank" rel="noopener">X<span class="vh"> (opens in a new tab)</span></a></li>
+    </ul>
+    <!-- DRAFT COPY for Rehan's approval -->
+    <p class="colophon">Set in Geist.</p>
+    <!-- /DRAFT COPY -->
+  </div>
+</footer>
+
+<script src="/assets/site.js?v={{version}}"></script>
+
+</body>
+</html>

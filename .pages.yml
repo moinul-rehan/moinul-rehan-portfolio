@@ -1,0 +1,401 @@
+# Pages CMS setup: the forms used at app.pagescms.org to add and edit projects.
+# Each project is one JSON file in content/projects. Its file name becomes its web address:
+#   content/projects/handynaija.json  ->  /projects/handynaija/
+# Saving in the admin commits to GitHub; the host rebuilds the site (python3 build.py) by itself.
+
+media:
+  input: public/images
+  output: /images
+  categories: [image]
+  rename: safe
+
+content:
+  - name: projects
+    label: Projects
+    type: collection
+    path: content/projects
+    format: json
+    filename:
+      template: "{primary}.json"
+      field: create
+    view:
+      fields: [title, featured, order, status, published]
+      primary: title
+      sort: [order, title]
+      default:
+        sort: order
+        order: asc
+    fields:
+      - name: title
+        label: Project name
+        type: string
+        required: true
+      - name: published
+        label: Show on the site
+        description: Turn off to keep a project as a draft.
+        type: boolean
+        default: true
+      - name: featured
+        label: Feature on the home page
+        description: The home page shows up to three featured projects, lowest order number first.
+        type: boolean
+        default: false
+      - name: order
+        label: Order
+        description: Lower numbers come first, on the home page and on the Projects page.
+        type: number
+        options:
+          min: 0
+      - name: headline
+        label: Headline
+        description: One line that sums up the project, for example "Find a trusted pro, in minutes".
+        type: string
+        required: true
+      - name: category
+        label: What it is
+        description: A short type line, for example "Trusted home-service marketplace".
+        type: string
+      - name: summary
+        label: Summary
+        description: Two or three sentences. Also used for search results and link previews.
+        type: text
+      - name: cover
+        label: Cover image
+        description: JPG or WebP, about 1600 px wide, ideally under 500 KB.
+        type: image
+        required: true
+        options:
+          path: projects
+      - name: cover_alt
+        label: Cover description (alt text)
+        description: What the image shows, for people who use screen readers.
+        type: text
+      - name: cover_caption
+        label: Cover caption
+        type: string
+      - name: cover_focus
+        label: Cover crop
+        description: Which part of the cover stays in view when a project card crops it.
+        type: select
+        options:
+          values: [Top, Center, Bottom]
+      - name: role
+        label: Your role
+        description: For example "Lead Designer".
+        type: string
+      - name: credit
+        label: Credit
+        description: Use when the work was shared or done for a company, for example "Designed with Interface Lab". Shown when Your role is empty.
+        type: string
+      - name: client
+        label: Client
+        description: Leave empty when the client should not be named.
+        type: string
+      - name: year
+        label: Year
+        type: string
+      - name: status
+        label: Status
+        type: select
+        options:
+          values: [Shipped, In progress]
+      - name: platform
+        label: Platform
+        description: For example "iOS and Android" or "Web".
+        type: string
+      - name: tools
+        label: Tools
+        type: string
+        list: true
+      - name: links
+        label: Links
+        description: Behance, Figma prototype, live site.
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Link text
+            type: string
+          - name: url
+            label: Web address
+            type: string
+            pattern:
+              regex: "^(https?://|mailto:|/).+"
+              message: Start with https://
+      - name: decision
+        label: Key decision
+        description: One sentence, drawn as your signed selection on the project page.
+        type: text
+      - name: story
+        label: Story
+        description: The case study, built from blocks in any order.
+        type: block
+        list:
+          collapsible: true
+        blockKey: type
+        blocks:
+          - name: text
+            label: Text
+            fields:
+              - name: heading
+                label: Heading
+                type: string
+              - name: body
+                label: Text
+                description: Leave an empty line between paragraphs.
+                type: text
+          - name: image
+            label: Image
+            fields:
+              - name: image
+                label: Image
+                type: image
+                options:
+                  path: projects
+              - name: alt
+                label: Description (alt text)
+                type: text
+              - name: caption
+                label: Caption
+                type: string
+          - name: gallery
+            label: Image grid
+            fields:
+              - name: images
+                label: Images
+                type: object
+                list: true
+                fields:
+                  - name: image
+                    label: Image
+                    type: image
+                    options:
+                      path: projects
+                  - name: alt
+                    label: Description (alt text)
+                    type: text
+              - name: caption
+                label: Caption
+                type: string
+          - name: before_after
+            label: Before and after
+            fields:
+              - name: before
+                label: Before image
+                type: image
+                options:
+                  path: projects
+              - name: before_alt
+                label: Before description (alt text)
+                type: text
+              - name: after
+                label: After image
+                type: image
+                options:
+                  path: projects
+              - name: after_alt
+                label: After description (alt text)
+                type: text
+              - name: caption
+                label: Caption
+                type: string
+          - name: quote
+            label: Quote
+            fields:
+              - name: text
+                label: Quote
+                type: text
+              - name: name
+                label: Name
+                type: string
+              - name: role
+                label: Role and company
+                type: string
+          - name: numbers
+            label: Numbers
+            fields:
+              - name: items
+                label: Numbers
+                type: object
+                list: true
+                fields:
+                  - name: value
+                    label: Number
+                    description: For example "3 weeks" or "12 screens".
+                    type: string
+                  - name: label
+                    label: What it counts
+                    type: string
+
+  - name: posts
+    label: Blog posts
+    type: collection
+    path: content/posts
+    format: json
+    exclude: [.gitkeep]
+    filename:
+      template: "{primary}.json"
+      field: create
+    view:
+      fields: [title, date, published]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: published
+        label: Publish on the site
+        description: Leave off while you are still writing. The Blog link appears in the menu once a post is published.
+        type: boolean
+        default: false
+      - name: date
+        label: Date
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: summary
+        label: Summary
+        description: One or two sentences for the blog list, search results and link previews.
+        type: text
+      - name: cover
+        label: Cover image (optional)
+        description: JPG or WebP, about 1600 px wide, ideally under 500 KB.
+        type: image
+        options:
+          path: blog
+      - name: cover_alt
+        label: Cover description (alt text)
+        description: What the image shows, for people who use screen readers.
+        type: text
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: body
+        label: Post
+        type: rich-text
+        options:
+          format: html
+          path: blog
+
+  - name: about
+    label: About page
+    type: file
+    path: content/about.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: headline
+        label: Headline
+        type: string
+        required: true
+      - name: signed
+        label: Signed words
+        description: The last words of the headline, drawn as your teal selection, for example "clarity and purpose.".
+        type: string
+      - name: intro
+        label: About me
+        description: Leave an empty line between paragraphs.
+        type: text
+      - name: portrait
+        label: Portrait
+        type: image
+        options:
+          path: site
+      - name: portrait_alt
+        label: Portrait description (alt text)
+        type: text
+      - name: stats
+        label: Numbers
+        type: object
+        list: true
+        fields:
+          - name: value
+            label: Number
+            type: string
+          - name: label
+            label: What it counts
+            type: string
+      - name: experience
+        label: Experience
+        description: Newest first.
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{role} · {company}"
+        fields:
+          - name: dates
+            label: Dates
+            description: For example "Sep 2026 to present".
+            type: string
+          - name: role
+            label: Role
+            type: string
+          - name: company
+            label: Company
+            type: string
+          - name: place
+            label: Place
+            type: string
+          - name: current
+            label: Current job
+            description: Draws this role as your signed selection.
+            type: boolean
+          - name: text
+            label: What you did
+            type: text
+      - name: education
+        label: Education
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: dates
+            label: Dates
+            type: string
+          - name: title
+            label: Degree or course
+            type: string
+          - name: school
+            label: School
+            type: string
+          - name: text
+            label: Details
+            type: text
+      - name: milestones
+        label: Milestones
+        type: object
+        list: true
+        fields:
+          - name: date
+            label: Date
+            type: string
+          - name: text
+            label: Milestone
+            type: text
+      - name: skills
+        label: Skills
+        type: object
+        list: true
+        fields:
+          - name: group
+            label: Group
+            description: For example "Design" or "Tools".
+            type: string
+          - name: items
+            label: Skills
+            type: string
+            list: true
+      - name: contact_heading
+        label: Contact heading
+        type: string

@@ -1,0 +1,7 @@
+# The built site: Vercel makes it from the sources on every deploy.
+dist/
+
+# Python's cache and Mac Finder files.
+__pycache__/
+*.pyc
+.DS_Store

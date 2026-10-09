@@ -1,0 +1,58 @@
+{
+  "title": "HandyNaija",
+  "published": true,
+  "featured": true,
+  "order": 1,
+  "headline": "Find a trusted pro, in minutes",
+  "category": "Trusted home-service marketplace",
+  "summary": "A home service marketplace built around one thing: trust. Browse vetted providers, compare real reviews, and book with confidence.",
+  "cover": "/images/projects/handynaija/cover.jpg",
+  "cover_alt": "HandyNaija home screen on a phone against a green background: a greeting, a service search and an AC service offer card.",
+  "cover_caption": "HandyNaija home screen: greeting, service search and an offer card.",
+  "cover_focus": "Top",
+  "role": "Lead Designer",
+  "credit": "",
+  "client": "Paschal",
+  "year": "2025",
+  "status": "Shipped",
+  "platform": "Mobile application",
+  "tools": [],
+  "links": [
+    {
+      "label": "Behance case study",
+      "url": "https://www.behance.net/gallery/243840891/HandyNaija-Design-a-Trusted-Home-Service-Marketplace"
+    },
+    {
+      "label": "Figma prototype",
+      "url": "https://www.figma.com/proto/mw08EDRVXF2u8Ne3h8X2v5/HandyNaija-Design-File?node-id=97-307&viewport=810%2C1027%2C0.53&t=72NB9UJppfY69rgu-0&scaling=scale-down&content-scaling=fixed&starting-point-node-id=97%3A307"
+    }
+  ],
+  "decision": "I designed HandyNaija around one thing: trust.",
+  "story": [
+    {
+      "type": "text",
+      "heading": "Overview",
+      "body": "HandyNaija is a UX/UI case study focused on designing a trusted, seamless home services marketplace for urban users.\n\nThis project explores how thoughtful user research, clear problem definition, and scalable design systems can simplify service discovery, booking, and payments in a two-sided platform. From personas and empathy mapping to high-fidelity screens and prototyping, HandyNaija demonstrates a research-driven approach to creating reliable, human-centered mobile experiences."
+    },
+    {
+      "type": "image",
+      "image": "/images/projects/handynaija/homepage.jpg",
+      "alt": "HandyNaija homepage on a phone: a greeting, a service search and an AC service offer, with a note that you can search for any service you need.",
+      "caption": "Homepage, with service search and the current offer."
+    },
+    {
+      "type": "gallery",
+      "images": [
+        {
+          "image": "/images/projects/handynaija/service-categories.jpg",
+          "alt": "The Services screen, grouped into home services, cleaning services, repair and maintenance, and beauty and grooming."
+        },
+        {
+          "image": "/images/projects/handynaija/payment.jpg",
+          "alt": "Two Confirm and pay screens: the booked service, date and time, address, payment method, notes and cancellation policy."
+        }
+      ],
+      "caption": "Service categories, and the confirm and pay flow."
+    }
+  ]
+}
