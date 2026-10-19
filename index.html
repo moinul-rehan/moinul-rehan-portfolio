@@ -346,10 +346,9 @@
      can be moved, resized, panned and inspected (see PLAYABLE CANVAS); without it this is the
      finished frame. */
   .cover{ position:relative; overflow-x:clip; padding-bottom:clamp(48px,7vw,88px); }
-  .cover-canvas{ position:relative; padding-top:clamp(56px,9vw,104px); }
-  /* Short laptop screens (1280x720, 1366x768): less air above the file. */
+  .cover-canvas{ position:relative; padding-top:56px; }
+  /* Short laptop screens (1280x720, 1366x768): the Contents follows the file closely. */
   @media (max-height:840px) and (min-width:861px){
-    .cover-canvas{ padding-top:56px; }
     .cover .contents{ margin-top:40px; }
   }
   .cover-head{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:24px; }
@@ -390,7 +389,7 @@
      frame) before the image arrives, so nothing shifts; the frame itself is positioned on top of
      that space, which lets a visitor move and resize it without moving anything else. */
   .cover-portrait{ grid-area:portrait; position:relative; width:min(75%,520px); margin-top:44px; }
-  .cover-portrait::before{ content:"\200B"; display:block; margin-bottom:8px; font-size:12px; line-height:1.5; }
+  .cover-portrait::before{ content:"\200B"; content:"\200B" / ""; display:block; margin-bottom:8px; font-size:12px; line-height:1.5; }
   .cover-portrait::after{ content:""; display:block; aspect-ratio:718 / 900; }
   .cv-portrait{ position:absolute; left:0; top:0; z-index:1; width:100%; transform-origin:0 0; }
   .cv-label{
@@ -418,7 +417,7 @@
   }
   .note{
     position:relative; width:128px; padding:10px 12px; border-radius:6px;
-    font-size:12.5px; font-weight:600; line-height:1.35; color:var(--ink);
+    font-size:12.5px; font-weight:600; line-height:1.35; color:var(--ink); text-wrap:balance;
     box-shadow:var(--shadow-float);
   }
   .note-a{ background:var(--p4-soft); --lx:-300px; --ly:-56px; --r:-6deg; }
@@ -433,38 +432,43 @@
   html.cover-play .cover-marquee{ visibility:visible; }
 
   @media (max-width:560px){
+    .cv-label-name{ flex:none; }
     .cover-notes{ top:0; right:calc(-100% / 3); }
     .note{ --mess:.5; }
-    .note-a{ --lx:-150px; --ly:-64px; }
-    .note-b{ --lx:-190px; --ly:150px; }
-    .note-c{ --lx:-40px; --ly:250px; }
+    .note-a{ --lx:-90px; --ly:-56px; }
+    .note-b{ --lx:0px; --ly:210px; }
+    .note-c{ --lx:-60px; --ly:140px; }
   }
+  /* Tablet landscape and small laptops: the draft's full-width headline, then the standfirst and
+     actions on the left of the portrait. */
   @media (min-width:861px){
+    .cover-canvas{ --cv-pw:clamp(420px,34vw,520px); }
     .cover-stage{
       grid-template-columns:minmax(0,1fr) auto;
-      grid-template-areas:"byline stats" "title title" "portrait portrait" "lede actions";
-      column-gap:48px; align-items:center;
+      grid-template-rows:auto auto auto 1fr;
+      grid-template-areas:"byline stats" "title title" "lede portrait" "actions portrait";
+      column-gap:48px; align-items:start;
     }
+    .cover-byline, .cover-stats{ align-self:center; }
     .cover-title{ margin-top:24px; }
     .cover-stats{ justify-content:flex-end; margin-top:0; }
-    .cover-actions{ margin-top:44px; }
+    .cover-portrait{ width:var(--cv-pw); }
+    .note-a{ --lx:-480px; --ly:-16px; }
+    .note-b{ --lx:-420px; --ly:140px; }
+    .note-c{ --lx:-460px; --ly:290px; }
   }
   /* Desktop: text on the left, the portrait on the right. The text column keeps the lead to two
      lines; the frame may run into the canvas margin on the right, where the grid shows. */
   @media (min-width:1176px){
+    .cover-head{ width:max(100%, calc(640px + 48px + var(--cv-pw))); }
     .cover-stage{
-      --cv-pw:clamp(420px,34vw,520px);
       grid-template-columns:minmax(640px,1fr) var(--cv-pw);
       grid-template-rows:auto auto auto auto 1fr;
       grid-template-areas:"byline portrait" "title portrait" "lede portrait" "stats portrait" "actions portrait";
       align-items:start;
     }
-    .cover-stats{ justify-content:flex-start; margin-top:24px; }
-    .cover-actions{ margin-top:24px; }
-    .cover-portrait{ width:var(--cv-pw); margin-top:0; }
-    .note-a{ --lx:-470px; --ly:-8px; }
-    .note-b{ --lx:-330px; --ly:250px; }
-    .note-c{ --lx:-130px; --ly:400px; }
+    .cover-stats{ justify-content:flex-start; margin-top:24px; align-self:start; }
+    .cover-portrait{ margin-top:0; }
   }
 
   /* PLAYABLE CANVAS UI, drawn in the selection system. Everything here exists only when the
@@ -479,6 +483,8 @@
   .sel-cover .sel-deco.is-selected .sel-box,
   .sel-cover .sel-deco.is-selected .sel-handle{ touch-action:none; }
   .sel-cover .sel-deco.is-focus .sel-box{ outline:2px solid var(--select-strong); outline-offset:3px; }
+  /* A focused layer's ring sits clear of its selection box, so the two lines never merge. */
+  .cv-on .note:focus-visible, .cv-on .cv-portrait:focus-visible{ outline-offset:8px; }
   .cv-on .cover-notes .note{ pointer-events:auto; }
   .cv-on .note, .cv-on .cv-portrait{ -webkit-user-select:none; user-select:none; }
   .note.is-selected{ z-index:1; }
@@ -518,9 +524,9 @@
   [data-cv-tool="inspect"] [data-inspect]{ cursor:crosshair; }
   [data-cv-tool="inspect"] .sel-cover .sel-handle{ cursor:crosshair; }
 
-  /* The floating toolbar, Figma style: it rides the bottom of the screen while the cover is in
-     view and settles under the file when the page moves on. Space is reserved from first paint. */
-  .cv-dock{ display:none; position:sticky; bottom:16px; z-index:6; justify-content:center; margin-top:24px; pointer-events:none; }
+  /* The floating toolbar, Figma style, at the bottom of the cover canvas. It never covers page
+     content, and its space is reserved from first paint. */
+  .cv-dock{ display:none; position:relative; z-index:6; justify-content:center; margin-top:32px; pointer-events:none; }
   .js .cv-dock{ display:flex; visibility:hidden; }
   .cv-on .cv-dock{ visibility:visible; }
   .cv-toolbar{
@@ -548,6 +554,12 @@
   .cv-tool:hover::after, .cv-tool:focus-visible::after{ opacity:1; }
   @media (hover:none) and (pointer:coarse){
     .cv-tool[data-tool="hand"], .cv-key, .cv-tool::after{ display:none; }
+  }
+  /* Very narrow windows: the letters move into the tooltips so the toolbar still fits. */
+  @media (max-width:400px){
+    .cv-toolbar{ gap:2px; }
+    .cv-key{ display:none; }
+    .cv-act{ padding:0 10px; }
   }
 
   /* Inspect: measured redlines and an honest spec card, drawn above the layers. */
@@ -864,6 +876,7 @@
           <p class="cv-hint"><span class="cv-hint-pointer">Live file: drag, resize, inspect</span><span class="cv-hint-touch">Live file: tap, then drag</span></p>
           <!-- /DRAFT COPY -->
         </div>
+        <!-- DRAFT COPY for Rehan's approval: the data-inspect values (Text, Pill, Button) are the layer names the Inspect tool shows. -->
         <div class="cover-stage" data-cover>
           <p class="cover-byline" data-inspect="Text"><strong>Moinul Islam Rehan</strong>&nbsp;· UI/UX Designer at TulipTech&nbsp;· Dhaka</p>
           <h1 class="cover-title" id="cover-title"><span class="cover-title-lead" data-inspect="Text">I turn messy product ideas into</span> <span class="sel sel-cover">clear, usable<br class="br-narrow"> products.<span class="sel-deco" aria-hidden="true"><span class="sel-drag"></span><span class="sel-box"><span class="sel-handle"></span><span class="sel-handle"></span><span class="sel-handle"></span><span class="sel-handle"></span></span><span class="sel-badge"></span><span class="sel-cursor"><svg class="sel-arrow"><use href="#i-cursor"/></svg></span></span></span></h1>
@@ -873,7 +886,7 @@
               <p class="cv-label" aria-hidden="true"><svg class="i-frame"><use href="#i-frame"/></svg><span class="cv-label-name">Rehan</span><span class="cv-size"></span></p>
               <div class="cv-frame-wrap">
                 <div class="cv-frame">
-                  <img src="images/web/rehan-portrait.png" srcset="images/web/rehan-portrait.png 718w, images/rehan-portrait.png 870w" sizes="(min-width: 1176px) clamp(420px, 34vw, 520px), min(520px, 75vw)" width="718" height="900" alt="Moinul Islam Rehan in a white TulipTech polo, arms crossed" decoding="async" fetchpriority="high" draggable="false">
+                  <img src="images/web/rehan-portrait.png" srcset="images/web/rehan-portrait.png 718w, images/rehan-portrait.png 870w" sizes="(min-width: 861px) clamp(420px, 34vw, 520px), min(520px, 75vw)" width="718" height="900" alt="Moinul Islam Rehan in a white TulipTech polo, arms crossed" decoding="async" fetchpriority="high" draggable="false">
                 </div>
               </div>
             </div>
@@ -906,9 +919,9 @@
       <div class="cv-dock">
         <!-- DRAFT COPY for Rehan's approval (toolbar names, tooltips and the screen-reader instructions below) -->
         <div class="cv-toolbar" role="toolbar" aria-label="Canvas tools" data-toolbar>
-          <button type="button" class="cv-tool" data-tool="move" aria-pressed="true" aria-label="Move (V)" aria-keyshortcuts="V" data-tip="Move"><svg class="cv-icon" aria-hidden="true"><use href="#i-move"/></svg><kbd class="cv-key" aria-hidden="true">V</kbd></button>
-          <button type="button" class="cv-tool" data-tool="hand" aria-pressed="false" aria-label="Hand (H)" aria-keyshortcuts="H" data-tip="Hand"><svg class="cv-icon" aria-hidden="true"><use href="#i-hand"/></svg><kbd class="cv-key" aria-hidden="true">H</kbd></button>
-          <button type="button" class="cv-tool" data-tool="inspect" aria-pressed="false" aria-label="Inspect (I)" aria-keyshortcuts="I" data-tip="Inspect"><svg class="cv-icon" aria-hidden="true"><use href="#i-inspect"/></svg><kbd class="cv-key" aria-hidden="true">I</kbd></button>
+          <button type="button" class="cv-tool" data-tool="move" aria-pressed="true" aria-label="Move (V)" aria-keyshortcuts="V" data-tip="Move · V"><svg class="cv-icon" aria-hidden="true"><use href="#i-move"/></svg><kbd class="cv-key" aria-hidden="true">V</kbd></button>
+          <button type="button" class="cv-tool" data-tool="hand" aria-pressed="false" aria-label="Hand (H)" aria-keyshortcuts="H" data-tip="Hand · H"><svg class="cv-icon" aria-hidden="true"><use href="#i-hand"/></svg><kbd class="cv-key" aria-hidden="true">H</kbd></button>
+          <button type="button" class="cv-tool" data-tool="inspect" aria-pressed="false" aria-label="Inspect (I)" aria-keyshortcuts="I" data-tip="Inspect · I"><svg class="cv-icon" aria-hidden="true"><use href="#i-inspect"/></svg><kbd class="cv-key" aria-hidden="true">I</kbd></button>
           <span class="cv-sep" aria-hidden="true"></span>
           <button type="button" class="cv-act" data-act="tidy">Tidy up</button>
           <button type="button" class="cv-act" data-act="reset">Reset</button>
@@ -1374,9 +1387,9 @@ window.PortfolioMotion = (function(){
   function translate(x, y){ return 'translate(' + x + 'px,' + y + 'px)'; }
 
   /* COVER SEQUENCE
-     The finished cover is the real layout; the mess is decoration layered on top. Timeline:
-       0 to 780ms      the "Rehan" cursor fades in and drags a marquee over the sticky notes
-       780 to 1480ms   the notes snap into one line, then fold into "clear, usable products."
+     The finished cover is the real layout; the mess is the notes' start state layered on top. Timeline:
+       0 to 780ms      the "Rehan" cursor fades in and drags a marquee over the loose sticky notes
+       780 to 1480ms   the notes straighten, then glide into their stack on the portrait frame
        1400 to 2020ms  the cursor drag-selects the phrase
        2020 to 2240ms  handles pop, the W x H badge appears, the cursor parks on the top-right handle
      Every move is transform or opacity, measured once before it starts. When it ends, no timer,
@@ -1471,22 +1484,20 @@ window.PortfolioMotion = (function(){
         { offset: 1, transform: 'scale(1)', opacity: 0 }
       ], opts));
 
-      // Tidy up: the notes straighten onto one line, then fold into the selected phrase.
-      var lineY = (m.y + m.y2) / 2;
-      var target = { x: sel.x + sel.w / 2, y: sel.y + sel.h / 2 };
-      var order = notes.map(function(n, i){ return i; }).sort(function(a, b){ return noteRects[a].x - noteRects[b].x; });
-      order.forEach(function(i, slot){
-        var r = noteRects[i];
-        var cx = r.x + r.w / 2, cy = r.y + r.h / 2;
-        var slotX = m.x + (m.x2 - m.x) * (slot + 0.5) / order.length;
-        var lag = slot * 40;
-        var tilt = noteTilts[i] === 'none' ? 'rotate(0deg)' : noteTilts[i];
-        anims.push(notes[i].animate([
-          { offset: 0, transform: tilt, opacity: 1 },
-          { offset: at(dragEnd + lag), transform: tilt, opacity: 1, easing: EASE },
-          { offset: at(dragEnd + UI + lag), transform: translate(slotX - cx, lineY - cy) + ' rotate(0deg) scale(1)', opacity: 1, easing: EASE },
-          { offset: at(travelEnd + lag), transform: translate(target.x - cx, target.y - cy) + ' rotate(0deg) scale(0.2)', opacity: 0 },
-          { offset: 1, transform: translate(target.x - cx, target.y - cy) + ' rotate(0deg) scale(0.2)', opacity: 0 }
+      // Tidy up: each note straightens where it lies, then glides into its place in the stack on
+      // the portrait frame, where it stays as a layer visitors can move.
+      notes.forEach(function(n, i){
+        var loose = noteTilts[i] === 'none' ? translate(0, 0) : noteTilts[i];
+        var m6 = /matrix\(([^)]+)\)/.exec(noteTilts[i]);
+        var parts = m6 ? m6[1].split(',') : null;
+        var straight = parts && parts.length === 6 ? translate(parseFloat(parts[4]), parseFloat(parts[5])) : translate(0, 0);
+        var lag = i * 40;
+        anims.push(n.animate([
+          { offset: 0, transform: loose },
+          { offset: at(dragEnd + lag), transform: loose, easing: EASE },
+          { offset: at(dragEnd + UI + lag), transform: straight, easing: EASE },
+          { offset: at(travelEnd + lag), transform: translate(0, 0) },
+          { offset: 1, transform: translate(0, 0) }
         ], opts));
       });
 
@@ -1598,7 +1609,10 @@ window.PortfolioMotion = (function(){
     var phrase = document.querySelector('.sel-cover');
     var badge = phrase && phrase.querySelector('.sel-badge');
     if (!badge) return;
+    var deco = badge.parentNode;
     function write(w, h){
+      // Once a visitor resizes the selection, the canvas reports the box's own size instead.
+      if (deco.hasAttribute('data-sized')) return;
       var value = Math.round(w) + ' × ' + Math.round(h);
       if (badge.getAttribute('data-size') !== value) badge.setAttribute('data-size', value);
     }
@@ -1611,6 +1625,618 @@ window.PortfolioMotion = (function(){
       var r = phrase.getBoundingClientRect();
       write(r.width, r.height);
     }
+  })();
+
+  /* FRAME SIZE: the portrait frame's label shows the frame's live width and height, like a
+     Figma frame. It updates only when that size changes (a window resize or a visitor's drag). */
+  (function(){
+    var frame = document.querySelector('.cv-frame');
+    var out = document.querySelector('.cv-size');
+    if (!frame || !out) return;
+    function write(){
+      var value = frame.offsetWidth + ' × ' + frame.offsetHeight;
+      if (out.getAttribute('data-size') !== value) out.setAttribute('data-size', value);
+    }
+    if ('ResizeObserver' in window) new ResizeObserver(write).observe(frame);
+    else write();
+  })();
+
+  /* PLAYABLE CANVAS
+     The cover is a small working file with three kinds of layer: the headline selection, the
+     portrait frame and three sticky notes. Move (V) selects, drags and resizes them, Hand (H)
+     pans them together and Inspect (I) measures them; Tidy up lines the notes up again and Reset
+     puts every layer back. Pointer Events only, captured on the element being dragged, so
+     nothing listens on window; during a drag one requestAnimationFrame per frame writes the
+     positions as transforms. Touch keeps scrolling the page: the first tap selects a layer, and
+     only a selected layer (or its handle) takes over a drag. Nothing here moves on its own, and
+     under reduced motion Tidy up and Reset jump instead of gliding. */
+  (function(){
+    var canvas = document.querySelector('[data-canvas]');
+    if (!canvas || !window.PointerEvent || typeof canvas.closest !== 'function') return;
+    var stage = canvas.querySelector('[data-cover]');
+    var phraseEl = stage && stage.querySelector('.sel-cover');
+    var portraitEl = stage && stage.querySelector('[data-obj="portrait"]');
+    var notesWrap = stage && stage.querySelector('.cover-notes');
+    var toolbar = canvas.querySelector('[data-toolbar]');
+    var live = canvas.querySelector('[data-cv-live]');
+    var layer = canvas.querySelector('[data-inspect-layer]');
+    if (!phraseEl || !portraitEl || !notesWrap || !toolbar || !live || !layer) return;
+    var title = phraseEl.parentNode;
+    var deco = phraseEl.querySelector('.sel-deco');
+    var badge = deco.querySelector('.sel-badge');
+    var slot = portraitEl.parentNode;
+    var frame = portraitEl.querySelector('.cv-frame');
+    var img = frame.querySelector('img');
+    var GRID = 8, GAP = 8, MIN = 48;
+    var KEYS = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
+    var tool = 'move', current = null, drag = null, frameReq = 0;
+    var suppressClick = false, pointerInside = false, keyed = null, keyedResize = false;
+    var pan = { x: 0, y: 0 };
+    var padX = -parseFloat(getComputedStyle(deco).left) || 0;
+    var padY = -parseFloat(getComputedStyle(deco).top) || 0;
+    function snap(v){ return Math.round(v / GRID) * GRID; }
+    function floorGrid(v){ return Math.floor(v / GRID) * GRID; }
+    function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
+    function round(v){ return Math.round(v); }
+
+    // Layers. Each one is focusable, says it can be moved, and is described by the shared
+    // instructions. The headline's selection is drawn inside the h1 (hidden from screen readers),
+    // so a separate, visually hidden button after the h1 takes its keyboard focus.
+    // DRAFT COPY for Rehan's approval: layer names and the labels screen readers announce.
+    var proxy = document.createElement('span');
+    proxy.className = 'vh';
+    title.parentNode.insertBefore(proxy, title.nextSibling);
+    function makeLayer(kind, el, focusEl, name, label){
+      focusEl.setAttribute('role', 'button');
+      focusEl.setAttribute('tabindex', '0');
+      focusEl.setAttribute('aria-pressed', 'false');
+      focusEl.setAttribute('aria-label', label);
+      focusEl.setAttribute('aria-describedby', 'cv-help');
+      return { kind: kind, el: el, focusEl: focusEl, name: name, x: 0, y: 0, w: 0, h: 0, sized: false, anim: null };
+    }
+    var phrase = makeLayer('phrase', deco, proxy, 'Selection', 'Selection box around “clear, usable products.”, movable and resizable');
+    var portrait = makeLayer('portrait', portraitEl, portraitEl, 'Portrait frame', 'Portrait frame: ' + img.getAttribute('alt') + '. Movable and resizable');
+    portraitEl.querySelector('.cv-frame-wrap').insertAdjacentHTML('beforeend', '<span class="cv-chrome" aria-hidden="true"><span class="cv-box"></span><span class="cv-handle" data-handle="br"></span></span>');
+    notesWrap.removeAttribute('aria-hidden');
+    var notes = toArray(notesWrap.querySelectorAll('.note')).map(function(n){
+      var text = n.textContent.trim();
+      n.insertAdjacentHTML('beforeend', '<span class="cv-chrome" aria-hidden="true"><span class="cv-box"></span><span class="sel-badge"></span></span>');
+      return makeLayer('note', n, n, 'Note “' + text + '”', 'Sticky note “' + text + '”, movable');
+    });
+    ['tl', 'tr', 'bl', 'br'].forEach(function(corner, i){
+      var h = deco.querySelectorAll('.sel-handle')[i];
+      if (h) h.setAttribute('data-handle', corner);
+    });
+    var layers = [phrase, portrait].concat(notes);
+
+    function layerFrom(t){
+      if (!t || !t.closest) return null;
+      if (t === proxy || t.closest('.sel-cover .sel-deco')) return phrase;
+      var n = t.closest('.note');
+      for (var i = 0; n && i < notes.length; i++) if (notes[i].el === n) return notes[i];
+      return t.closest('[data-obj="portrait"]') ? portrait : null;
+    }
+    function rectOf(o){ return o.el.getBoundingClientRect(); }
+    function natural(){ var r = phraseEl.getBoundingClientRect(); return { w: r.width, h: r.height }; }
+    function phraseSize(){ return phrase.sized ? { w: phrase.w, h: phrase.h } : natural(); }
+    function portraitWidth(){ return portrait.sized ? portrait.w : portraitEl.offsetWidth; }
+    function restWidth(){ return slot.getBoundingClientRect().width; }
+    function writeSize(el, w, h){
+      var value = round(w) + ' × ' + round(h);
+      if (el.getAttribute('data-size') !== value) el.setAttribute('data-size', value);
+    }
+
+    // Writes one layer's state to the page: its position as a transform, and its size where it
+    // has been resized (the selection box, or the portrait frame's width).
+    function apply(o){
+      var tx = o.x + pan.x, ty = o.y + pan.y;
+      o.el.style.transform = (tx || ty) ? translate(tx, ty) : '';
+      if (o === phrase) {
+        var s = deco.style;
+        if (o.sized) {
+          s.right = s.bottom = 'auto';
+          s.width = (o.w + padX * 2) + 'px';
+          s.height = (o.h + padY * 2) + 'px';
+          deco.setAttribute('data-sized', '');
+          writeSize(badge, o.w, o.h);
+        } else if (deco.hasAttribute('data-sized')) {
+          s.right = s.bottom = s.width = s.height = '';
+          deco.removeAttribute('data-sized');
+          var n = natural();
+          writeSize(badge, n.w, n.h);
+        }
+      } else if (o === portrait) {
+        o.el.style.width = o.sized ? o.w + 'px' : '';
+      }
+    }
+
+    // How far the given boxes may travel together and stay inside the canvas.
+    function limits(rects){
+      var c = canvas.getBoundingClientRect();
+      var L = { x0: -Infinity, x1: Infinity, y0: -Infinity, y1: Infinity };
+      rects.forEach(function(r){
+        L.x0 = Math.max(L.x0, c.left - r.left); L.x1 = Math.min(L.x1, c.right - r.right);
+        L.y0 = Math.max(L.y0, c.top - r.top); L.y1 = Math.min(L.y1, c.bottom - r.bottom);
+      });
+      if (L.x0 > L.x1) L.x0 = L.x1 = (L.x0 + L.x1) / 2;
+      if (L.y0 > L.y1) L.y0 = L.y1 = (L.y0 + L.y1) / 2;
+      return L;
+    }
+
+    // DRAFT COPY for Rehan's approval: status messages read by screen readers.
+    function say(text){
+      if (live.textContent === text) text += ' ';
+      live.textContent = text;
+    }
+    function offsetText(x, y){
+      var parts = [];
+      if (round(x)) parts.push(Math.abs(round(x)) + (x > 0 ? ' right' : ' left'));
+      if (round(y)) parts.push(Math.abs(round(y)) + (y > 0 ? ' down' : ' up'));
+      return parts.length ? parts.join(' and ') + ' from its place' : 'back in its place';
+    }
+    function movedText(o){ return o.name + ' moved, ' + offsetText(o.x + pan.x, o.y + pan.y) + '.'; }
+    function sizedText(o){
+      if (o === phrase) { var s = phraseSize(); return 'Selection resized to ' + round(s.w) + ' by ' + round(s.h) + '.'; }
+      return 'Portrait frame resized to ' + frame.offsetWidth + ' by ' + frame.offsetHeight + '.';
+    }
+
+    // Selection, like Figma: one layer at a time. The headline's selection is Rehan's own and
+    // always stays drawn; selecting it adds the translucent fill.
+    function select(o, focus){
+      if (current !== o) {
+        if (current) {
+          current.el.classList.remove('is-selected');
+          current.focusEl.setAttribute('aria-pressed', 'false');
+        }
+        current = o;
+        if (o) {
+          o.el.classList.add('is-selected');
+          o.focusEl.setAttribute('aria-pressed', 'true');
+          if (o.kind === 'note') writeSize(o.el.querySelector('.sel-badge'), o.el.offsetWidth, o.el.offsetHeight);
+        }
+      }
+      if (o && focus && document.activeElement !== o.focusEl) {
+        try { o.focusEl.focus({ preventScroll: true }); } catch (e) { o.focusEl.focus(); }
+      }
+    }
+
+    // Glides a layer from where it was (a rect taken before the change) to where it is now, as a
+    // transform-only FLIP. Skipped entirely under reduced motion.
+    function stopAnim(o){ if (o.anim) { o.anim.cancel(); o.anim = null; } }
+    function glide(o, from, delay){
+      if (motion.reduceMotion() || typeof o.el.animate !== 'function') return;
+      var to = rectOf(o);
+      var dx = from.left - to.left, dy = from.top - to.top;
+      var sx = to.width ? from.width / to.width : 1, sy = to.height ? from.height / to.height : 1;
+      if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5 && Math.abs(sx - 1) < 0.005 && Math.abs(sy - 1) < 0.005) return;
+      var end = o.el.style.transform || 'none';
+      var start = (end === 'none' ? '' : end + ' ') + translate(dx, dy) + ' scale(' + sx + ',' + sy + ')';
+      var a = o.el.animate([{ transform: start }, { transform: end }], { duration: DRAG, easing: EASE, delay: delay || 0, fill: 'backwards' });
+      o.anim = a;
+      a.onfinish = function(){ if (o.anim === a) o.anim = null; };
+    }
+
+    // KEYBOARD: arrows move by 8px, Shift + arrows resize by 8px where a layer can be resized.
+    function moveBy(o, dx, dy){
+      var L = limits([rectOf(o)]);
+      o.x += clamp(dx, Math.min(0, L.x0), Math.max(0, L.x1));
+      o.y += clamp(dy, Math.min(0, L.y0), Math.max(0, L.y1));
+      apply(o);
+    }
+    function portraitLimits(r){
+      var c = canvas.getBoundingClientRect(), fr = frame.getBoundingClientRect();
+      var ratio = fr.height / fr.width, rest = restWidth();
+      var lo = snap(rest / 2);
+      var hi = Math.min(snap(rest * 1.5), floorGrid(c.right - r.left), floorGrid((c.bottom - fr.top) / ratio));
+      return { lo: lo, hi: Math.max(lo, hi), ratio: ratio };
+    }
+    function resizeBy(o, dx, dy){
+      var c = canvas.getBoundingClientRect(), r = rectOf(o);
+      if (o === phrase) {
+        var s = phraseSize(), w = s.w, h = s.h;
+        if (dx) w = clamp(snap(s.w + dx), MIN, Math.max(MIN, floorGrid(s.w + c.right - r.right)));
+        if (dy) h = clamp(snap(s.h + dy), MIN, Math.max(MIN, floorGrid(s.h + c.bottom - r.bottom)));
+        o.w = w; o.h = h; o.sized = true;
+      } else {
+        var P = portraitLimits(r);
+        o.w = clamp(snap(portraitWidth() + (dx || dy)), P.lo, P.hi);
+        o.sized = true;
+      }
+      apply(o);
+    }
+
+    // POINTER: one drag at a time, captured on the dragged element.
+    function begin(e, d, el){
+      d.id = e.pointerId; d.sx = d.px = e.pageX; d.sy = d.py = e.pageY; d.moved = false; d.el = el;
+      drag = d;
+      try { el.setPointerCapture(e.pointerId); } catch (err) {}
+      el.addEventListener('pointermove', onMove);
+      el.addEventListener('pointerup', onEnd);
+      el.addEventListener('pointercancel', onEnd);
+      el.addEventListener('lostpointercapture', onEnd);
+    }
+    function startMove(e, o){
+      begin(e, { mode: 'move', o: o, x0: o.x, y0: o.y, L: limits([rectOf(o)]) }, o.el);
+    }
+    function startPan(e){
+      e.preventDefault();
+      layers.forEach(stopAnim);
+      canvas.classList.add('is-panning');
+      begin(e, { mode: 'pan', x0: pan.x, y0: pan.y, L: limits(layers.map(rectOf)) }, canvas);
+    }
+    function startResize(e, o, handle){
+      var c = canvas.getBoundingClientRect(), r = rectOf(o);
+      var d = { mode: 'resize', o: o, corner: handle.getAttribute('data-handle'), x0: o.x, y0: o.y };
+      if (o === phrase) {
+        var s = phraseSize();
+        var right = d.corner === 'tr' || d.corner === 'br', bottom = d.corner === 'bl' || d.corner === 'br';
+        d.w0 = s.w; d.h0 = s.h;
+        d.maxW = s.w + (right ? c.right - r.right : r.left - c.left);
+        d.maxH = s.h + (bottom ? c.bottom - r.bottom : r.top - c.top);
+      } else {
+        var P = portraitLimits(r);
+        d.w0 = portraitWidth(); d.lo = P.lo; d.hi = P.hi; d.ratio = P.ratio;
+      }
+      begin(e, d, handle);
+    }
+    function step(){
+      var d = drag, dx = d.px - d.sx, dy = d.py - d.sy, o = d.o;
+      if (d.mode === 'move') {
+        o.x = d.x0 + clamp(dx, d.L.x0, d.L.x1);
+        o.y = d.y0 + clamp(dy, d.L.y0, d.L.y1);
+        apply(o);
+      } else if (d.mode === 'pan') {
+        pan.x = d.x0 + clamp(dx, d.L.x0, d.L.x1);
+        pan.y = d.y0 + clamp(dy, d.L.y0, d.L.y1);
+        layers.forEach(apply);
+      } else if (!d.moved) {
+        return;                                   // a click on a handle changes nothing
+      } else if (o === phrase) {
+        var c = d.corner, left = c === 'tl' || c === 'bl', top = c === 'tl' || c === 'tr';
+        var w = clamp(snap(d.w0 + (left ? -dx : dx)), MIN, Math.max(MIN, floorGrid(d.maxW)));
+        var h = clamp(snap(d.h0 + (top ? -dy : dy)), MIN, Math.max(MIN, floorGrid(d.maxH)));
+        o.x = d.x0 + (left ? d.w0 - w : 0);
+        o.y = d.y0 + (top ? d.h0 - h : 0);
+        o.w = w; o.h = h; o.sized = true;
+        apply(o);
+      } else {
+        o.w = clamp(snap(d.w0 + (dx + dy / d.ratio) / 2), d.lo, d.hi);
+        o.sized = true;
+        apply(o);
+      }
+    }
+    function flush(){ frameReq = 0; if (drag) step(); }
+    function onMove(e){
+      if (!drag || e.pointerId !== drag.id) return;
+      drag.px = e.pageX; drag.py = e.pageY;
+      if (!drag.moved && Math.abs(drag.px - drag.sx) + Math.abs(drag.py - drag.sy) > 3) {
+        drag.moved = true;
+        if (drag.o) drag.o.el.classList.add('is-dragging');
+      }
+      if (!frameReq) frameReq = requestAnimationFrame(flush);
+    }
+    function onEnd(e){
+      var d = drag;
+      if (!d || e.pointerId !== d.id) return;
+      if (frameReq) { cancelAnimationFrame(frameReq); frameReq = 0; }
+      if (e.type === 'pointerup') { d.px = e.pageX; d.py = e.pageY; }
+      step();                                     // land exactly where the pointer let go
+      drag = null;
+      d.el.removeEventListener('pointermove', onMove);
+      d.el.removeEventListener('pointerup', onEnd);
+      d.el.removeEventListener('pointercancel', onEnd);
+      d.el.removeEventListener('lostpointercapture', onEnd);
+      try { if (d.el.hasPointerCapture && d.el.hasPointerCapture(d.id)) d.el.releasePointerCapture(d.id); } catch (err) {}
+      canvas.classList.remove('is-panning');
+      if (d.o) d.o.el.classList.remove('is-dragging');
+      if (!d.moved) return;
+      if (d.mode === 'pan') { suppressClick = true; say('Canvas panned, ' + offsetText(pan.x, pan.y).replace('its place', 'the start') + '.'); }
+      else say(d.mode === 'resize' ? sizedText(d.o) : movedText(d.o));
+    }
+
+    canvas.addEventListener('pointerdown', function(e){
+      suppressClick = false;
+      if (drag || e.isPrimary === false || (e.pointerType === 'mouse' && e.button !== 0)) return;
+      var t = e.target;
+      if (!t.closest || t.closest('[data-toolbar]')) return;
+      finishCover();
+      if (tool === 'hand') { if (e.pointerType !== 'touch') startPan(e); return; }
+      if (tool !== 'move') return;
+      var o = layerFrom(t);
+      if (!o || (e.pointerType === 'touch' && current !== o)) return;   // a first tap only selects
+      e.preventDefault();
+      stopAnim(o);
+      select(o, true);
+      var handle = t.closest('[data-handle]');
+      if (handle) startResize(e, o, handle); else startMove(e, o);
+    });
+    // Clicks select (this is also how a tap selects on touch); a click on empty canvas clears the
+    // selection. After a pan, the click that ends it is swallowed so no link fires by accident.
+    canvas.addEventListener('click', function(e){
+      if (suppressClick) { suppressClick = false; e.preventDefault(); e.stopPropagation(); return; }
+      var t = e.target;
+      if (tool !== 'move' || !t.closest || t.closest('[data-toolbar]')) return;
+      var o = layerFrom(t);
+      if (o) select(o, true);
+      else if (!t.closest('a, button')) select(null);
+    }, true);
+    deco.addEventListener('dblclick', function(e){
+      if (tool !== 'move') return;
+      e.preventDefault();
+      stopAnim(phrase);
+      var from = rectOf(phrase);
+      phrase.x = -pan.x; phrase.y = -pan.y; phrase.sized = false;
+      apply(phrase);
+      glide(phrase, from, 0);
+      say('Selection reset.');
+    });
+
+    canvas.addEventListener('keydown', function(e){
+      var o = layerFrom(e.target);
+      if (!o || e.target !== o.focusEl || e.ctrlKey || e.metaKey || e.altKey) return;
+      var k = e.key;
+      if (k === 'Escape') {
+        e.preventDefault();
+        if (current) { select(null); say('Selection cleared.'); }
+        return;
+      }
+      if (k === 'Enter' || k === ' ') { e.preventDefault(); select(current === o ? null : o); return; }
+      var v = KEYS[k];
+      if (!v) return;
+      e.preventDefault();
+      finishCover();
+      stopAnim(o);
+      select(o);
+      keyedResize = e.shiftKey && o.kind !== 'note';
+      if (keyedResize) resizeBy(o, v[0] * GRID, v[1] * GRID); else moveBy(o, v[0] * GRID, v[1] * GRID);
+      if (tool === 'inspect') showInspect(inspectTarget(o.focusEl), false);
+      keyed = o;
+    });
+    // One announcement per key press or held-down run, when the key comes back up: no timer.
+    canvas.addEventListener('keyup', function(e){
+      if (!keyed || !KEYS[e.key]) return;
+      say(keyedResize ? sizedText(keyed) : movedText(keyed));
+      keyed = null;
+    });
+
+    canvas.addEventListener('focusin', function(e){
+      var o = layerFrom(e.target);
+      if (o && e.target === o.focusEl) select(o);
+      if (e.target === proxy) {
+        var visible = true;
+        try { visible = proxy.matches(':focus-visible'); } catch (err) {}
+        deco.classList.toggle('is-focus', visible);
+      }
+      if (tool === 'inspect') showInspect(inspectTarget(e.target), true);
+    });
+    canvas.addEventListener('focusout', function(e){ if (e.target === proxy) deco.classList.remove('is-focus'); });
+
+    // TIDY UP, like Figma's: the notes line up as a row or a stack where they are now, 8px apart.
+    function tidy(){
+      finishCover();
+      var c = canvas.getBoundingClientRect();
+      var items = notes.map(function(o){
+        stopAnim(o);
+        var r = rectOf(o);
+        return { o: o, r: r, x: r.left - c.left, y: r.top - c.top, w: r.width, h: r.height };
+      });
+      function pick(f, g){ return items.map(f).reduce(function(a, b){ return g(a, b); }); }
+      var minX = pick(function(i){ return i.x; }, Math.min), minY = pick(function(i){ return i.y; }, Math.min);
+      var maxX = pick(function(i){ return i.x + i.w; }, Math.max), maxY = pick(function(i){ return i.y + i.h; }, Math.max);
+      var sumW = pick(function(i){ return i.w; }, function(a, b){ return a + b; }) + GAP * (items.length - 1);
+      var sumH = pick(function(i){ return i.h; }, function(a, b){ return a + b; }) + GAP * (items.length - 1);
+      var bigW = pick(function(i){ return i.w; }, Math.max), bigH = pick(function(i){ return i.h; }, Math.max);
+      var row = maxX - minX > maxY - minY;
+      if (row && sumW > c.width) row = false;
+      if (!row && sumH > c.height) row = true;
+      items.sort(row ? function(a, b){ return a.x - b.x || a.y - b.y; } : function(a, b){ return a.y - b.y || a.x - b.x; });
+      var ax = clamp(minX, 0, Math.max(0, c.width - (row ? sumW : bigW)));
+      var ay = clamp(minY, 0, Math.max(0, c.height - (row ? bigH : sumH)));
+      var cur = row ? ax : ay, changed = false;
+      items.forEach(function(it, i){
+        var tx = row ? cur : ax, ty = row ? ay : cur;
+        cur += (row ? it.w : it.h) + GAP;
+        var dx = tx - it.x, dy = ty - it.y;
+        if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
+        changed = true;
+        it.o.x += dx; it.o.y += dy;
+        apply(it.o);
+        glide(it.o, it.r, i * 40);
+      });
+      say(changed ? (row ? 'Notes tidied into a row.' : 'Notes tidied into a stack.') : 'The notes are already tidy.');
+    }
+    // RESET: every layer back to its original place and size, the pan undone, the selection cleared.
+    function reset(){
+      finishCover();
+      var from = layers.map(function(o){ stopAnim(o); return rectOf(o); });
+      pan.x = pan.y = 0;
+      layers.forEach(function(o){ o.x = o.y = 0; o.sized = false; apply(o); });
+      select(null);
+      hideInspect();
+      layers.forEach(function(o, i){ glide(o, from[i], o.kind === 'note' ? notes.indexOf(o) * 40 : 0); });
+      say('Canvas reset. Every layer is back in its place.');
+    }
+
+    // TOOLS
+    var toolButtons = toArray(toolbar.querySelectorAll('[data-tool]'));
+    var handButton = toolbar.querySelector('[data-tool="hand"]');
+    function handAvailable(){ return !!handButton && getComputedStyle(handButton).display !== 'none'; }
+    // DRAFT COPY for Rehan's approval: tool announcements.
+    var TOOL_TEXT = {
+      move: 'Move tool. Drag a layer, or focus it and use the arrow keys.',
+      hand: 'Hand tool. Drag anywhere on the cover to pan the layers.',
+      inspect: 'Inspect tool. Point at or focus a layer to see its measurements.'
+    };
+    function setTool(t, speak){
+      if (t === tool || (t === 'hand' && !handAvailable())) return;
+      tool = t;
+      canvas.setAttribute('data-cv-tool', t);
+      toolButtons.forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-tool') === t ? 'true' : 'false'); });
+      hideInspect();
+      if (speak) say(TOOL_TEXT[t]);
+      if (t === 'inspect' && canvas.contains(document.activeElement)) showInspect(inspectTarget(document.activeElement), false);
+    }
+    toolbar.addEventListener('click', function(e){
+      var b = e.target.closest ? e.target.closest('button') : null;
+      if (!b) return;
+      var t = b.getAttribute('data-tool'), act = b.getAttribute('data-act');
+      if (t) setTool(t, true);
+      else if (act === 'tidy') tidy();
+      else if (act === 'reset') reset();
+    });
+    // The toolbar is one Tab stop; arrow keys, Home and End move between its buttons.
+    var buttons = toArray(toolbar.querySelectorAll('button'));
+    function rove(b){ buttons.forEach(function(x){ x.tabIndex = x === b ? 0 : -1; }); }
+    rove(buttons[0]);
+    toolbar.addEventListener('focusin', function(e){ if (buttons.indexOf(e.target) > -1) rove(e.target); });
+    toolbar.addEventListener('keydown', function(e){
+      var list = buttons.filter(function(b){ return b.offsetParent !== null; });
+      var i = list.indexOf(document.activeElement);
+      var k = e.key;
+      var n = k === 'ArrowRight' || k === 'ArrowDown' ? i + 1 : k === 'ArrowLeft' || k === 'ArrowUp' ? i - 1 : k === 'Home' ? 0 : k === 'End' ? list.length - 1 : null;
+      if (i < 0 || n === null) return;
+      e.preventDefault();
+      var next = list[(n + list.length) % list.length];
+      rove(next);
+      next.focus();
+    });
+    // V, H and I work only while focus or the pointer is inside the canvas (WCAG 2.1.4), never
+    // with a modifier key, so the browser's own shortcuts are untouched.
+    canvas.addEventListener('pointerenter', function(e){ if (e.pointerType !== 'touch') pointerInside = true; });
+    canvas.addEventListener('pointerleave', function(){
+      pointerInside = false;
+      if (tool === 'inspect' && !canvas.contains(document.activeElement)) hideInspect();
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
+      var a = document.activeElement;
+      if (!pointerInside && !canvas.contains(a)) return;
+      if (a && (a.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))) return;
+      var k = (e.key || '').toLowerCase();
+      var t = k === 'v' ? 'move' : k === 'h' ? 'hand' : k === 'i' ? 'inspect' : '';
+      if (t) {
+        if (t !== 'hand' || handAvailable()) { e.preventDefault(); setTool(t, true); }
+        return;
+      }
+      if (e.key === 'Escape' && current) { select(null); say('Selection cleared.'); }
+    });
+
+    // INSPECT: for the layer under the pointer or in focus, its measured size, the gap to its
+    // nearest neighbour as a redline, and for text the family, size and weight the browser
+    // computed. Nothing is looked up or named beyond what is measured here.
+    var insBox = layer.querySelector('.cv-ins-box'), insNbr = layer.querySelector('.cv-ins-nbr');
+    var insLine = layer.querySelector('.cv-ins-line'), insGap = layer.querySelector('.cv-ins-gap');
+    var insSpec = layer.querySelector('.cv-ins-spec'), insName = layer.querySelector('.cv-ins-name');
+    var insSize = layer.querySelector('.cv-ins-size'), insFont = layer.querySelector('.cv-ins-font');
+    function inspectTarget(t){
+      var o = layerFrom(t);
+      if (o) return { o: o, el: o === portrait ? frame : o === phrase ? null : o.el };
+      var d = t && t.closest ? t.closest('[data-inspect]') : null;
+      return d && canvas.contains(d) ? { el: d } : null;
+    }
+    function boxOf(tg, c){
+      if (tg.o === phrase) {
+        var r = deco.getBoundingClientRect();
+        return { x: r.left - c.left + padX, y: r.top - c.top + padY, w: r.width - padX * 2, h: r.height - padY * 2 };
+      }
+      var q = tg.el.getBoundingClientRect();
+      return { x: q.left - c.left, y: q.top - c.top, w: q.width, h: q.height };
+    }
+    // The file behind the portrait: srcset hands back a density-corrected naturalWidth, so the
+    // width comes from the chosen candidate's own w descriptor and the height from its ratio.
+    function sourceSize(){
+      var src = img.currentSrc || img.src, w = 0;
+      (img.getAttribute('srcset') || '').split(',').forEach(function(part){
+        var bits = part.trim().split(/\s+/);
+        try { if (bits[0] && /w$/.test(bits[1] || '') && new URL(bits[0], document.baseURI).href === src) w = parseInt(bits[1], 10); } catch (err) {}
+      });
+      if (!w && img.naturalWidth && !img.getAttribute('srcset')) w = img.naturalWidth;
+      return w && img.naturalWidth ? w + ' × ' + round(w * img.naturalHeight / img.naturalWidth) : '';
+    }
+    function fontOf(el){
+      var cs = getComputedStyle(el);
+      return cs.fontFamily.split(',')[0].replace(/["']/g, '').trim() + ' · ' + parseFloat(cs.fontSize) + 'px · ' + cs.fontWeight;
+    }
+    function place(el, x, y, w, h){
+      el.style.transform = translate(round(x), round(y));
+      if (w != null) el.style.width = Math.max(1, round(w)) + 'px';
+      if (h != null) el.style.height = Math.max(1, round(h)) + 'px';
+    }
+    function hideInspect(){ layer.classList.remove('is-on'); }
+    function showInspect(tg, speak){
+      if (!tg) { hideInspect(); return; }
+      var c = canvas.getBoundingClientRect();
+      var r = boxOf(tg, c), name, font;
+      // DRAFT COPY for Rehan's approval: layer names on the spec card.
+      if (tg.o === phrase) { name = 'Selection'; font = fontOf(title); }
+      else if (tg.o === portrait) { name = 'Frame · Rehan'; font = sourceSize() ? 'Image · ' + sourceSize() + ' source' : 'Image'; }
+      else if (tg.o) { name = 'Sticky note'; font = fontOf(tg.el); }
+      else { name = tg.el.getAttribute('data-inspect'); font = fontOf(tg.el); }
+      var own = tg.el || deco, best = null;
+      var others = [{ o: phrase, el: null }, { o: portrait, el: frame }].concat(notes.map(function(n){ return { o: n, el: n.el }; }));
+      toArray(canvas.querySelectorAll('[data-inspect]')).forEach(function(el){ others.push({ el: el }); });
+      others.forEach(function(cd){
+        if (cd.o ? cd.o === tg.o : (cd.el === tg.el || cd.el.contains(own) || own.contains(cd.el))) return;
+        var q = boxOf(cd, c);
+        if (q.w < 1 || q.h < 1) return;
+        var ox = Math.min(r.x + r.w, q.x + q.w) - Math.max(r.x, q.x);
+        var oy = Math.min(r.y + r.h, q.y + q.h) - Math.max(r.y, q.y);
+        var axis, gap;
+        if (ox > 0 && oy <= 0) { axis = 'v'; gap = q.y >= r.y + r.h ? q.y - (r.y + r.h) : r.y - (q.y + q.h); }
+        else if (oy > 0 && ox <= 0) { axis = 'h'; gap = q.x >= r.x + r.w ? q.x - (r.x + r.w) : r.x - (q.x + q.w); }
+        else return;
+        if (!best || gap < best.gap) best = { gap: gap, axis: axis, q: q, ox: ox, oy: oy };
+      });
+      layer.classList.add('is-on');
+      place(insBox, r.x, r.y, r.w, r.h);
+      insNbr.classList.toggle('is-off', !best);
+      insGap.classList.toggle('is-off', !best);
+      insLine.className = 'cv-ins-line' + (best ? (best.axis === 'v' ? ' is-v' : ' is-h') : ' is-off');
+      if (best) {
+        var q = best.q, g = best.gap;
+        place(insNbr, q.x, q.y, q.w, q.h);
+        insGap.textContent = round(g);
+        if (best.axis === 'v') {
+          var lx = Math.max(r.x, q.x) + best.ox / 2, top = q.y >= r.y + r.h ? r.y + r.h : q.y + q.h;
+          place(insLine, lx, top, 1, g);
+          place(insGap, lx + 6, top + g / 2 - insGap.offsetHeight / 2);
+        } else {
+          var ly = Math.max(r.y, q.y) + best.oy / 2, left = q.x >= r.x + r.w ? r.x + r.w : q.x + q.w;
+          place(insLine, left, ly, g, 1);
+          place(insGap, left + g / 2 - insGap.offsetWidth / 2, ly - insGap.offsetHeight - 6);
+        }
+      }
+      insName.textContent = name;
+      insSize.textContent = round(r.w) + ' × ' + round(r.h);
+      insFont.textContent = font;
+      // The card goes on the side away from the measured neighbour, so the redline stays in view.
+      var sw = insSpec.offsetWidth, sh = insSpec.offsetHeight;
+      var cx = clamp(r.x, 8, Math.max(8, c.width - sw - 8)), cy = clamp(r.y, 8, Math.max(8, c.height - sh - 8));
+      var above = { x: cx, y: r.y - sh - 8 }, below = { x: cx, y: r.y + r.h + 8 };
+      var toLeft = { x: r.x - sw - 8, y: cy }, toRight = { x: r.x + r.w + 8, y: cy };
+      var spots = !best ? [above, below, toRight, toLeft]
+        : best.axis === 'v' ? (best.q.y < r.y ? [below, above, toRight, toLeft] : [above, below, toRight, toLeft])
+        : (best.q.x > r.x ? [toLeft, toRight, above, below] : [toRight, toLeft, above, below]);
+      var spot = spots.filter(function(s){ return s.x >= 0 && s.y >= 0 && s.x + sw <= c.width && s.y + sh <= c.height; })[0] || above;
+      place(insSpec, spot.x, Math.max(0, spot.y));
+      if (speak) say(name + ', ' + round(r.w) + ' by ' + round(r.h) + ', ' + font.replace(/ · /g, ', ') + (best ? ', ' + round(best.gap) + ' pixels from the nearest layer.' : '.'));
+    }
+    canvas.addEventListener('pointerover', function(e){ if (tool === 'inspect') showInspect(inspectTarget(e.target), false); });
+
+    // A layout change (a window resize, a rotated phone) keeps every moved layer inside the canvas.
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(function(){
+        hideInspect();
+        layers.forEach(function(o){
+          if (!o.x && !o.y && !pan.x && !pan.y && !o.sized) return;
+          var L = limits([rectOf(o)]);
+          var dx = clamp(0, L.x0, L.x1), dy = clamp(0, L.y0, L.y1);
+          if (dx || dy) { o.x += dx; o.y += dy; apply(o); }
+        });
+      }).observe(canvas);
+    }
+
+    html.classList.add('cv-on');
   })();
 
   /* SCROLL-SPY: one shared IntersectionObserver marks the section crossing the reading line. It
