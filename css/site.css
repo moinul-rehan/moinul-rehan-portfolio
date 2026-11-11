@@ -111,8 +111,12 @@ button{ font:inherit; color:inherit; background:none; border:0; padding:0; curso
 .tick::before,.tick::after{ content:""; position:absolute; background:var(--ink-dash); }
 .tick::before{ left:0; top:50%; width:12px; height:1px; }
 .tick::after{ top:0; left:50%; width:1px; height:12px; }
-.tick--tl{ left:-6px; top:-6px; } .tick--tr{ right:-6px; top:-6px; }
-.tick--bl{ left:-6px; bottom:-6px; } .tick--br{ right:-6px; bottom:-6px; }
+/* Every frame that carries ticks has a 1px border, and absolute offsets are
+   measured from inside it. The lines sit 6px into the 12px box, which lands
+   them on the border on the right and bottom but 1px inside it on the left
+   and top, so those two sides reach out one pixel further. */
+.tick--tl{ left:-7px; top:-7px; } .tick--tr{ right:-6px; top:-7px; }
+.tick--bl{ left:-7px; bottom:-6px; } .tick--br{ right:-6px; bottom:-6px; }
 
 /* ============================================================
    NAV
@@ -588,6 +592,61 @@ html.cur .pm::backdrop{ cursor:none; }
 .about__specs{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:32px; margin-top:44px; }
 .about__photo{ position:relative; border:1px solid var(--hairline); border-radius:4px; background:var(--image-bg); aspect-ratio:400/480; }
 .about__photo img{ width:100%; height:100%; object-fit:cover; border-radius:3px; }
+
+/* ============================================================
+   CERTIFICATIONS: one card in front, its neighbours set back
+   JS gives every card a data-pos relative to the front one (-2..2);
+   these rules do all of the moving. All cards share one grid cell,
+   so the stage is as tall as the tallest card with no fixed height.
+   ============================================================ */
+.certs{ margin-top:clamp(36px,4.2vw,54px); }
+.certs__stage{ display:grid; padding-block:6px; }
+.cert{
+  grid-area:1/1; justify-self:center; width:min(560px,100%);
+  transition:transform .8s cubic-bezier(.76,0,.24,1), opacity .8s cubic-bezier(.76,0,.24,1);
+}
+.cert__frame{
+  position:relative; border:1px solid var(--hairline); border-radius:4px;
+  background:var(--surface); aspect-ratio:1400/988;
+}
+.cert__frame img{ width:100%; height:100%; object-fit:contain; border-radius:3px; display:block; }
+.cert__info{ padding-top:22px; text-align:center; transition:opacity .4s ease; }
+.cert__meta{ display:flex; justify-content:center; align-items:baseline; gap:14px; margin-top:10px; }
+.cert__id{ margin-top:6px; }
+
+/* front */
+.cert[data-pos="0"]{ z-index:3; transform:none; opacity:1; }
+/* set back on either side; only the front card carries its caption */
+.cert[data-pos="-1"],.cert[data-pos="1"]{ z-index:2; opacity:.55; }
+.cert[data-pos="-1"]{ transform:translateX(-62%) scale(.78); }
+.cert[data-pos="1"]{ transform:translateX(62%) scale(.78); }
+/* waiting off-stage, behind the others */
+.cert[data-pos="-2"],.cert[data-pos="2"]{ z-index:1; opacity:0; pointer-events:none; }
+.cert[data-pos="-2"]{ transform:translateX(-62%) scale(.6); }
+.cert[data-pos="2"]{ transform:translateX(62%) scale(.6); }
+.cert:not([data-pos="0"]) .cert__info{ opacity:0; }
+.cert[data-pos="-1"],.cert[data-pos="1"]{ cursor:pointer; }
+
+.certs__ctrl{ display:flex; align-items:center; justify-content:center; gap:20px; margin-top:28px; }
+.certs__btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:34px; height:34px; border:1px solid var(--hairline); border-radius:4px;
+  transition:background .2s ease, border-color .2s ease, color .2s ease;
+}
+.certs__btn:hover{ background:var(--accent); border-color:var(--accent); color:var(--on-accent); }
+/* the site's one arrow points up-right; turned to face each way */
+.certs__btn--prev svg{ transform:rotate(-135deg); }
+.certs__btn--next svg{ transform:rotate(45deg); }
+
+@media (max-width:860px){
+  .certs{ overflow-x:clip; }
+  .cert{ width:min(560px,74%); }
+  .cert[data-pos="-1"]{ transform:translateX(-46%) scale(.8); }
+  .cert[data-pos="1"]{ transform:translateX(46%) scale(.8); }
+}
+@media (prefers-reduced-motion:reduce){
+  .cert,.cert__info{ transition:none; }
+}
 
 /* ============================================================
    CONTACT + FOOTER

@@ -659,14 +659,58 @@
       footMark.style.setProperty('--my', (e.clientY - r.top).toFixed(1) + 'px');
     };
 
+    // footIntro holds the rAF id while the one-time intro sweep is running;
+    // during it the sweep owns the light until the visitor actually moves.
+    var footHover = false, footIntro = 0, footLast = null;
+
     footEl.addEventListener('pointerenter', function (e) {
+      footHover = true; footLast = e;
+      if (footIntro) return;
       lampTrack(e);
       footMark.classList.add('is-live');
     });
-    footEl.addEventListener('pointermove', lampTrack, { passive: true });
+    footEl.addEventListener('pointermove', function (e) {
+      footHover = true; footLast = e;
+      if (footIntro) {
+        // Scrolling the footer under a still cursor reports a move with no
+        // movement; only a real hand on the mouse takes the light over.
+        if (!e.movementX && !e.movementY) return;
+        cancelAnimationFrame(footIntro); footIntro = 0;
+        footMark.classList.add('is-live');
+      }
+      lampTrack(e);
+    }, { passive: true });
     footEl.addEventListener('pointerleave', function () {
-      footMark.classList.remove('is-live');
+      footHover = false;
+      if (!footIntro) footMark.classList.remove('is-live');
     });
+
+    /* One-time intro: the first time the mark is mostly on screen, the light
+       sweeps through it once, in from the left on a shallow arc and out to the
+       right, then rests. Once per page load; skipped under reduced motion. */
+    if (!reduce && 'IntersectionObserver' in window) {
+      var footSeen = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        footSeen.disconnect();
+        var box = markGlyphs.getBoundingClientRect();
+        var w = box.width, h = box.height, t0 = null, DUR = 2200;
+        footMark.classList.add('is-live');
+        var footStep = function (now) {
+          if (t0 === null) t0 = now;
+          var p = Math.min((now - t0) / DUR, 1);
+          var footEase = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+          footMark.style.setProperty('--mx', (w * (-0.15 + 1.3 * footEase)).toFixed(1) + 'px');
+          footMark.style.setProperty('--my', (h * (0.75 - 0.5 * Math.sin(Math.PI * footEase))).toFixed(1) + 'px');
+          if (p < 1) { footIntro = requestAnimationFrame(footStep); return; }
+          footIntro = 0;
+          // hand straight to the pointer if it is already resting on the footer
+          if (footHover && footLast) lampTrack(footLast);
+          else footMark.classList.remove('is-live');
+        };
+        footIntro = requestAnimationFrame(footStep);
+      }, { threshold: 0.6 });
+      footSeen.observe(footMark);
+    }
     // a tap should light it too, then let go
     footEl.addEventListener('pointerdown', function (e) {
       if (e.pointerType !== 'mouse') { lampTrack(e); footMark.classList.add('is-live'); }
@@ -697,6 +741,77 @@
     }
   }
 
+  /* ---------- certifications deck ----------
+     One card in front, its neighbours set back on either side. Each step
+     only renumbers data-pos (-2..2, relative to the front card); the CSS
+     does the moving. The front card slides back to the left, the right one
+     comes forward, and the card that leaves on the left loops round behind
+     to wait on the right. Auto-advances every 5s, holds while hovered or
+     focused, and never moves on its own under reduced motion.
+     Names are all cert-prefixed: this file is one function scope, and a
+     shared `var` name silently overwrites another block's variable. */
+  var certsEl = document.getElementById('certs');
+  if (certsEl) {
+    var certCards = certsEl.querySelectorAll('.cert');
+    var certNow = document.getElementById('certsNow');
+    var certIdx = 0, certTimer = null, certHeld = false;
+
+    var certPlace = function (n) {
+      var total = certCards.length;
+      certIdx = (n + total) % total;
+      for (var certI = 0; certI < total; certI++) {
+        var certD = (certI - certIdx + total) % total;
+        if (certD > total / 2) certD -= total;
+        certD = Math.max(-2, Math.min(2, certD));
+        certCards[certI].setAttribute('data-pos', String(certD));
+        certCards[certI].setAttribute('aria-hidden', certD === 0 ? 'false' : 'true');
+      }
+      if (certNow) certNow.textContent = (certIdx + 1 < 10 ? '0' : '') + (certIdx + 1);
+    };
+
+    var certArm = function () {
+      clearInterval(certTimer);
+      if (reduce || certCards.length < 2) return;
+      certTimer = setInterval(function () {
+        if (!certHeld && !document.hidden) certPlace(certIdx + 1);
+      }, 5000);
+    };
+
+    // Hold while the pointer is on a card itself (not the empty space beside
+    // the cards) or while keyboard focus is inside. Focus left behind by a
+    // mouse click on an arrow does not count, or one click would pause the
+    // deck until the visitor happened to click somewhere else.
+    var certHover = false, certKeyFocus = false;
+    var certSync = function () { certHeld = certHover || certKeyFocus; };
+    certsEl.addEventListener('pointerover', function (e) {
+      certHover = !!e.target.closest('.cert'); certSync();
+    });
+    certsEl.addEventListener('pointerleave', function () { certHover = false; certSync(); });
+    certsEl.addEventListener('focusin', function (e) {
+      certKeyFocus = e.target.matches(':focus-visible'); certSync();
+    });
+    certsEl.addEventListener('focusout', function (e) {
+      if (!certsEl.contains(e.relatedTarget)) { certKeyFocus = false; certSync(); }
+    });
+
+    certsEl.addEventListener('click', function (e) {
+      var btn = e.target.closest('.certs__btn');
+      if (btn) { certPlace(certIdx + Number(btn.getAttribute('data-step'))); certArm(); return; }
+      // a set-back card is a shortcut to itself
+      var card = e.target.closest('.cert');
+      var pos = card ? Number(card.getAttribute('data-pos')) : 0;
+      if (pos === -1 || pos === 1) { certPlace(certIdx + pos); certArm(); }
+    });
+
+    certsEl.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft')  { certPlace(certIdx - 1); certArm(); }
+      if (e.key === 'ArrowRight') { certPlace(certIdx + 1); certArm(); }
+    });
+
+    certPlace(0);
+    certArm();
+  }
+
   /* ---------- scroll reveal ---------- */
   var rises = document.querySelectorAll('.rise');
   if (reduce || !('IntersectionObserver' in window)) {
@@ -720,7 +835,7 @@
     var panels = testi.querySelectorAll('.testi__q');
 
     if (picks.length && picks.length === panels.length) {
-      var cur = 0;
+      var testiIdx = 0;
 
       // animationend drives the advance, but an engine that never fires it for
       // a pseudo-element animation would stall the rotation; this guard is the
@@ -731,21 +846,21 @@
         guard = setTimeout(function tick() {
           if (testi.classList.contains('is-manual')) return;
           if (testi.classList.contains('is-held')) { guard = setTimeout(tick, 1000); return; }
-          showTesti(cur + 1);
+          showTesti(testiIdx + 1);
         }, 6800);
       };
 
       var showTesti = function (n, manual) {
-        var prev = cur;
-        cur = (n + picks.length) % picks.length;
+        var prev = testiIdx;
+        testiIdx = (n + picks.length) % picks.length;
         for (var i = 0; i < picks.length; i++) {
-          var on = (i === cur);
+          var on = (i === testiIdx);
           picks[i].classList.toggle('is-on', on);
           picks[i].setAttribute('aria-selected', on ? 'true' : 'false');
           picks[i].tabIndex = on ? 0 : -1;
           panels[i].classList.toggle('is-on', on);
           // the panel being left keeps moving up and out; the rest wait below
-          panels[i].classList.toggle('is-out', !on && i === prev && prev !== cur);
+          panels[i].classList.toggle('is-out', !on && i === prev && prev !== testiIdx);
         }
         // a deliberate pick wins: stop rotating so nothing moves under them
         if (manual) testi.classList.add('is-manual');
@@ -777,7 +892,7 @@
       // the timer bar reaching full width is the advance signal
       testi.addEventListener('animationend', function (e) {
         if (e.animationName === 'testiBar' && !testi.classList.contains('is-manual')) {
-          showTesti(cur + 1);
+          showTesti(testiIdx + 1);
         }
       });
 
