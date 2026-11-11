@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Selected work — Moinul Islam Rehan</title>
+<meta name="description" content="Case studies from Moinul Islam Rehan: Can I Park?, HandyNaija and SUEDE.">
+<meta name="theme-color" content="#F5F5F3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+
+<div class="cursor" id="cursor" aria-hidden="true">
+  <canvas class="cursor__trail" id="trail"></canvas>
+  <span class="cursor__ring"></span>
+  <span class="cursor__arrow">
+    <svg width="24" height="32" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1 1 7.4 29.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M1 1 21.6 13.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </span>
+</div>
+
+<i class="reg reg--tl"></i><i class="reg reg--tr"></i><i class="reg reg--bl"></i><i class="reg reg--br"></i>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="logo" href="index.html">Moinul-Rehan</a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a class="is-current" href="projects.html" aria-current="page">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav__right">
+      <span class="pill lbl-sm"><i></i>Open to work</span>
+      <button class="mbtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel" aria-label="Menu">
+        <span class="mbtn__bars" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+    </div>
+  </div>
+
+</header>
+
+<div class="mpanel" id="menuPanel">
+  <div class="wrap">
+    <nav class="mnav" aria-label="Site menu">
+        <a class="mitem" href="index.html"><span class="mitem__n data">01</span><span class="mitem__label">Home</span></a>
+        <a class="mitem is-current" href="projects.html" aria-current="page"><span class="mitem__n data">02</span><span class="mitem__label">Projects</span></a>
+        <a class="mitem" href="blog.html"><span class="mitem__n data">03</span><span class="mitem__label">Blog</span></a>
+        <a class="mitem" href="about.html"><span class="mitem__n data">04</span><span class="mitem__label">About</span></a>
+        <a class="mitem" href="contact.html"><span class="mitem__n data">05</span><span class="mitem__label">Contact</span></a>
+    </nav>
+    <div class="mpanel__foot">
+      <a class="mpanel__mail" href="mailto:rehan.moinul.10@gmail.com">rehan.moinul.10@gmail.com</a>
+      <span class="lbl-sm dash">Dhaka, Bangladesh — UTC+6</span>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero hero--doc" id="top">
+  <div class="hero__grid" id="heroGrid" aria-hidden="true"></div>
+  <div class="wrap hero__in">
+
+    <div class="micro">
+      <span class="micro__tag"><i class="micro__x"></i><span class="lbl">Projects / 2026</span></span>
+      <span class="lbl-sm dash">Dhaka, Bangladesh — UTC+6</span>
+    </div>
+
+    <div class="hero__main">
+      <div class="hero__lede">
+        <h1 class="d-xl hero__h1" id="heroH1">Work I can <span class="accent">walk you through</span>.</h1>
+
+        <div class="hero__body">
+          <p class="b-lg soft">Everything I can show publicly. Each one covers the problem, the flow it had to survive, and the decisions behind what you are looking at.</p>
+        </div>
+
+        <div class="cta">
+          <a class="btn btn--ghost" href="https://www.behance.net/moinul_rehan" target="_blank" rel="noopener noreferrer">Behance profile
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.6 11.4 11.4 2.6M4.6 2.6h6.8v6.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <nav class="shot" aria-label="Project index">
+        <ol class="pindex">
+          <li><a href="#canipark"><span class="data dash">[01]</span><span class="pindex__t">Can I Park?</span><span class="pindex__k lbl-sm dash">Mobile app</span></a></li>
+          <li><a href="#handynaija"><span class="data dash">[02]</span><span class="pindex__t">HandyNaija</span><span class="pindex__k lbl-sm dash">Service booking</span></a></li>
+          <li><a href="#suede"><span class="data dash">[03]</span><span class="pindex__t">SUEDE</span><span class="pindex__k lbl-sm dash">E-commerce</span></a></li>
+          <li><a href="#terrava"><span class="data dash">[04]</span><span class="pindex__t">TERRAVA</span><span class="pindex__k lbl-sm dash">Fitness app</span></a></li>
+          <li><a href="#prottoyon"><span class="data dash">[05]</span><span class="pindex__t">Prottoyon</span><span class="pindex__k lbl-sm dash">Govt. service</span></a></li>
+          <li><a href="#qatargold"><span class="data dash">[06]</span><span class="pindex__t">Qatar Gold Souq</span><span class="pindex__k lbl-sm dash">Marketplace</span></a></li>
+        </ol>
+      </nav>
+    </div>
+
+    <dl class="specs">
+      <div class="spec"><dt>Projects</dt><dd>Six shown</dd></div>
+      <div class="spec"><dt>Span</dt><dd>2025 — 2026</dd></div>
+      <div class="spec"><dt>Platforms</dt><dd>iOS, Android, Web</dd></div>
+      <div class="spec"><dt>Sectors</dt><dd>Marketplace, civic, retail</dd></div>
+    </dl>
+  </div>
+</section>
+
+
+<section class="sec sec--cases" id="work">
+  <div class="wrap">
+    <!-- case 01 -->
+    <article id="canipark" class="case rise">
+      <div class="case__meta"><span class="data accent">[01]</span><span class="tag">Mobile app</span></div>
+      <div class="case__detail">
+        <h3 class="case__title h-md">Can I Park?</h3>
+        <p class="case__desc b-md soft">An AI sign scanner for Green P, Toronto's official parking app. Point your phone at a parking sign and get one clear answer: park, pay, or move on.</p>
+        <div class="case__actions">
+          <button class="btn-view" type="button" data-project="canipark"><span>View project</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7s2.2-4.2 6-4.2S13 7 13 7s-2.2 4.2-6 4.2S1 7 1 7Z" stroke="currentColor" stroke-width="1.2"/><circle cx="7" cy="7" r="1.7" stroke="currentColor" stroke-width="1.2"/></svg>
+          </button>
+          <a class="ilink" href="https://www.behance.net/gallery/258071189/Can-I-Park-AI-Parking-Sign-Scanner-for-Green-P" target="_blank" rel="noopener noreferrer"><span>Read case study</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.6 11.4 11.4 2.6M4.6 2.6h6.8v6.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <dl class="case__specs">
+          <div class="spec"><dt>Type</dt><dd>Feature module</dd></div>
+          <div class="spec"><dt>Platform</dt><dd>iOS + Android</dd></div>
+          <div class="spec"><dt>Focus</dt><dd>AI assistance, failure states</dd></div>
+        </dl>
+      </div>
+      <figure class="case__media">
+        <video class="case__video" muted loop playsinline preload="none"
+               poster="media/canipark-poster.jpg" aria-label="Can I Park? demo film"></video>
+        <i class="tick tick--tl"></i><i class="tick tick--tr"></i><i class="tick tick--bl"></i><i class="tick tick--br"></i>
+      </figure>
+    </article>
+
+    <!-- case 02 (mirrored) -->
+    <article id="handynaija" class="case case--rev rise">
+      <div class="case__meta"><span class="data accent">[02]</span><span class="tag">Service booking</span></div>
+      <div class="case__detail">
+        <h3 class="case__title h-md">HandyNaija</h3>
+        <p class="case__desc b-md soft">A home services booking platform for Nigeria. Vetted providers, reviews that read as real, and a booking flow that never asks the same question twice.</p>
+        <div class="case__actions">
+          <button class="btn-view" type="button" data-project="handynaija"><span>View project</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7s2.2-4.2 6-4.2S13 7 13 7s-2.2 4.2-6 4.2S1 7 1 7Z" stroke="currentColor" stroke-width="1.2"/><circle cx="7" cy="7" r="1.7" stroke="currentColor" stroke-width="1.2"/></svg>
+          </button>
+          <a class="ilink" href="https://www.behance.net/gallery/243840891/HandyNaija-Design-a-Trusted-Home-Service-Marketplace" target="_blank" rel="noopener noreferrer"><span>Read case study</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.6 11.4 11.4 2.6M4.6 2.6h6.8v6.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <dl class="case__specs">
+          <div class="spec"><dt>Type</dt><dd>Service booking platform</dd></div>
+          <div class="spec"><dt>Platform</dt><dd>Web + mobile web</dd></div>
+          <div class="spec"><dt>Focus</dt><dd>Trust signals, booking flow</dd></div>
+        </dl>
+      </div>
+      <figure class="case__media">
+        <img src="images/web/handynaija-1.jpg" alt="HandyNaija booking interface" loading="lazy">
+        <i class="tick tick--tl"></i><i class="tick tick--tr"></i><i class="tick tick--bl"></i><i class="tick tick--br"></i>
+      </figure>
+    </article>
+
+    <!-- case 03 -->
+    <article id="suede" class="case rise">
+      <div class="case__meta"><span class="data accent">[03]</span><span class="tag">E-commerce</span></div>
+      <div class="case__detail">
+        <h3 class="case__title h-md">SUEDE</h3>
+        <p class="case__desc b-md soft">A fashion review platform that matches real body measurements to real reviews — so shoppers stop guessing their size and start trusting the fit.</p>
+        <div class="case__actions">
+          <button class="btn-view" type="button" data-project="suede"><span>View project</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7s2.2-4.2 6-4.2S13 7 13 7s-2.2 4.2-6 4.2S1 7 1 7Z" stroke="currentColor" stroke-width="1.2"/><circle cx="7" cy="7" r="1.7" stroke="currentColor" stroke-width="1.2"/></svg>
+          </button>
+          <a class="ilink" href="https://www.behance.net/gallery/252365437/SUEDE-Fashion-Review-Platform-Audit-Redesign" target="_blank" rel="noopener noreferrer"><span>Read case study</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.6 11.4 11.4 2.6M4.6 2.6h6.8v6.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <dl class="case__specs">
+          <div class="spec"><dt>Type</dt><dd>Review platform</dd></div>
+          <div class="spec"><dt>Platform</dt><dd>Responsive web</dd></div>
+          <div class="spec"><dt>Focus</dt><dd>Fit confidence, reviews</dd></div>
+        </dl>
+      </div>
+      <figure class="case__media">
+        <img src="images/web/suede-1.jpg" alt="SUEDE review platform interface" loading="lazy">
+        <i class="tick tick--tl"></i><i class="tick tick--tr"></i><i class="tick tick--bl"></i><i class="tick tick--br"></i>
+      </figure>
+    </article>
+
+    <!-- case 04 (mirrored) -->
+    <article id="terrava" class="case case--rev rise">
+      <div class="case__meta"><span class="data accent">[04]</span><span class="tag">Fitness app</span></div>
+      <div class="case__detail">
+        <h3 class="case__title h-md">TERRAVA</h3>
+        <p class="case__desc b-md soft">A running app where finishing a route claims ground. Every run expands your territory, builds a heatmap and feeds a streak &mdash; progress you can see on a map instead of reading off a number.</p>
+        <div class="case__actions">
+          <button class="btn-view" type="button" data-project="terrava"><span>View project</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7s2.2-4.2 6-4.2S13 7 13 7s-2.2 4.2-6 4.2S1 7 1 7Z" stroke="currentColor" stroke-width="1.2"/><circle cx="7" cy="7" r="1.7" stroke="currentColor" stroke-width="1.2"/></svg>
+          </button>
+          <a class="ilink" href="https://www.behance.net/gallery/251718063/TERRAVA-Fitness-App-UIUX-Design-Case-study" target="_blank" rel="noopener noreferrer"><span>Read case study</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.6 11.4 11.4 2.6M4.6 2.6h6.8v6.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <dl class="case__specs">
+          <div class="spec"><dt>Type</dt><dd>Running app</dd></div>
+          <div class="spec"><dt>Platform</dt><dd>iOS</dd></div>
+          <div class="spec"><dt>Focus</dt><dd>Territory, heatmaps, streaks</dd></div>
+        </dl>
+      </div>
+      <figure class="case__media case__media--fit">
+        <img src="images/web/terrava-1.jpg" alt="TERRAVA running app — territory map" loading="lazy">
+        <i class="tick tick--tl"></i><i class="tick tick--tr"></i><i class="tick tick--bl"></i><i class="tick tick--br"></i>
+      </figure>
+    </article>
+
+    <!-- case 05 -->
+    <article id="prottoyon" class="case rise">
+      <div class="case__meta"><span class="data accent">[05]</span><span class="tag">Govt. service</span></div>
+      <div class="case__detail">
+        <h3 class="case__title h-md">Prottoyon</h3>
+        <p class="case__desc b-md soft">A redesign of the Bangladeshi government app for birth, death and nationality certificates &mdash; rebuilt around the people who find it hardest to use, not the ones who already manage.</p>
+        <div class="case__actions">
+          <button class="btn-view" type="button" data-project="prottoyon"><span>View project</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7s2.2-4.2 6-4.2S13 7 13 7s-2.2 4.2-6 4.2S1 7 1 7Z" stroke="currentColor" stroke-width="1.2"/><circle cx="7" cy="7" r="1.7" stroke="currentColor" stroke-width="1.2"/></svg>
+          </button>
+          <a class="ilink" href="https://www.behance.net/gallery/224308507/Prottoyon-App-Redesign-Case-Study" target="_blank" rel="noopener noreferrer"><span>Read case study</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.6 11.4 11.4 2.6M4.6 2.6h6.8v6.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <dl class="case__specs">
+          <div class="spec"><dt>Type</dt><dd>Government service app</dd></div>
+          <div class="spec"><dt>Platform</dt><dd>iOS + Android</dd></div>
+          <div class="spec"><dt>Focus</dt><dd>Navigation, accessibility</dd></div>
+        </dl>
+      </div>
+      <figure class="case__media case__media--fit">
+        <img src="images/web/prottoyon-1.jpg" alt="Prottoyon certificate application app" loading="lazy">
+        <i class="tick tick--tl"></i><i class="tick tick--tr"></i><i class="tick tick--bl"></i><i class="tick tick--br"></i>
+      </figure>
+    </article>
+
+    <!-- case 06 (mirrored) -->
+    <article id="qatargold" class="case case--rev rise">
+      <div class="case__meta"><span class="data accent">[06]</span><span class="tag">Marketplace</span></div>
+      <div class="case__detail">
+        <h3 class="case__title h-md">Qatar Gold Souq</h3>
+        <p class="case__desc b-md soft">A marketplace for buying and selling physical gold in Qatar where the money never moves through the app. Licensed shops are the inspection point, so trust rests on a physical meeting instead of an escrow balance.</p>
+        <div class="case__actions">
+          <button class="btn-view" type="button" data-project="qatargold"><span>View project</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7s2.2-4.2 6-4.2S13 7 13 7s-2.2 4.2-6 4.2S1 7 1 7Z" stroke="currentColor" stroke-width="1.2"/><circle cx="7" cy="7" r="1.7" stroke="currentColor" stroke-width="1.2"/></svg>
+          </button>
+          <a class="ilink" href="https://qatargoldsouq.com" target="_blank" rel="noopener noreferrer"><span>Visit the live site</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.6 11.4 11.4 2.6M4.6 2.6h6.8v6.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <dl class="case__specs">
+          <div class="spec"><dt>Type</dt><dd>Gold marketplace app</dd></div>
+          <div class="spec"><dt>Platform</dt><dd>iOS + Android</dd></div>
+          <div class="spec"><dt>Focus</dt><dd>Verification, offline settlement</dd></div>
+        </dl>
+      </div>
+      <figure class="case__media">
+        <img src="images/web/qatargold-1.jpg" alt="Qatar Gold Souq — live pricing, inspection request and shop verification" loading="lazy">
+        <i class="tick tick--tl"></i><i class="tick tick--tr"></i><i class="tick tick--bl"></i><i class="tick tick--br"></i>
+      </figure>
+    </article>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== PROJECT MODAL ===================== -->
+<dialog class="pm" id="projectModal" aria-labelledby="pmTitle">
+  <div class="pm__inner">
+    <div class="pm__bar">
+      <span class="pm__id"><span class="data accent" id="pmNum">[01]</span><span class="tag" id="pmTag">Tag</span></span>
+      <button class="pm__close" type="button" id="pmClose" aria-label="Close project">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2 2 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="pm__body">
+      <!-- hero block: identity + specs on the left, hero media on the right -->
+      <div class="pm__grid">
+        <div class="pm__info">
+          <h2 class="pm__title h-lg" id="pmTitle">Project</h2>
+          <p class="pm__lede b-lg soft" id="pmLede"></p>
+          <dl class="pm__specs" id="pmSpecs"></dl>
+        </div>
+        <div class="pm__stage">
+          <div class="pm__main" id="pmMain"></div>
+        </div>
+      </div>
+
+      <!-- everything below runs full width -->
+      <h3 class="pm__h lbl">The problem</h3>
+      <p class="pm__prose b-md soft" id="pmProblem"></p>
+
+      <h3 class="pm__h lbl">What I did</h3>
+      <ul class="pm__list pm__prose b-md soft" id="pmDid"></ul>
+
+      <h3 class="pm__h lbl" id="pmMoreH">More screens</h3>
+      <div class="pm__media" id="pmMedia"></div>
+    </div>
+  </div>
+</dialog>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__mark" id="footMark"><span>Moinul-Rehan</span></div>
+    <div class="foot__meta lbl-sm">
+      <span>© 2026 Moinul Islam Rehan</span>
+      <span>Dhaka, Bangladesh — <span id="footClock">UTC+6</span></span>
+      <span>Designed in Figma</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+</body>
+</html>

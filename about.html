@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About — Moinul Islam Rehan</title>
+<meta name="description" content="Moinul Islam Rehan — product designer in Dhaka. Where I have worked, what I studied, and how I got here.">
+<meta name="theme-color" content="#F5F5F3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+
+<div class="cursor" id="cursor" aria-hidden="true">
+  <canvas class="cursor__trail" id="trail"></canvas>
+  <span class="cursor__ring"></span>
+  <span class="cursor__arrow">
+    <svg width="24" height="32" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1 1 7.4 29.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M1 1 21.6 13.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </span>
+</div>
+
+<i class="reg reg--tl"></i><i class="reg reg--tr"></i><i class="reg reg--bl"></i><i class="reg reg--br"></i>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="logo" href="index.html">Moinul-Rehan</a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a class="is-current" href="about.html" aria-current="page">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav__right">
+      <span class="pill lbl-sm"><i></i>Open to work</span>
+      <button class="mbtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel" aria-label="Menu">
+        <span class="mbtn__bars" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+    </div>
+  </div>
+
+</header>
+
+<div class="mpanel" id="menuPanel">
+  <div class="wrap">
+    <nav class="mnav" aria-label="Site menu">
+        <a class="mitem" href="index.html"><span class="mitem__n data">01</span><span class="mitem__label">Home</span></a>
+        <a class="mitem" href="projects.html"><span class="mitem__n data">02</span><span class="mitem__label">Projects</span></a>
+        <a class="mitem" href="blog.html"><span class="mitem__n data">03</span><span class="mitem__label">Blog</span></a>
+        <a class="mitem is-current" href="about.html" aria-current="page"><span class="mitem__n data">04</span><span class="mitem__label">About</span></a>
+        <a class="mitem" href="contact.html"><span class="mitem__n data">05</span><span class="mitem__label">Contact</span></a>
+    </nav>
+    <div class="mpanel__foot">
+      <a class="mpanel__mail" href="mailto:rehan.moinul.10@gmail.com">rehan.moinul.10@gmail.com</a>
+      <span class="lbl-sm dash">Dhaka, Bangladesh — UTC+6</span>
+    </div>
+  </div>
+</div>
+
+<main>
+
+
+<!-- ===================== HERO ===================== -->
+<section class="hero hero--doc" id="top">
+  <div class="hero__grid" id="heroGrid" aria-hidden="true"></div>
+  <div class="wrap hero__in">
+
+    <div class="micro">
+      <span class="micro__tag"><i class="micro__x"></i><span class="lbl">About / 2026</span></span>
+      <span class="lbl-sm dash">Dhaka, Bangladesh — UTC+6</span>
+    </div>
+
+    <div class="hero__main">
+      <div class="hero__lede">
+        <h1 class="d-xl hero__h1" id="heroH1">I work in the gap between the brief and <span class="accent">the real user</span>.</h1>
+
+        <div class="hero__body">
+          <p class="b-lg soft">I&rsquo;m Moinul Islam Rehan, a product designer in Dhaka. Over the last two years I&rsquo;ve designed client products at MindSynth Technologies and Softvence IT, and now work in-house at Tulip Tech.</p>
+          <p class="b-lg soft">Most of the job happens before Figma opens: working out what the brief actually means, who the real decision-maker is, and which constraint is going to break the design three weeks from now.</p>
+        </div>
+
+        <div class="cta">
+          <a class="btn btn--primary" href="projects.html">See selected work
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.6 11.4 11.4 2.6M4.6 2.6h6.8v6.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="contact.html">Let&rsquo;s talk
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.6 11.4 11.4 2.6M4.6 2.6h6.8v6.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="shot">
+        <figure class="shot__frame">
+          <img src="images/web/rehan-2.jpg" alt="Moinul Islam Rehan" width="1200" height="1600">
+          <i class="tick tick--tl"></i><i class="tick tick--tr"></i><i class="tick tick--bl"></i><i class="tick tick--br"></i>
+        </figure>
+        <figcaption class="shot__cap lbl-sm">
+          <span class="accent">Fig. 01</span>
+          <span class="dash">Dhaka &mdash; 2026</span>
+        </figcaption>
+      </div>
+    </div>
+
+    <dl class="specs">
+      <div class="spec"><dt>Role</dt><dd>Product designer</dd></div>
+      <div class="spec"><dt>Based in</dt><dd>Dhaka, Bangladesh</dd></div>
+      <div class="spec"><dt>Experience</dt><dd>2+ years, 25+ projects</dd></div>
+      <div class="spec"><dt>Currently</dt><dd><img class="spec__logo" src="images/logos/tuliptech.png" alt="Tulip Tech" width="88" height="22"></dd></div>
+    </dl>
+  </div>
+</section>
+
+
+
+<section class="sec sec--alt" id="experience">
+  <div class="wrap">
+    <div class="shead">
+      <span class="data accent">[01]</span>
+      <span class="lbl">Experience</span>
+      <span class="shead__rule"></span>
+      <span class="data dash">01 / 02</span>
+    </div>
+
+    <div class="lede-row rise">
+      <div>
+        <h2 class="h-lg">Where I&rsquo;ve grown, designed and <span class="accent">contributed</span>.</h2>
+        <p class="b-lg soft">Three teams in two years &mdash; an agency, a product company, and now in-house. The job was the same each time: find out what the brief actually means before anything gets drawn.</p>
+      </div>
+    </div>
+
+    <ol class="cv rise">
+      <li class="cv__row cv__row--now">
+        <div class="cv__when">
+          <span class="data cv__date">2026 &mdash; Present</span>
+          <span class="lbl-sm dash">Dhaka &middot; In-house</span>
+        </div>
+        <div class="cv__what">
+          <h3 class="h-sm">Product Designer</h3>
+          <p class="cv__org"><img class="cv__logo cv__logo--tulip" src="images/logos/tuliptech.png" alt="Tulip Tech" width="120" height="30"></p>
+          <p class="b-md soft">Designing the company&rsquo;s own products end to end &mdash; from the first flow through to shipped UI &mdash; and maintaining the design system the developers build from.</p>
+        </div>
+      </li>
+
+      <li class="cv__row">
+        <div class="cv__when">
+          <span class="data cv__date">Jun 2025 &mdash; 2026</span>
+          <span class="lbl-sm dash">Dhaka &middot; Agency</span>
+        </div>
+        <div class="cv__what">
+          <h3 class="h-sm">Executive, UI-UX</h3>
+          <p class="cv__org"><img class="cv__logo" src="images/logos/softvence.png" alt="Softvence IT Ltd." width="97" height="24"></p>
+          <p class="b-md soft">Joined as a UI/UX design intern and stayed on, working across client projects and internal product design with a focus on interface design and usability.</p>
+        </div>
+      </li>
+
+      <li class="cv__row">
+        <div class="cv__when">
+          <span class="data cv__date">Nov 2024 &mdash; May 2025</span>
+          <span class="lbl-sm dash">Dhaka &middot; Product</span>
+        </div>
+        <div class="cv__what">
+          <h3 class="h-sm">Junior UX Engineer</h3>
+          <p class="cv__org"><img class="cv__logo cv__logo--mindsynth" src="images/logos/mindsynth-wordmark.png" alt="MindSynth Technologies Ltd." width="124" height="16"></p>
+          <p class="b-md soft">Web and SaaS products &mdash; user flows, interfaces and design systems, worked out alongside developers and stakeholders rather than handed over to them.</p>
+        </div>
+      </li>
+
+      <li class="cv__row">
+        <div class="cv__when">
+          <span class="data cv__date">Aug 2024 &mdash; Oct 2024</span>
+          <span class="lbl-sm dash">Dhaka &middot; Internship</span>
+        </div>
+        <div class="cv__what">
+          <h3 class="h-sm">UI/UX Designer &mdash; Intern</h3>
+          <p class="cv__org"><img class="cv__logo cv__logo--mindsynth" src="images/logos/mindsynth-wordmark.png" alt="MindSynth Technologies Ltd." width="124" height="16"></p>
+          <p class="b-md soft">Supported research, interface design and design system work across client and internal projects. The first time I saw a design go all the way into a build.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+
+
+<section class="sec" id="education">
+  <div class="wrap">
+    <div class="shead">
+      <span class="data accent">[02]</span>
+      <span class="lbl">Education</span>
+      <span class="shead__rule"></span>
+      <span class="data dash">02 / 02</span>
+    </div>
+
+    <div class="lede-row rise">
+      <div>
+        <h2 class="h-lg">Where I <span class="accent">learned</span> and grew.</h2>
+        <p class="b-lg soft">A computer science degree running in parallel with the design work &mdash; which is mostly why handoff conversations with developers tend to be short ones.</p>
+      </div>
+    </div>
+
+    <ol class="cv rise">
+      <li class="cv__row cv__row--now">
+        <div class="cv__when">
+          <span class="data cv__date">Jul 2022 &mdash; Jul 2026</span>
+          <span class="lbl-sm dash">Dhaka &middot; Undergraduate</span>
+        </div>
+        <div class="cv__what">
+          <h3 class="h-sm">B.Sc. in Computer Science &amp; Engineering</h3>
+          <p class="cv__org lbl">Bangladesh University of Business &amp; Technology</p>
+          <p class="b-md soft">Four years of CSE taken alongside full-time design work &mdash; enough engineering to know what a spec costs to build before I draw it.</p>
+          <p class="cv__note b-sm soft"><b>Vice Chair</b> &mdash; IEEE BUBT Student Branch, organising technical workshops and events.</p>
+        </div>
+      </li>
+
+      <li class="cv__row">
+        <div class="cv__when">
+          <span class="data cv__date">May 2024</span>
+          <span class="lbl-sm dash">Online &middot; Certificate</span>
+        </div>
+        <div class="cv__what">
+          <h3 class="h-sm">UI/UX Guided Program</h3>
+          <p class="cv__org lbl">Ostad</p>
+          <p class="b-md soft">User research, wireframing, design systems, prototyping and usability principles &mdash; taught through hands-on projects rather than lectures.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__mark" id="footMark"><span>Moinul-Rehan</span></div>
+    <div class="foot__meta lbl-sm">
+      <span>© 2026 Moinul Islam Rehan</span>
+      <span>Dhaka, Bangladesh — <span id="footClock">UTC+6</span></span>
+      <span>Designed in Figma</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+</body>
+</html>

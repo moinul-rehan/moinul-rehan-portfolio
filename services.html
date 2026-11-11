@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Services — Moinul Islam Rehan</title>
+<meta name="description" content="Product design, mobile apps, design systems and marketing sites.">
+<meta name="theme-color" content="#F5F5F3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+
+<div class="cursor" id="cursor" aria-hidden="true">
+  <canvas class="cursor__trail" id="trail"></canvas>
+  <span class="cursor__ring"></span>
+  <span class="cursor__arrow">
+    <svg width="24" height="32" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1 1 7.4 29.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M1 1 21.6 13.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </span>
+</div>
+
+<i class="reg reg--tl"></i><i class="reg reg--tr"></i><i class="reg reg--bl"></i><i class="reg reg--br"></i>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="logo" href="index.html">Moinul-Rehan</a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav__right">
+      <span class="pill lbl-sm"><i></i>Open to work</span>
+      <button class="mbtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel" aria-label="Menu">
+        <span class="mbtn__bars" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+    </div>
+  </div>
+
+</header>
+
+<div class="mpanel" id="menuPanel">
+  <div class="wrap">
+    <nav class="mnav" aria-label="Site menu">
+        <a class="mitem" href="index.html"><span class="mitem__n data">01</span><span class="mitem__label">Home</span></a>
+        <a class="mitem" href="projects.html"><span class="mitem__n data">02</span><span class="mitem__label">Projects</span></a>
+        <a class="mitem" href="blog.html"><span class="mitem__n data">03</span><span class="mitem__label">Blog</span></a>
+        <a class="mitem" href="about.html"><span class="mitem__n data">04</span><span class="mitem__label">About</span></a>
+        <a class="mitem" href="contact.html"><span class="mitem__n data">05</span><span class="mitem__label">Contact</span></a>
+    </nav>
+    <div class="mpanel__foot">
+      <a class="mpanel__mail" href="mailto:rehan.moinul.10@gmail.com">rehan.moinul.10@gmail.com</a>
+      <span class="lbl-sm dash">Dhaka, Bangladesh — UTC+6</span>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<section class="sec sec--alt" id="services">
+  <div class="wrap">
+    <div class="shead">
+      <span class="data accent">[02]</span>
+      <span class="lbl">What I can help with</span>
+      <span class="shead__rule"></span>
+      <span class="data dash">02 / 06</span>
+    </div>
+
+    <div class="lede-row rise">
+      <div>
+        <h2 class="h-lg"><span class="accent">Four ways</span> I can help.</h2>
+        <p class="b-lg soft">Whether you have a product that needs fixing or a blank page that needs a direction.</p>
+      </div>
+    </div>
+
+    <div class="flow rise">
+      <a class="svc" href="#contact">
+        <span class="svc__head"><span class="svc__num data">[01]</span><span class="lbl-sm dash">SaaS · Dashboards</span></span>
+        <span class="svc__title h-sm">Product design</span>
+        <span class="svc__body b-md soft">SaaS platforms, dashboards and web apps — from the first flow through to shipped UI.</span>
+        
+      </a>
+      <a class="svc" href="#contact">
+        <span class="svc__head"><span class="svc__num data">[02]</span><span class="lbl-sm dash">iOS · Android</span></span>
+        <span class="svc__title h-sm">Mobile app design</span>
+        <span class="svc__body b-md soft">iOS and Android screens with prototypes people can actually click through.</span>
+        
+      </a>
+
+      <a class="svc" href="#contact">
+        <span class="svc__head"><span class="svc__num data">[03]</span><span class="lbl-sm dash">Tokens · Docs</span></span>
+        <span class="svc__title h-sm">Design systems</span>
+        <span class="svc__body b-md soft">Components, tokens and documentation your developers can genuinely build from.</span>
+        
+      </a>
+      <a class="svc" href="#contact">
+        <span class="svc__head"><span class="svc__num data">[04]</span><span class="lbl-sm dash">Marketing · Redesign</span></span>
+        <span class="svc__title h-sm">Websites &amp; landing pages</span>
+        <span class="svc__body b-md soft">Marketing sites and redesigns that load fast and read clearly on any device.</span>
+      </a>
+      <svg class="flow__wires" id="flowWires" aria-hidden="true"></svg>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__mark" id="footMark"><span>Moinul-Rehan</span></div>
+    <div class="foot__meta lbl-sm">
+      <span>© 2026 Moinul Islam Rehan</span>
+      <span>Dhaka, Bangladesh — <span id="footClock">UTC+6</span></span>
+      <span>Designed in Figma</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+</body>
+</html>
