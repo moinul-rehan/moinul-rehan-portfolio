@@ -233,8 +233,20 @@
       cur.classList.toggle('is-link', !!link && !media);
     });
 
-    // hide it when the pointer leaves the window entirely
-    document.addEventListener('mouseleave', function(){ cur.classList.add('is-out'); });
+    // Hide it when the pointer leaves the window entirely — and a bare
+    // mouseleave is not proof of that. Opening a modal <dialog> promotes it to
+    // the top layer, and the browser then reports a document-level leave with a
+    // null relatedTarget while the pointer is still well inside the viewport.
+    // Acting on that strands the cursor at opacity 0 with the native one
+    // already suppressed, which leaves no pointer at all. Only a position on
+    // the edge is a real exit.
+    var EDGE = 2;
+    document.addEventListener('mouseleave', function(e){
+      if (e.clientX > EDGE && e.clientY > EDGE &&
+          e.clientX < window.innerWidth  - EDGE &&
+          e.clientY < window.innerHeight - EDGE) return;
+      cur.classList.add('is-out');
+    });
     document.addEventListener('mouseenter', function(){ cur.classList.remove('is-out'); });
   }
 
@@ -565,7 +577,9 @@
       modal.querySelector('.pm__inner').scrollTop = 0;
       // A modal <dialog> lives in the top layer, which is painted above every
       // z-index — so the custom cursor has to move inside it to stay visible.
-      if (cur) modal.appendChild(cur);
+      // Clearing is-out as well, because opening the dialog is exactly the
+      // moment the browser fires a spurious document-level mouseleave.
+      if (cur) { modal.appendChild(cur); cur.classList.remove('is-out'); }
     }
 
     document.addEventListener('click', function(e){
@@ -577,7 +591,9 @@
     document.getElementById('pmClose').addEventListener('click', function(){ modal.close(); });
     modal.addEventListener('close', function(){
       document.documentElement.style.overflow = '';
-      if (cur) document.body.appendChild(cur);   // hand the cursor back to the page
+      // hand the cursor back to the page, visible — closing fires the same
+      // spurious leave that opening does
+      if (cur) { document.body.appendChild(cur); cur.classList.remove('is-out'); }
       // stop any playing media
       var vids = modal.querySelectorAll('video');
       for (var i = 0; i < vids.length; i++) { try { vids[i].pause(); } catch (err) {} }
