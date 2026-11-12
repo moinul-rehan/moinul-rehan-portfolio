@@ -55,7 +55,8 @@
 
     // Section titles wave as each is scrolled to. Scoped to <main> so the
     // modal's own <h2 class="h-lg"> is left alone — JS rewrites its text.
-    var heads = document.querySelectorAll('main h2.h-lg');
+    // (h1 too: on Process, Services and Clients the section title is the page's h1)
+    var heads = document.querySelectorAll('main h2.h-lg, main h1.h-lg');
     for (var hi = 0; hi < heads.length; hi++) buildWave(heads[hi], 20);
     if (heads.length) {
       if ('IntersectionObserver' in window) {
@@ -331,7 +332,7 @@
      card is actually scrolled into view, then it loops silently. */
   var cardVideos = document.querySelectorAll('.case__video');
   if (cardVideos.length && !reduce) {
-    var VID_SRC = 'media/canipark.mp4';
+    var VID_SRC = '/media/canipark.mp4';
 
     function inView(el){
       var r = el.getBoundingClientRect();
@@ -384,11 +385,11 @@
         'Built the VelaCrew icon documentation and component set the team designs from.'
       ],
       media: [
-        ['images/web/velacrew-hero.jpg','Public website, hero'],
-        ['images/web/velacrew-app.jpg','Projects, with progress and what is up next'],
-        ['images/web/velacrew-crew.jpg','The crew your assistant brings in'],
-        ['images/web/velacrew-project.jpg','A project and its milestones'],
-        ['images/web/velacrew-people.jpg','People, and what their crew is on']
+        ['/images/web/velacrew-hero.jpg','Public website, hero'],
+        ['/images/web/velacrew-app.jpg','Projects, with progress and what is up next'],
+        ['/images/web/velacrew-crew.jpg','The crew your assistant brings in'],
+        ['/images/web/velacrew-project.jpg','A project and its milestones'],
+        ['/images/web/velacrew-people.jpg','People, and what their crew is on']
       ],
       video: []
     },
@@ -406,11 +407,11 @@
         'Held the "assistant, not authority" line in the UI: a standing disclaimer and a Report Inaccuracy affordance on every state.'
       ],
       media: [
-        ['media/canipark.mp4','Demo film — sign to answer','media/canipark-poster.jpg'],
-        ['images/web/canipark-ba.jpg','Before / after — four rules to one sentence'],
-        ['images/web/canipark-five.jpg','Five answers the scanner can give'],
-        ['images/web/canipark-ui.jpg','UI showcase — curb to scan to result'],
-        ['images/web/canipark-parts.jpg','The components that carry the trust']
+        ['/media/canipark.mp4','Demo film — sign to answer','/media/canipark-poster.jpg'],
+        ['/images/web/canipark-ba.jpg','Before / after — four rules to one sentence'],
+        ['/images/web/canipark-five.jpg','Five answers the scanner can give'],
+        ['/images/web/canipark-ui.jpg','UI showcase — curb to scan to result'],
+        ['/images/web/canipark-parts.jpg','The components that carry the trust']
       ],
       video: []
     },
@@ -426,9 +427,9 @@
         'Designed the empty, pending and failed states that the original brief never mentioned.'
       ],
       media: [
-        ['images/web/handynaija-1.jpg','Home — service discovery'],
-        ['images/web/handynaija-2.jpg','Provider detail and verification'],
-        ['images/web/handynaija-3.jpg','Booking confirmation']
+        ['/images/web/handynaija-1.jpg','Home — service discovery'],
+        ['/images/web/handynaija-2.jpg','Provider detail and verification'],
+        ['/images/web/handynaija-3.jpg','Booking confirmation']
       ],
       video: []
     },
@@ -444,9 +445,9 @@
         'Documented the component set and tokens so the team could extend it without me.'
       ],
       media: [
-        ['images/web/suede-1.jpg','Brand dashboard — review analytics'],
-        ['images/web/suede-2.jpg','Product detail with fit data'],
-        ['images/web/suede-3.jpg','Review composer']
+        ['/images/web/suede-1.jpg','Brand dashboard — review analytics'],
+        ['/images/web/suede-2.jpg','Product detail with fit data'],
+        ['/images/web/suede-3.jpg','Review composer']
       ],
       video: []
     },
@@ -463,8 +464,8 @@
         'Made cinematic replay the share artefact — something a runner will actually post, instead of a screenshot of statistics.'
       ],
       media: [
-        ['images/web/terrava-1.jpg','Cover — every run expands your territory'],
-        ['images/web/terrava-2.jpg','Overview — what the product does']
+        ['/images/web/terrava-1.jpg','Cover — every run expands your territory'],
+        ['/images/web/terrava-2.jpg','Overview — what the product does']
       ],
       video: []
     },
@@ -480,7 +481,7 @@
         'Raised contrast, type size and target sizes across the interface for people who are not comfortable on a phone.'
       ],
       media: [
-        ['images/web/prottoyon-1.jpg','Prottoyon — every certificate service in one place']
+        ['/images/web/prottoyon-1.jpg','Prottoyon — every certificate service in one place']
       ],
       video: []
     },
@@ -498,10 +499,10 @@
         'Flagged the concurrency problem — two buyers booking the same unique piece — and specified a Pending Inspection state that locks the listing once an appointment is confirmed.'
       ],
       media: [
-        ['images/web/qatargold-1.jpg','Live pricing, inspection request, and the shop’s verification check'],
-        ['images/web/qatargold-4.jpg','Full app flow — four roles across three surfaces'],
-        ['images/web/qatargold-2.jpg','Buyer journey — search, listing detail, want-to-buy, settlement'],
-        ['images/web/qatargold-3.jpg','Shop side — dashboard, catalog, inspection queue, analytics']
+        ['/images/web/qatargold-1.jpg','Live pricing, inspection request, and the shop’s verification check'],
+        ['/images/web/qatargold-4.jpg','Full app flow — four roles across three surfaces'],
+        ['/images/web/qatargold-2.jpg','Buyer journey — search, listing detail, want-to-buy, settlement'],
+        ['/images/web/qatargold-3.jpg','Shop side — dashboard, catalog, inspection queue, analytics']
       ],
       video: []
     }

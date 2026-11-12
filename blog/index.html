@@ -3,8 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Blog — Moinul Islam Rehan</title>
-<meta name="description" content="Notes on product design decisions by Moinul Islam Rehan — why a flow got cut, what a test changed, where a design broke in build.">
+<title>Blog | Moinul Islam Rehan</title>
+<meta name="description" content="Notes on product design decisions by Moinul Islam Rehan: why a flow got cut, what a test changed, and where a design broke in build.">
+<link rel="canonical" href="https://www.moinul-rehan.info/blog/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Moinul Islam Rehan">
+<meta property="og:title" content="Blog | Moinul Islam Rehan">
+<meta property="og:description" content="Notes on product design decisions by Moinul Islam Rehan: why a flow got cut, what a test changed, and where a design broke in build.">
+<meta property="og:url" content="https://www.moinul-rehan.info/blog/">
+<meta property="og:image" content="https://www.moinul-rehan.info/images/og/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Moinul Islam Rehan, UI/UX and product designer in Dhaka">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@moinul_rehan">
+<meta name="twitter:creator" content="@moinul_rehan">
+<meta name="twitter:title" content="Blog | Moinul Islam Rehan">
+<meta name="twitter:description" content="Notes on product design decisions by Moinul Islam Rehan: why a flow got cut, what a test changed, and where a design broke in build.">
+<meta name="twitter:image" content="https://www.moinul-rehan.info/images/og/og-default.jpg">
+<meta name="author" content="Moinul Islam Rehan">
 <meta name="theme-color" content="#F5F5F3">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32.png">
@@ -12,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="/css/site.css">
 </head>
 <body>
 <script>document.documentElement.classList.add('js');</script>
@@ -34,13 +52,13 @@
 <!-- ===================== NAV ===================== -->
 <header class="nav">
   <div class="wrap nav__in">
-    <a class="logo" href="index.html">Moinul-Rehan</a>
+    <a class="logo" href="/">Moinul-Rehan</a>
     <nav class="nav__links" aria-label="Main">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="projects.html">Projects</a>
-      <a class="is-current" href="blog.html" aria-current="page">Blog</a>
-      <a href="contact.html">Contact</a>
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <a href="/projects/">Projects</a>
+      <a class="is-current" href="/blog/" aria-current="page">Blog</a>
+      <a href="/contact/">Contact</a>
     </nav>
     <div class="nav__right">
       <span class="pill lbl-sm"><i></i>Open to work</span>
@@ -55,11 +73,11 @@
 <div class="mpanel" id="menuPanel">
   <div class="wrap">
     <nav class="mnav" aria-label="Site menu">
-        <a class="mitem" href="index.html"><span class="mitem__n data">01</span><span class="mitem__label">Home</span></a>
-        <a class="mitem" href="about.html"><span class="mitem__n data">02</span><span class="mitem__label">About</span></a>
-        <a class="mitem" href="projects.html"><span class="mitem__n data">03</span><span class="mitem__label">Projects</span></a>
-        <a class="mitem is-current" href="blog.html" aria-current="page"><span class="mitem__n data">04</span><span class="mitem__label">Blog</span></a>
-        <a class="mitem" href="contact.html"><span class="mitem__n data">05</span><span class="mitem__label">Contact</span></a>
+        <a class="mitem" href="/"><span class="mitem__n data">01</span><span class="mitem__label">Home</span></a>
+        <a class="mitem" href="/about/"><span class="mitem__n data">02</span><span class="mitem__label">About</span></a>
+        <a class="mitem" href="/projects/"><span class="mitem__n data">03</span><span class="mitem__label">Projects</span></a>
+        <a class="mitem is-current" href="/blog/" aria-current="page"><span class="mitem__n data">04</span><span class="mitem__label">Blog</span></a>
+        <a class="mitem" href="/contact/"><span class="mitem__n data">05</span><span class="mitem__label">Contact</span></a>
     </nav>
     <div class="mpanel__foot">
       <a class="mpanel__mail" href="mailto:rehan.moinul.10@gmail.com">rehan.moinul.10@gmail.com</a>
@@ -95,10 +113,10 @@
       <p class="blank__title">Nothing published yet.</p>
       <p class="blank__body b-lg soft">I'd rather put the first one up when it's worth your time than fill this page to look busy. Until then, the thinking is written out inside the case studies.</p>
       <div class="blank__acts">
-        <a class="btn btn--primary" href="projects.html">Read a case study
+        <a class="btn btn--primary" href="/projects/">Read a case study
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.6 11.4 11.4 2.6M4.6 2.6h6.8v6.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a class="btn btn--ghost" href="contact.html">Let's talk
+        <a class="btn btn--ghost" href="/contact/">Let's talk
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.6 11.4 11.4 2.6M4.6 2.6h6.8v6.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
@@ -120,6 +138,6 @@
   </div>
 </footer>
 
-<script src="js/site.js"></script>
+<script src="/js/site.js"></script>
 </body>
 </html>
