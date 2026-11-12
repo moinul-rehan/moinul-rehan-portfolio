@@ -422,7 +422,10 @@ button{ font:inherit; color:inherit; background:none; border:0; padding:0; curso
    re-parented in here (top layer) without being clipped; the inner panel
    does the rounding and scrolling instead. */
 .pm{
-  width:min(1100px,92vw); max-height:90vh; padding:0; border:0; border-radius:6px;
+  /* dvh is the viewport actually visible between the browser's own bars;
+     plain vh on a phone includes the area under the address bar, which
+     pushed the popup's close button out of reach. vh stays as fallback. */
+  width:min(1100px,92vw); max-height:90vh; max-height:90dvh; padding:0; border:0; border-radius:6px;
   background:var(--paper); color:var(--ink); overflow:visible;
 }
 /* showModal() moves focus into the scrollable inner panel (browsers make
@@ -433,7 +436,7 @@ button{ font:inherit; color:inherit; background:none; border:0; padding:0; curso
 .pm::backdrop{ background:rgba(20,22,23,.72); backdrop-filter:blur(3px); }
 html.cur .pm::backdrop{ cursor:none; }
 .pm__inner{
-  max-height:90vh; overflow-y:auto; overflow-x:hidden;
+  max-height:90vh; max-height:90dvh; overflow-y:auto; overflow-x:hidden;
   overscroll-behavior:contain; border-radius:6px;
 }
 .pm__bar{
@@ -492,6 +495,18 @@ html.cur .pm::backdrop{ cursor:none; }
   .pm__grid{ grid-template-columns:1fr; }
   .pm__stage{ order:-1; }                    /* hero leads on narrow screens */
   .pm__media{ grid-template-columns:1fr; }
+}
+/* phone: still a centred popup, kept inside a safe area: 16px clear of every
+   edge plus the device's own insets (notch, home bar), measured against the
+   visible viewport, so the close button never sits under the address bar */
+@media (max-width:560px){
+  .pm{
+    --pm-safe:calc(32px + env(safe-area-inset-top) + env(safe-area-inset-bottom));
+    width:calc(100% - 32px - env(safe-area-inset-left) - env(safe-area-inset-right)); max-width:none; margin:auto;
+    max-height:calc(100vh - var(--pm-safe)); max-height:calc(100dvh - var(--pm-safe));
+  }
+  .pm__inner{ max-height:calc(100vh - var(--pm-safe)); max-height:calc(100dvh - var(--pm-safe)); }
+  .pm__close{ width:40px; height:40px; }
 }
 
 /* ============================================================
@@ -905,6 +920,13 @@ html.cur .pm::backdrop{ cursor:none; }
   /* testimonials: the five-name list becomes a row of dots under the quote.
      Every dot gets the same 44px slot, so nothing shifts when the active one
      changes; track and fill both start at the slot's left edge. */
+  /* all quotes share one grid cell, so the stage is exactly as tall as the
+     longest quote: no fixed min-height leaving a hole under short ones,
+     and the dots still never jump as quotes change */
+  /* (one notch more specific than the later 640px/860px rules they override) */
+  div.testi{ row-gap:22px; }
+  .testi__quote .testi__stage{ display:grid; min-height:0; }
+  .testi__stage .testi__q,.testi__stage .testi__q.is-on{ grid-area:1/1; position:relative; inset:auto; }
   .testi__index{ flex-direction:row; justify-content:center; gap:0; }
   .testi__pick,.testi__pick:first-child{
     width:44px; height:28px; padding:0; border:0;
