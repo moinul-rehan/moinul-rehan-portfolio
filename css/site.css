@@ -649,6 +649,71 @@ html.cur .pm::backdrop{ cursor:none; }
 }
 
 /* ============================================================
+   IN PROGRESS: two rows of mockups drift in opposite directions
+   behind a single project card. Rows and card share one grid cell,
+   so the panel grows to whichever is taller and nothing overflows.
+   ============================================================ */
+.build{
+  position:relative; display:grid; overflow:hidden;
+  margin-top:clamp(36px,4.2vw,54px); padding-block:clamp(40px,5vw,64px);
+  background:var(--paper); border:1px solid var(--hairline); border-radius:4px;
+}
+.build__rows{
+  grid-area:1/1; align-self:center; display:grid; gap:20px; min-width:0;
+  /* rows dissolve into the panel at both ends instead of being cut off */
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+          mask-image:linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.build__row{ overflow:hidden; }
+.build__track{ display:flex; gap:20px; width:max-content; animation:marquee 60s linear infinite; }
+.build__row--right .build__track{ animation-direction:reverse; }
+/* a row holds still while the pointer is on it */
+.build__row:hover .build__track{ animation-play-state:paused; }
+
+.build__shot{
+  display:block; height:200px; flex:none; cursor:pointer;
+  border:1px solid var(--hairline); border-radius:4px; background:var(--image-bg);
+  filter:grayscale(1); opacity:.55;
+  transition:filter .4s ease, opacity .4s ease, transform .4s ease;
+}
+.build__shot img{ height:100%; width:auto; display:block; border-radius:3px; }
+.build__shot:hover{ filter:none; opacity:1; transform:translateY(-4px); }
+
+.build__card{
+  grid-area:1/1; place-self:center; position:relative; z-index:1;
+  width:min(380px,100% - 40px); padding:26px 26px 28px;
+  background:var(--surface); border:1px solid var(--hairline); border-radius:4px;
+}
+/* the status dot reads as live: a ring of the same accent keeps
+   expanding out of it and fading, while the dot itself stays solid */
+.build__card .pill i{ position:relative; }
+.build__card .pill i::after{
+  content:""; position:absolute; inset:0; border-radius:50%;
+  background:var(--accent); animation:livePulse 1.6s cubic-bezier(0,0,.2,1) infinite;
+}
+@keyframes livePulse{
+  from{ transform:scale(1); opacity:.7; }
+  to{ transform:scale(3.2); opacity:0; }
+}
+.build__title{ margin-top:18px; }
+.build__card p{ margin-top:12px; }
+.build__card .build__for{ margin-top:6px; }
+
+/* on a phone the card would cover the rows entirely, so the rows stay on
+   top and the card sits below, overlapping their lower edge */
+@media (max-width:560px){
+  .build{ padding:16px 0; }
+  .build__row--right{ display:none; }
+  .build__shot{ height:180px; }
+  .build__card{ grid-area:2/1; margin-top:16px; width:calc(100% - 32px); }
+}
+@media (prefers-reduced-motion:reduce){
+  .build__track{ animation:none; }
+  .build__shot{ transition:none; }
+  .build__card .pill i::after{ animation:none; opacity:0; }
+}
+
+/* ============================================================
    CONTACT + FOOTER
    ============================================================ */
 .contact__title{ margin-top:60px; max-width:16ch; }
@@ -813,8 +878,8 @@ html.cur .pm::backdrop{ cursor:none; }
   .about__photo{ max-width:400px; }
   .steps{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; }
   .hero__grid{ display:none; }
-  /* flowchart collapses to a single stacked column; the trace is dropped */
-  .flow{ grid-template-columns:1fr; row-gap:40px; column-gap:0; }
+  /* flowchart becomes a plain 2x2 grid; the trace is dropped */
+  .flow{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
   .flow__wires{ display:none; }
 }
 @media (max-width:860px){
@@ -830,6 +895,62 @@ html.cur .pm::backdrop{ cursor:none; }
   .steps{ grid-template-columns:1fr; }
   .reg{ display:none; }
 }
+/* ============================================================
+   PHONE: services and steps one per row; testimonials as dots
+   ============================================================ */
+@media (max-width:560px){
+  .flow{ grid-template-columns:1fr; gap:16px; }
+  .steps{ grid-template-columns:1fr; gap:16px; }
+
+  /* testimonials: the five-name list becomes a row of dots under the quote.
+     Every dot gets the same 44px slot, so nothing shifts when the active one
+     changes; track and fill both start at the slot's left edge. */
+  .testi__index{ flex-direction:row; justify-content:center; gap:0; }
+  .testi__pick,.testi__pick:first-child{
+    width:44px; height:28px; padding:0; border:0;
+  }
+  .testi__pick:hover{ padding-left:0; }
+  .testi__pick .data,.testi__pick img{ display:none; }
+  /* the name stays for screen readers, just not on screen */
+  .testi__who{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  /* the track: a dot that grows into a pill for the active quote */
+  .testi__pick::before{
+    content:''; position:absolute; left:6px; top:50%; margin-top:-4px;
+    width:8px; height:8px; border-radius:4px; background:var(--hairline);
+    transition:width .3s linear;
+  }
+  .testi__pick.is-on::before{ width:32px; }
+  /* the fill: the same 6s timer that drives the auto-advance, drawn inside
+     the track. It waits .3s for the track to finish growing, and when the
+     quote moves on it stays full red while it shrinks back and fades. */
+  .testi__pick::after{
+    left:6px; right:auto; top:50%; bottom:auto; margin:-4px 0 0;
+    width:8px; height:8px; border-radius:4px; transform:none;
+    opacity:0; transition:width .3s ease, opacity .25s ease .2s;
+  }
+  /* resting width is full, so when this quote moves on the shrink starts
+     from full red; while the timer runs (and during its .3s wait, through
+     fill-mode both) the animation holds the real width */
+  .testi__pick.is-on::after{ width:32px; opacity:1; transition:none; }
+  .testi.is-live:not(.is-manual) .testi__pick.is-on::after{ animation-delay:.3s; animation-fill-mode:both; }
+  .testi:not(.is-live) .testi__pick.is-on::after{ width:0; }
+  /* the dot just left: full red shrinks with its track (same .3s, linear),
+     then fades. JS adds was-on for half a second. */
+  .testi__pick.was-on::after{ animation:testiDone .45s linear forwards; }
+  /* a picked quote holds, so its pill shows full */
+  .testi.is-manual .testi__pick.is-on::after{ width:32px; transform:none; }
+}
+/* On a phone the fill grows in width rather than scaling, so its rounded
+   ends stay round. Same name: the script listens for testiBar ending. */
+@media (max-width:560px){
+  @keyframes testiBar{ from{ width:0; } to{ width:32px; } }
+  @keyframes testiDone{
+    0%  { width:32px; opacity:1; }
+    66% { width:8px;  opacity:1; }
+    100%{ width:8px;  opacity:0; }
+  }
+}
+
 /* ============================================================
    MENU (hamburger + full-screen panel)
    ============================================================ */
@@ -870,8 +991,9 @@ html.cur .pm::backdrop{ cursor:none; }
 .mpanel{
   position:fixed; inset:0; z-index:60;
   background:var(--paper);
-  display:flex; flex-direction:column; justify-content:center;
-  padding-block:clamp(104px,14vh,150px) clamp(32px,6vh,56px);
+  display:flex; flex-direction:column;
+  /* the list starts just under the header; contact details sit at the foot */
+  padding-block:clamp(112px,16vh,136px) clamp(28px,5vh,48px);
   overflow-y:auto; overscroll-behavior:contain;
   opacity:0; visibility:hidden;
   transition:opacity .3s ease, visibility 0s linear .3s;
@@ -880,6 +1002,11 @@ html.cur .pm::backdrop{ cursor:none; }
   opacity:1; visibility:visible;
   transition:opacity .3s ease, visibility 0s;
 }
+/* while the menu is open the header is pinned, so the close button is
+   always on screen however far down the page the menu was opened */
+html.menu-on .nav{ position:fixed; top:0; left:0; right:0; }
+/* the inner column fills the panel so the foot can sit at the bottom */
+.mpanel > .wrap{ flex:1; display:flex; flex-direction:column; gap:clamp(32px,5vh,56px); width:100%; }
 
 .mnav{ display:flex; flex-direction:column; }
 
@@ -905,7 +1032,7 @@ html.cur .pm::backdrop{ cursor:none; }
 /* contact details stay reachable without closing the menu first */
 .mpanel__foot{
   display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px;
-  margin-top:clamp(32px,5vw,56px); padding-top:20px;
+  margin-top:auto; padding-top:20px;
   border-top:1px solid var(--grid-line);
 }
 .mpanel__mail{ padding-bottom:3px; border-bottom:1px solid var(--accent); transition:color .25s ease; }
@@ -1090,6 +1217,17 @@ html.cur .pm::backdrop{ cursor:none; }
   .cv__row{ grid-template-columns:1fr; gap:14px; }
   .cv__when{ flex-direction:row; align-items:center; gap:14px; padding-top:0; }
 }
+/* phone: the date keeps one line, the place sits under it (indented to the
+   date text, past the marker), the org line drops its lead dash so a long
+   name wraps cleanly, and the note puts its title on a line of its own */
+@media (max-width:560px){
+  .cv__when{ flex-direction:column; align-items:flex-start; gap:6px; }
+  .cv__date{ white-space:nowrap; }
+  .cv__when .lbl-sm{ padding-left:16px; }
+  .cv__org{ margin-top:8px; line-height:1.5; }
+  .cv__org::before{ display:none; }
+  .cv__sep{ display:none; }
+}
 
 /* ============================================================
    DOCUMENT HERO (sub-pages)
@@ -1268,4 +1406,78 @@ html.cur .pm::backdrop{ cursor:none; }
   .foot__meta{ flex-direction:column; align-items:flex-start; gap:9px; }
   .mpanel__foot{ flex-direction:column; align-items:flex-start; gap:12px; }
   .reach a{ gap:14px; }
+}
+
+/* ============================================================
+   404: the missing page drawn as a part on a technical drawing
+   A giant 404 in corner ticks, a dimension line carrying the error,
+   then the way back. Under the pointer the numerals light with the
+   same lens as the footer wordmark; on touch the light drifts on its
+   own. At rest (--lens 0) every stop sits on one point: solid ink.
+   ============================================================ */
+.err{
+  min-height:calc(100svh - 89px); display:flex; align-items:center;
+  padding-block:clamp(36px,4.5vw,56px) clamp(48px,6vw,72px);
+}
+.err .hero__in{ width:100%; }
+
+.err__drawing{ margin-top:clamp(28px,3.6vw,44px); }
+.err__frame{
+  position:relative; display:flex; justify-content:center;
+  padding:clamp(14px,2.4vw,30px) 0 clamp(8px,1.6vw,20px);
+  border:1px dashed var(--hairline); border-radius:4px;
+}
+.err__mark{
+  --mx:50%; --my:50%; --lens:0px;
+  font-weight:700; font-size:clamp(120px,30vw,300px); line-height:.82;
+  letter-spacing:-0.06em; color:var(--ink);
+  transition:--lens .5s ease;
+}
+.err__mark.is-live{ --lens:clamp(160px,22vw,320px); }
+.err__mark span{ display:inline-block; padding-right:.06em; }   /* room for the last glyph's negative tracking */
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .err__mark span{
+    background-image:radial-gradient(circle at var(--mx) var(--my),
+      var(--accent) 0px,
+      var(--accent) calc(var(--lens) * .35),
+      var(--ink) var(--lens));
+    -webkit-background-clip:text; background-clip:text;
+    color:transparent;
+  }
+}
+
+/* dimension line: hairline with end stops, the label sitting in a gap */
+.err__dim{
+  position:relative; display:flex; justify-content:center; align-items:center;
+  margin-top:16px; height:14px;
+}
+.err__dim::before{
+  content:""; position:absolute; left:0; right:0; top:50%; height:1px;
+  background:var(--hairline);
+}
+.err__dim::after{
+  content:""; position:absolute; inset:0;
+  border-inline:1px solid var(--hairline);
+}
+.err__dim-label{
+  position:relative; padding-inline:14px; background:var(--paper);
+  color:var(--accent); white-space:nowrap;
+}
+
+.err__body{ margin-top:clamp(32px,4vw,44px); max-width:720px; }
+.err__body p{ margin-top:20px; max-width:52ch; }
+.err__acts{ display:flex; flex-wrap:wrap; gap:14px; margin-top:32px; }
+.err__links{
+  display:flex; flex-wrap:wrap; align-items:center; gap:10px 22px;
+  margin-top:32px; padding-top:20px; border-top:1px solid var(--grid-line);
+}
+.err__links a{ padding-bottom:3px; border-bottom:1px solid var(--hairline); transition:color .2s ease, border-color .2s ease; }
+.err__links a:hover{ color:var(--accent); border-color:var(--accent); }
+
+@media (max-width:560px){
+  .err{ min-height:0; }
+  .err__acts .btn{ flex:1 1 auto; justify-content:center; }
+}
+@media (prefers-reduced-motion:reduce){
+  .err__mark{ transition:none; }
 }

@@ -371,6 +371,27 @@
 
   /* ---------- project modal ---------- */
   var PROJECTS = {
+    velacrew: {
+      num: '[01]', tag: 'AI product', title: 'VelaCrew',
+      lede: 'VelaCrew is the operating system your business runs on. You talk to your crew, they do the work, and everything the business needs to keep track of lives in one place.',
+      specs: [['Role','UI/UX design'],['Company','Tulip Tech'],['Platform','Web, desktop and mobile'],['Year','2026, in progress']],
+      problem: 'VelaCrew gives people AI assistants that work across their apps, remember context and act on their behalf. The build it started from used three different shells with the same content on every screen, and put setup screens and technical detail in front of people who just wanted the work done. The brief: simple for a non-technical, zero-knowledge user. When they land, they should see what they want and know where to go.',
+      did: [
+        'Set one rule for the whole product: things you do every day stay in the main interface, things you set up once move to Setup.',
+        'Rebuilt the navigation as one shell, two levels deep everywhere, with your own space and your teams as peers in one switcher.',
+        'Designed the assistant to show its plan before it acts, wait for your OK, and keep Undo next to every result.',
+        'Designed own space and team space end to end: Home, Projects, CRM, Messages, Routines, Channels and Agent Properties.',
+        'Built the VelaCrew icon documentation and component set the team designs from.'
+      ],
+      media: [
+        ['images/web/velacrew-hero.jpg','Public website, hero'],
+        ['images/web/velacrew-app.jpg','Projects, with progress and what is up next'],
+        ['images/web/velacrew-crew.jpg','The crew your assistant brings in'],
+        ['images/web/velacrew-project.jpg','A project and its milestones'],
+        ['images/web/velacrew-people.jpg','People, and what their crew is on']
+      ],
+      video: []
+    },
     canipark: {
       num: '[01]', tag: 'Mobile app', title: 'Can I Park?',
       lede: 'An AI sign-scanning feature added to Green P, Toronto’s official parking app. An assistant, not an authority — it reads the pole so the driver doesn’t have to.',
@@ -583,7 +604,8 @@
     }
 
     document.addEventListener('click', function(e){
-      var btn = e.target.closest && e.target.closest('.btn-view');
+      // the in-progress mockups open their project too
+      var btn = e.target.closest && e.target.closest('.btn-view, .build__shot');
       if (btn) { e.preventDefault(); openProject(btn.getAttribute('data-project')); return; }
       // click outside the panel closes it
       if (e.target === modal) modal.close();
@@ -741,6 +763,56 @@
     }
   }
 
+  /* ---------- 404: the numerals light under the pointer ----------
+     The same lens idea as the footer wordmark. With a mouse the light
+     follows the pointer anywhere over the section; on touch (or before the
+     pointer arrives) it drifts slowly through the numerals on its own.
+     It only runs while the numerals are on screen, never under reduced motion. */
+  var errMark = document.getElementById('errMark');
+  var errSec = errMark && errMark.closest('section');
+  if (errMark && errSec && !reduce) {
+    var errGlyphs = errMark.querySelector('span') || errMark;
+    var errLive = false, errDrift = 0, errT0 = null, errSeen = true;
+    var errTrack = function (x, y) {
+      var r = errGlyphs.getBoundingClientRect();
+      errMark.style.setProperty('--mx', (x - r.left).toFixed(1) + 'px');
+      errMark.style.setProperty('--my', (y - r.top).toFixed(1) + 'px');
+    };
+    var errStep = function (now) {
+      if (errT0 === null) errT0 = now;
+      var r = errGlyphs.getBoundingClientRect(), t = (now - errT0) / 1000;
+      // a slow figure-of-eight through the middle of the numerals
+      errTrack(r.left + r.width * (0.5 + 0.42 * Math.sin(t * 0.55)),
+               r.top + r.height * (0.5 + 0.3 * Math.sin(t * 1.1)));
+      errDrift = requestAnimationFrame(errStep);
+    };
+    var errDriftOn = function () {
+      if (errDrift || errLive || !errSeen) return;
+      errMark.classList.add('is-live');
+      errDrift = requestAnimationFrame(errStep);
+    };
+    var errDriftOff = function () {
+      if (errDrift) { cancelAnimationFrame(errDrift); errDrift = 0; }
+    };
+    errSec.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      errLive = true; errDriftOff();
+      errMark.classList.add('is-live');
+      errTrack(e.clientX, e.clientY);
+    }, { passive: true });
+    errSec.addEventListener('pointerleave', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      errLive = false; errDriftOn();
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        errSeen = entries[0].isIntersecting;
+        if (errSeen) errDriftOn(); else errDriftOff();
+      }).observe(errMark);
+    }
+    errDriftOn();
+  }
+
   /* ---------- certifications deck ----------
      One card in front, its neighbours set back on either side. Each step
      only renumbers data-pos (-2..2, relative to the front card); the CSS
@@ -862,6 +934,13 @@
           // the panel being left keeps moving up and out; the rest wait below
           panels[i].classList.toggle('is-out', !on && i === prev && prev !== testiIdx);
         }
+        // the dot being left plays its own exit (phone CSS: the full fill
+        // shrinks back with its track and fades), then the class clears
+        if (prev !== testiIdx) {
+          var testiLeft = picks[prev];
+          testiLeft.classList.add('was-on');
+          setTimeout(function () { testiLeft.classList.remove('was-on'); }, 500);
+        }
         // a deliberate pick wins: stop rotating so nothing moves under them
         if (manual) testi.classList.add('is-manual');
         armGuard();
@@ -918,12 +997,12 @@
     }
   }
 
-  /* ---------- menu: button + dropdown panel ----------
-     Plain absolutely-positioned markup rather than a <dialog>, so the custom
-     cursor still draws over it and the sticky nav stays the containing block. */
-  /* ---------- menu: hamburger + full-screen panel ---------- */
+  /* ---------- menu: hamburger + full-screen panel ----------
+     Plain fixed markup rather than a <dialog>, so the custom cursor still
+     draws over it and the header (logo + close button) stays on top. */
   var mbtn = document.getElementById('menuBtn');
   var mpanel = document.getElementById('menuPanel');
+  var menuNav = document.querySelector('.nav');
   if (mbtn && mpanel) {
     var mitems = mpanel.querySelectorAll('.mitem');
     var deskQ = window.matchMedia ? window.matchMedia('(min-width:1000px)') : null;
@@ -933,8 +1012,15 @@
       mpanel.classList.toggle('is-open', open);
       mbtn.setAttribute('aria-expanded', open ? 'true' : 'false');
       mbtn.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
-      // the panel covers the viewport, so the page behind it must not scroll
+      // The panel covers the viewport, so the page behind it must not scroll.
+      // Locking scroll breaks the header's sticky positioning: scrolled down,
+      // it jumped back to the top of the document and took the close button
+      // off screen. While open it is pinned with position:fixed instead, and
+      // the body gets the same height as padding so nothing behind it shifts.
+      if (open && menuNav) document.body.style.paddingTop = menuNav.offsetHeight + 'px';
+      document.documentElement.classList.toggle('menu-on', open);
       document.documentElement.style.overflow = open ? 'hidden' : '';
+      if (!open) document.body.style.paddingTop = '';
     };
     var closeMenu = function (refocus) {
       if (!menuOpen()) return;

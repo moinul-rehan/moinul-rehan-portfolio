@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found · Moinul Islam Rehan</title>
+<meta name="description" content="This page does not exist. Head back to the portfolio of Moinul Islam Rehan, product designer in Dhaka.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F5F5F3">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32.png">
+<link rel="apple-touch-icon" href="/images/icon/apple-touch-icon.png">
+<!-- Every path here is root-absolute: Vercel serves this page at whatever
+     address was missing (for example /projects/old/thing), so a relative
+     css/site.css would resolve to the wrong folder and the page would load
+     unstyled. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+
+<div class="cursor" id="cursor" aria-hidden="true">
+  <canvas class="cursor__trail" id="trail"></canvas>
+  <span class="cursor__ring"></span>
+  <span class="cursor__arrow">
+    <svg width="24" height="32" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1 1 7.4 29.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M1 1 21.6 13.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </span>
+</div>
+
+<i class="reg reg--tl"></i><i class="reg reg--tr"></i><i class="reg reg--bl"></i><i class="reg reg--br"></i>
+
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="logo" href="/">Moinul-Rehan</a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/projects.html">Projects</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/contact.html">Contact</a>
+    </nav>
+    <div class="nav__right">
+      <span class="pill lbl-sm"><i></i>Open to work</span>
+      <button class="mbtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel" aria-label="Menu">
+        <span class="mbtn__bars" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+    </div>
+  </div>
+
+</header>
+
+<div class="mpanel" id="menuPanel">
+  <div class="wrap">
+    <nav class="mnav" aria-label="Site menu">
+        <a class="mitem" href="/"><span class="mitem__n data">01</span><span class="mitem__label">Home</span></a>
+        <a class="mitem" href="/about.html"><span class="mitem__n data">02</span><span class="mitem__label">About</span></a>
+        <a class="mitem" href="/projects.html"><span class="mitem__n data">03</span><span class="mitem__label">Projects</span></a>
+        <a class="mitem" href="/blog.html"><span class="mitem__n data">04</span><span class="mitem__label">Blog</span></a>
+        <a class="mitem" href="/contact.html"><span class="mitem__n data">05</span><span class="mitem__label">Contact</span></a>
+    </nav>
+    <div class="mpanel__foot">
+      <a class="mpanel__mail" href="mailto:rehan.moinul.10@gmail.com">rehan.moinul.10@gmail.com</a>
+      <span class="lbl-sm dash">Dhaka, Bangladesh · UTC+6</span>
+    </div>
+  </div>
+</div>
+
+<main>
+<!-- ===================== 404 ===================== -->
+<section class="hero err" id="top">
+  <div class="hero__grid" id="heroGrid" aria-hidden="true"></div>
+  <div class="wrap hero__in">
+
+    <div class="micro">
+      <span class="micro__tag"><i class="micro__x"></i><span class="lbl">[404] / Page not found</span></span>
+      <span class="lbl-sm dash">Dhaka, Bangladesh · UTC+6</span>
+    </div>
+
+    <!-- the number is drawn like a part on a technical drawing: corner ticks,
+         and a dimension line underneath that carries the error -->
+    <div class="err__drawing" aria-hidden="true">
+      <div class="err__frame">
+        <div class="err__mark" id="errMark"><span>404</span></div>
+        <i class="tick tick--tl"></i><i class="tick tick--tr"></i><i class="tick tick--bl"></i><i class="tick tick--br"></i>
+      </div>
+      <div class="err__dim">
+        <span class="err__dim-label data">ERR 404 · Not found</span>
+      </div>
+    </div>
+
+    <div class="err__body">
+      <h1 class="h-lg">This page isn&rsquo;t <span class="accent">on the drawing</span>.</h1>
+      <p class="b-lg soft">The link may be old, or the address has a typo. Everything that does exist is one click away.</p>
+      <div class="err__acts">
+        <a class="btn btn--primary" href="/">Back to home
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.6 11.4 11.4 2.6M4.6 2.6h6.8v6.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn--ghost" href="/projects.html">See projects
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.6 11.4 11.4 2.6M4.6 2.6h6.8v6.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <nav class="err__links" aria-label="Other pages">
+        <span class="lbl-sm dash">Or go to</span>
+        <a class="data" href="/about.html">About</a>
+        <a class="data" href="/blog.html">Blog</a>
+        <a class="data" href="/contact.html">Contact</a>
+      </nav>
+    </div>
+
+  </div>
+</section>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__mark" id="footMark"><span>Moinul-Rehan</span></div>
+    <div class="foot__meta lbl-sm">
+      <span>© 2026 Moinul Islam Rehan</span>
+      <span>Dhaka, Bangladesh · <span id="footClock">UTC+6</span></span>
+      <span>Designed in Figma</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/site.js"></script>
+</body>
+</html>
