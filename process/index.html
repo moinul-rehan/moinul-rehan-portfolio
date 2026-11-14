@@ -31,12 +31,25 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/site.css">
+<!-- Chapter Cut: marks the page covered before the first paint, so a cut carries across the load. -->
+<script>try{if(sessionStorage.getItem('cc')){sessionStorage.removeItem('cc');document.documentElement.className+=' cc-in';}}catch(e){}</script>
 <!-- Vercel Web Analytics (cookieless). The script only exists on Vercel,
      so on a local server it 404s harmlessly. -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
+<!-- Chapter Cut overlay: this page's own chapter card, so an arriving cut is
+     already drawn on the first frame. Hidden until a transition runs. -->
+<div class="cc" aria-hidden="true">
+  <div class="cc__bar cc__bar--t"></div>
+  <div class="cc__bar cc__bar--b"></div>
+  <div class="cc__card">
+    <span class="cc__ch lbl">Chapter 07</span>
+    <span class="cc__t d-xl">Process</span>
+    <span class="cc__line"></span>
+  </div>
+</div>
 <script>document.documentElement.classList.add('js');</script>
 
 <div class="cursor" id="cursor" aria-hidden="true">

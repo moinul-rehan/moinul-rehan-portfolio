@@ -1503,3 +1503,89 @@ html.menu-on .nav{ position:fixed; top:0; left:0; right:0; }
 @media (prefers-reduced-motion:reduce){
   .err__mark{ transition:none; }
 }
+
+/* ============================================================
+   CHAPTER CUT — page transition
+   Ported from the "Chapter Cut Transition (Prototype)" component in
+   P4PP · Own The Story (Figma, node 159:9638), rebuilt in this site's
+   ink, accent and type instead of that project's near-black and gold.
+
+   The prototype's timings are kept exactly:
+     0.00–0.40s   two bars close in from both edges   ease-in-out
+     0.40–0.75s   the card fades up 16px              ease-out
+     0.40–1.10s   the rule draws, 1 → 120 → 240px     ease-out, then linear
+     1.20s        navigate
+     on arrival   the whole cut dissolves out, 0.45s  ease-out
+
+   The card is in the page's own markup so an arriving cut is already
+   painted on the first frame — nothing pops in once scripts run.
+   Everything animates on transform and opacity only.
+   ============================================================ */
+.cc{
+  position:fixed; inset:0; z-index:200;   /* over the page, under the cursor (300) */
+  pointer-events:none;                     /* the cursor keeps reading the page below */
+  visibility:hidden;
+}
+.cc__bar{
+  position:absolute; left:0; right:0;
+  height:50.5%;                            /* a hair past half, so the seam never shows */
+  background:var(--ink);
+  transform:scaleY(0);
+  will-change:transform;
+}
+.cc__bar--t{ top:0; transform-origin:top; }
+.cc__bar--b{ bottom:0; transform-origin:bottom; }
+
+.cc__card{
+  position:absolute; inset:0;
+  display:grid; align-content:center; justify-items:center; gap:20px;
+  padding-inline:var(--gutter); text-align:center;
+  opacity:0; transform:translateY(16px);
+  will-change:opacity, transform;
+}
+.cc__ch{ color:var(--accent); }
+.cc__t{ color:var(--on-dark); max-width:1100px; }
+.cc__line{
+  display:block; width:240px; max-width:40vw; height:2px;
+  background:var(--accent);
+  transform:scaleX(.004);                  /* the prototype's 1px of 240 */
+  will-change:transform;
+}
+
+@keyframes cc-bar{ from{ transform:scaleY(0); } to{ transform:scaleY(1); } }
+@keyframes cc-card{
+  from{ opacity:0; transform:translateY(16px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+/* two segments, each with the prototype's own curve */
+@keyframes cc-line{
+  0%{   transform:scaleX(.004); animation-timing-function:cubic-bezier(0,0,.58,1); }
+  50%{  transform:scaleX(.5);   animation-timing-function:linear; }
+  100%{ transform:scaleX(1); }
+}
+
+/* leaving: play the cut */
+.cc.is-cut{ visibility:visible; }
+.cc.is-cut .cc__bar{  animation:cc-bar  .4s  cubic-bezier(.42,0,.58,1) forwards; }
+.cc.is-cut .cc__card{ animation:cc-card .35s cubic-bezier(0,0,.58,1) .4s forwards; }
+.cc.is-cut .cc__line{ animation:cc-line .7s  .4s forwards; }
+
+/* Arriving: the head script sets .cc-in before the first paint, so the new
+   page is already covered by the same card the last page ended on, then
+   dissolves off it. The dissolve is CSS, not script, so a page that never
+   gets its JavaScript still clears itself instead of stranding the visitor
+   behind an ink screen. */
+html.cc-in .cc{
+  visibility:visible;
+  animation:cc-reveal .45s cubic-bezier(0,0,.58,1) both;
+}
+html.cc-in .cc__bar{  transform:scaleY(1); }
+html.cc-in .cc__card{ opacity:1; transform:none; }
+html.cc-in .cc__line{ transform:scaleX(1); }
+@keyframes cc-reveal{ from{ opacity:1; } to{ opacity:0; visibility:hidden; } }
+
+/* a cut is motion for its own sake, so under reduced motion there is none:
+   links navigate straight away and the page arrives uncovered */
+@media (prefers-reduced-motion:reduce){
+  .cc{ display:none; }
+}

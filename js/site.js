@@ -1080,3 +1080,119 @@
     }
   }
 })();
+
+/* ---------- Chapter Cut: page transition ----------
+   The "Chapter Cut" from P4PP · Own The Story, rebuilt for a plain
+   multi-page site. Leaving a page, two ink bars close over it and the
+   destination's chapter card rises; 1.2s in, the browser navigates. The
+   new page is served with its own copy of that card already in the
+   markup, and a one-line script in its <head> marks it covered before
+   the first paint — so the cut carries across the load with no flash,
+   then dissolves off the arriving page.
+
+   Timings and curves come straight from the prototype component; see the
+   CHAPTER CUT block in site.css. */
+(function () {
+  var cc = document.querySelector('.cc');
+  if (!cc) return;
+
+  var html = document.documentElement;
+  var KEY = 'cc';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* ---- arriving ---- */
+  // The head script put .cc-in on <html> before the first paint and cleared
+  // the hand-off flag itself, so the cover and its dissolve are already
+  // running in CSS by now. What is left is to land at the top of the page,
+  // and to drop the class once the dissolve is over so a later cut on this
+  // page starts from a clean slate.
+  if (html.classList.contains('cc-in')) {
+    window.scrollTo(0, 0);
+    setTimeout(function () { html.classList.remove('cc-in'); }, 500);
+  }
+
+  // Under reduced motion the cut is skipped in both directions: the CSS
+  // hides the card and links are left to navigate on their own.
+  if (reduce) return;
+
+  // Each page's chapter, in the order the menu numbers them. Services,
+  // Process and Clients are not in the menu but carry on the count.
+  var PAGES = {
+    '/':          ['Chapter 01', 'Home'],
+    '/about/':    ['Chapter 02', 'About'],
+    '/projects/': ['Chapter 03', 'Projects'],
+    '/blog/':     ['Chapter 04', 'Blog'],
+    '/contact/':  ['Chapter 05', 'Contact'],
+    '/services/': ['Chapter 06', 'Services'],
+    '/process/':  ['Chapter 07', 'Process'],
+    '/clients/':  ['Chapter 08', 'Clients']
+  };
+
+  function cardFor(path) {
+    if (PAGES[path]) return PAGES[path];
+    // anything off the map still gets a card, just without a number
+    var seg = path.replace(/\/+$/, '').split('/').pop().replace(/[-_]+/g, ' ');
+    if (!seg) return PAGES['/'];
+    return ['', seg.charAt(0).toUpperCase() + seg.slice(1)];
+  }
+
+  var going = false;
+
+  function cut(url) {
+    going = true;
+
+    var card = cardFor(url.pathname);
+    var ch = cc.querySelector('.cc__ch');
+    var ti = cc.querySelector('.cc__t');
+    if (ch) { ch.textContent = card[0]; ch.style.visibility = card[0] ? '' : 'hidden'; }
+    if (ti) { ti.textContent = card[1]; }
+
+    // warm the destination while the bars are closing, so the swap at
+    // 1.2s lands on something already fetched
+    try {
+      var pre = document.createElement('link');
+      pre.rel = 'prefetch';
+      pre.href = url.href;
+      document.head.appendChild(pre);
+    } catch (e) {}
+
+    // tells the next page to paint itself covered
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+
+    cc.classList.add('is-cut');
+    setTimeout(function () { window.location.href = url.href; }, 1200);
+  }
+
+  document.addEventListener('click', function (e) {
+    if (going) { e.preventDefault(); return; }   // the cut owns the page now
+    if (e.defaultPrevented || e.button !== 0) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;  // open-in-tab etc.
+
+    var a = e.target && e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    if (a.hasAttribute('download')) return;
+    if (a.target && a.target !== '_self') return;
+    if ((a.getAttribute('rel') || '').indexOf('external') > -1) return;
+
+    var url;
+    try { url = new URL(a.href, window.location.href); } catch (err) { return; }
+
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') return;  // mailto, tel
+    if (url.origin !== window.location.origin) return;
+    // same page — in-page jumps and smooth scrolling stay as they are
+    if (url.pathname === window.location.pathname && url.search === window.location.search) return;
+
+    e.preventDefault();
+    cut(url);
+  });
+
+  // Coming back through the history cache restores this page mid-cut, so
+  // clear the cover rather than leave the visitor staring at an ink screen.
+  window.addEventListener('pageshow', function (e) {
+    if (!e.persisted) return;
+    going = false;
+    cc.classList.remove('is-cut');
+    html.classList.remove('cc-in', 'cc-out');
+    try { sessionStorage.removeItem(KEY); } catch (err) {}
+  });
+})();
